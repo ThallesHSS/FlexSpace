@@ -195,13 +195,28 @@
   </nav>
 
 
-  <div class="controls" aria-hidden="false">
-    <button class="icon-btn" id="toggleTheme" title="Alternar tema (lido pelo leitor)">
-      <!-- simple moon/sun icon -->
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/></svg>
-    </button>
-    <button class="icon-btn" title="Ajuda" aria-label="Ajuda"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM11 17h2v-2h-2v2zm2.07-7.75a2 2 0 10-3.14 1.76" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  </div>
+ <div class="controls" aria-hidden="false">
+  <button class="icon-btn" id="toggleTheme" title="Alternar tema (lido pelo leitor)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
+    </svg>
+  </button>
+
+  <!-- novo botão de acessibilidade -->
+  <button class="icon-btn" id="toggleReader" title="Ativar leitor de texto" aria-label="Ativar leitor de texto">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M3 10v4a1 1 0 001 1h2l3 3V6L6 9H4a1 1 0 00-1 1zm13.54-3.54a5 5 0 010 7.07m2.83-9.9a9 9 0 010 12.73"
+        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <button class="icon-btn" title="Ajuda" aria-label="Ajuda">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM11 17h2v-2h-2v2zm2.07-7.75a2 2 0 10-3.14 1.76"
+        stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 </header>
 
 
@@ -520,9 +535,68 @@ grid.addEventListener('click', (ev)=>{
 window.addEventListener('storage', ()=>{ filterAndRender(); });
 
 
+/* ====== Leitor de Texto Acessível ====== */
+const readerBtn = document.getElementById('toggleReader');
+let reading = false;
+let synth = window.speechSynthesis;
+let utterance = null;
+
+function getPageText() {
+  // pega o conteúdo textual principal da página
+  const mainText = document.body.innerText
+    .replace(/\s+/g, ' ')
+    .replace(/Detalhes|Agendar/g, '') // remove botões repetitivos
+    .trim();
+  return mainText;
+}
+
+function startReading() {
+  if (synth.speaking) synth.cancel();
+  utterance = new SpeechSynthesisUtterance(getPageText());
+  utterance.lang = 'pt-BR';
+  utterance.rate = 1.0;
+  utterance.pitch = 1;
+  synth.speak(utterance);
+  reading = true;
+  readerBtn.classList.add('active');
+  readerBtn.title = 'Desativar leitor de texto';
+  readerBtn.setAttribute('aria-label', 'Desativar leitor de texto');
+}
+
+function stopReading() {
+  synth.cancel();
+  reading = false;
+  readerBtn.classList.remove('active');
+  readerBtn.title = 'Ativar leitor de texto';
+  readerBtn.setAttribute('aria-label', 'Ativar leitor de texto');
+}
+
+readerBtn.addEventListener('click', () => {
+  if (!reading) {
+    startReading();
+  } else {
+    stopReading();
+  }
+});
+
+// se o usuário fechar o navegador ou trocar de aba
+window.addEventListener('beforeunload', () => synth.cancel());
+
+// feedback visual quando ativo
+const style = document.createElement('style');
+style.textContent = `
+  #toggleReader.active {
+    color: var(--accent);
+    transform: scale(1.2);
+  }
+`;
+document.head.appendChild(style);
+
+
 </script>
 </body>
 </html>
+
 
 
 
