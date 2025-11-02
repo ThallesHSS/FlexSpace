@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FlexSpace — Detalhes do Espaço</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5fefd;
+    --card: #ffffff;
+    --muted: #6b7a80;
+    --brand: #2bc3cc;
+    --accent: #32ebc0;
+    --text: #053f4e;
+    --glass: rgba(255,255,255,0.6);
+    --shadow: 0 8px 24px rgba(6,20,25,0.08);
+    --radius: 14px;
+    --transition: 250ms cubic-bezier(.2,.9,.3,1);
+  }
+
+  .dark {
+    --bg: #0f1720;
+    --card: #0b1220;
+    --muted: #9aa7b0;
+    --brand: #6a9bd6;
+    --accent: #7fd3d1;
+    --text: #e6f0f3;
+    --glass: rgba(255,255,255,0.05);
+    --shadow: 0 10px 30px rgba(2,6,12,0.6);
+  }
+
+  *{box-sizing:border-box}
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--text);
+    background: linear-gradient(180deg, var(--bg), #eafefefd 120%);
+    transition: background var(--transition), color var(--transition);
+  }
+
+  header {
+    position: sticky; top: 0;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(90deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px;
+    z-index: 100;
+  }
+  .dark header {
+    background: linear-gradient(90deg, rgba(10,14,20,0.6), rgba(10,14,20,0.4));
+    border-bottom-color: rgba(255,255,255,0.03);
+  }
+  .brand {display:flex;align-items:center;gap:12px}
+  .logo {
+    width:44px; height:44px; border-radius:10px;
+    background:linear-gradient(135deg,var(--brand),var(--accent));
+    display:grid;place-items:center;color:#fff;font-weight:700;
+    box-shadow: var(--shadow);
+  }
+  .brand h1{font-size:1rem;margin:0}
+  button.icon-btn {
+    border:0; background:transparent; padding:8px; border-radius:10px;
+    cursor:pointer; display:inline-grid; place-items:center;
+    transition:transform var(--transition);
+  }
+  button.icon-btn:hover{transform:translateY(-3px)}
+
+  main {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .detail-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: all var(--transition);
+  }
+
+  .detail-header {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .detail-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+  }
+
+  .detail-content {
+    padding: 28px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin: 0 0 8px;
+    letter-spacing: -0.3px;
+  }
+
+  p {
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 8px 0 18px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .info-item {
+    background: var(--glass);
+    border-radius: 10px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition);
+  }
+  .btn.primary {
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(43,195,204,0.18);
+  }
+  .btn.ghost {
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.06);
+    color: var(--text);
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align:center;
+    color:var(--muted);
+    font-size:0.9rem;
+    margin:40px 0;
+  }
+
+  @media (max-width:620px){
+    .detail-header{height:200px}
+    .detail-content{padding:20px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo"><img src="https://thalleshss.github.io/FlexSpace/Logo flexspace.jfif" width="38" height="38" style="border-radius:8px;"></div>
+    <div>
+      <h1>FlexSpace</h1>
+      <div style="font-size:.85rem;color:var(--muted)">Detalhes do Espaço</div>
+    </div>
+  </div>
+  <button class="icon-btn" id="toggleTheme" title="Alternar tema">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/></svg>
+  </button>
+</header>
+
+<main>
+  <article class="detail-card">
+    <div class="detail-header" style="background-image:url('https://s32907.pcdn.co/wp-content/uploads/2020/03/revestimento-de-banheiro-01032020.jpg')"></div>
+    <div class="detail-content">
+      <h2>Banheiros</h2>
+      <p>Um ambiente moderno, projetado para oferecer conforto e produtividade à equipe. Conta com iluminação natural.</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Capacidade:</strong><br> Até 10 pessoas
+        </div>
+        <div class="info-item">
+          <strong>Recursos:</strong><br> Wi-Fi, ar-condicionado, tomadas, pias, espelhos, cabines e mictórios.
+        </div>
+        <div class="info-item">
+          <strong>Disponibilidade:</strong><br> Segunda a Sexta, 08h às 18h
+        </div>
+        <div class="info-item">
+          <strong>Tipo:</strong><br> Banheiros
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:26px;">
+        <a href="https://thalleshss.github.io/FlexSpace/" class="btn ghost">← Voltar</a>
+        <button class="btn primary">Agendar Espaço</button>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  FlexSpace © <span id="year"></span> — Página de Detalhes
+</footer>
+
+<script>
+  // Tema
+  const toggleThemeBtn = document.getElementById('toggleTheme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let dark = localStorage.getItem('flexspace_theme') === 'dark' || prefersDark;
+
+  function applyTheme() {
+    document.body.classList.toggle('dark', dark);
+    localStorage.setItem('flexspace_theme', dark ? 'dark' : 'light');
+  }
+
+  toggleThemeBtn.addEventListener('click', () => {
+    dark = !dark;
+    applyTheme();
+  });
+  applyTheme();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
