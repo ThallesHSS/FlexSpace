@@ -341,8 +341,26 @@ function attachActionHandlers(card, space){
     btn.addEventListener('click', e=>{
       const act = btn.getAttribute('data-action');
       if(act==='details'){
-        alert(`Opções para: ${space.title}\n\n( Aqui você pode abrir modal, página de detalhes, calendário etc. )`);
-      } else if(act==='book'){
+        const links = {
+          'Escritório Principal': 'https://thalleshss.github.io/FlexSpace/FlexDt/Detalhes%20escrit%C3%B3rio.html',
+          'Sala de Reunião': 'https://thalleshss.github.io/FlexSpace/FlexDt/Detalhes%20sala%20reuni%C3%A3o.html',
+          'Banheiros': 'https://thalleshss.github.io/FlexSpace/FlexDt/Banheiros%20dt.html',
+          'Área Comum': 'https://thalleshss.github.io/FlexSpace/FlexDt/Arc%20dt.html',
+          'Escritório Financeiro': 'https://thalleshss.github.io/FlexSpace/FlexDt/Escfndt.html',
+          'Sala de Lazer': 'https://thalleshss.github.io/FlexSpace/FlexDt/sllzdt.html',
+          'Sala de Treinamento': 'https://thalleshss.github.io/FlexSpace/FlexDt/strdt.html',
+          'Cantina': 'https://thalleshss.github.io/FlexSpace/FlexDt/Ctdt.html',
+          'Praça de alimentação': 'https://thalleshss.github.io/FlexSpace/FlexDt/padt.html'
+        };
+
+        const url = links[space.title];
+        if(url){
+          window.location.href = url;
+        } else {
+          alert(`Página de detalhes não encontrada para: ${space.title}`);
+        }
+      } 
+      else if(act==='book'){
         alert(`Abrir agendamento para: ${space.title}\n\n(Simulação demo)`);
       }
     });
@@ -505,6 +523,7 @@ window.addEventListener('storage', ()=>{ filterAndRender(); });
 </script>
 </body>
 </html>
+
 
 
 
