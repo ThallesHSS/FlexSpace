@@ -315,7 +315,6 @@
       <p class="muted small">Demo / Suporte: <strong>demo@flexspace.com</strong></p>
       <p style="margin-top:12px"><a href="#" class="btn primary" style="width:100%;text-align:center">Solicitar apresentação</a></p>
     </div>
-    <ul id="listaEspacos"></ul>
   </section>
 </main>
 
@@ -549,78 +548,405 @@ mountCards(spaces);
 
 /* keyboard: focus first card with ArrowDown */
 document.addEventListener('keydown', (e)=>{
- /* keyboard: focus first card with ArrowDown */
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'j' || e.key === 'ArrowDown') {
-    const firstCard = document.querySelector('.card');
-    if (firstCard) firstCard.focus();
+  if(e.key === 'j' || e.key === 'ArrowDown'){
+    const first = document.querySelector('.card');
+    if(first) first.focus();
   }
 });
 
 
-/* ====== MODO ALTO CONTRASTE ====== */
-const contrastBtn = document.getElementById('toggleContrast');
-let isHighContrast = localStorage.getItem('flexspace_contrast') === 'true';
+/* touch behavior: show overlay on tap by focusing */
+grid.addEventListener('click', (ev)=>{
+  const card = ev.target.closest('.card');
+  if(!card) return;
+  // on small screens we might want to open details directly
+  if(window.innerWidth < 700){
+    const title = card.querySelector('.card-title').textContent;
+    alert(`${title}\n\nOpções: Detalhes / Agendar (simulação)`);
+  }
+});
 
-function applyContrast() {
-  document.body.classList.toggle('high-contrast', isHighContrast);
-  localStorage.setItem('flexspace_contrast', isHighContrast);
+
+/* quick: update visible count after rating change (so UI reacts) */
+window.addEventListener('storage', ()=>{ filterAndRender(); });
+
+
+/* ====== Leitor de Texto Acessível ====== */
+const readerBtn = document.getElementById('toggleReader');
+let reading = false;
+let synth = window.speechSynthesis;
+let utterance = null;
+
+function getPageText() {
+  // pega o conteúdo textual principal da página
+  const mainText = document.body.innerText
+    .replace(/\s+/g, ' ')
+    .replace(/Detalhes|Agendar/g, '') // remove botões repetitivos
+    .trim();
+  return mainText;
 }
 
-contrastBtn.addEventListener('click', () => {
-  isHighContrast = !isHighContrast;
+function startReading() {
+  if (synth.speaking) synth.cancel();
+  utterance = new SpeechSynthesisUtterance(getPageText());
+  utterance.lang = 'pt-BR';
+  utterance.rate = 1.0;
+  utterance.pitch = 1;
+  synth.speak(utterance);
+  reading = true;
+  readerBtn.classList.add('active');
+  readerBtn.title = 'Desativar leitor de texto';
+  readerBtn.setAttribute('aria-label', 'Desativar leitor de texto');
+}
+
+function stopReading() {
+  synth.cancel();
+  reading = false;
+  readerBtn.classList.remove('active');
+  readerBtn.title = 'Ativar leitor de texto';
+  readerBtn.setAttribute('aria-label', 'Ativar leitor de texto');
+}
+
+readerBtn.addEventListener('click', () => {
+  if (!reading) {
+    startReading();
+  } else {
+    stopReading();
+  }
+});
+
+// se o usuário fechar o navegador ou trocar de aba
+window.addEventListener('beforeunload', () => synth.cancel());
+
+// feedback visual quando ativo
+const style = document.createElement('style');
+style.textContent = `
+  #toggleReader.active {
+    color: var(--accent);
+    transform: scale(1.2);
+  }
+`;
+document.head.appendChild(style);
+
+  const contrastBtn = document.getElementById('toggleContrast');
+let usingContrast = localStorage.getItem('flexspace_contrast') === 'true';
+
+function applyContrast(){
+  if(usingContrast){
+    document.body.classList.add('high-contrast');
+  } else {
+    document.body.classList.remove('high-contrast');
+  }
+  localStorage.setItem('flexspace_contrast', usingContrast);
+}
+
+contrastBtn.addEventListener('click', ()=>{
+  usingContrast = !usingContrast;
   applyContrast();
 });
 
 applyContrast();
 
 
-/* ====== LEITOR DE TEXTO ====== */
-const readerBtn = document.getElementById('toggleReader');
-let isReading = false;
-let synth = window.speechSynthesis;
+</script>
 
-readerBtn.addEventListener('click', () => {
-  isReading = !isReading;
+  <!-- ===== FLEXAI AVANÇADA (Frontend) ===== -->
+<div id="flexai-root" aria-live="polite">
+  <button id="flexai-toggle" class="chatbot-button" aria-haspopup="dialog" aria-expanded="false" title="Abrir FlexAI">💬</button>
 
-  if (isReading) {
-    readerBtn.setAttribute('aria-label', 'Desativar leitor de texto');
-    readerBtn.title = 'Desativar leitor de texto';
-    speakVisibleText();
-  } else {
-    readerBtn.setAttribute('aria-label', 'Ativar leitor de texto');
-    readerBtn.title = 'Ativar leitor de texto';
-    synth.cancel();
-  }
+  <aside id="flexai-panel" class="chatbot-panel" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true">
+    <header class="chatbot-header">
+      <div><strong>FlexAI</strong><div class="small muted">Assistente da FlexSpace</div></div>
+      <div>
+        <button id="flexai-summarize" title="Resumir conversa" aria-label="Resumir conversa">✂️</button>
+        <button id="flexai-close" aria-label="Fechar">×</button>
+      </div>
+    </header>
+
+    <section id="flexai-body" class="chatbot-body" tabindex="0" aria-live="polite">
+      <div class="bot-message">👋 Olá! Sou a <strong>FlexAI</strong>. Posso ajudar com agendamentos, reformular mensagens (para melhorar a comunicação), checar o clima da equipe e muito mais. Em que eu te ajudo hoje?</div>
+    </section>
+
+    <form id="flexai-form" class="chatbot-input-area" aria-label="Enviar mensagem para FlexAI">
+      <input id="flexai-input" type="text" placeholder="Escreva uma mensagem (ex: 'Agendar demo para terça 10h')" aria-label="Mensagem para FlexAI" autocomplete="off">
+      <button id="flexai-send" type="submit" aria-label="Enviar mensagem">➤</button>
+    </form>
+
+    <div id="flexai-actions" class="chatbot-quick-actions" aria-hidden="false">
+      <button data-act="agendar">Agendar demo</button>
+      <button data-act="reformular">Reformular mensagem</button>
+      <button data-act="clima">Ver clima da equipe</button>
+      <button data-act="contato">Contato suporte</button>
+    </div>
+  </aside>
+</div>
+
+<style>
+/* (Use as classes from your previous CSS, ajustei para integração) */
+#flexai-root { position:fixed; right:20px; bottom:18px; z-index:1200; font-family:Inter, sans-serif; }
+.chatbot-button{ width:56px; height:56px; border-radius:50%; background:var(--brand); color:#fff; border:0; box-shadow:0 8px 30px rgba(0,0,0,0.2); cursor:pointer; font-size:22px; }
+.chatbot-panel{ width:340px; max-width:92vw; display:flex; flex-direction:column; position:absolute; bottom:72px; right:0; border-radius:12px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.25); background:var(--card); }
+.chatbot-header{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:linear-gradient(90deg,var(--brand),var(--accent)); color:#fff; }
+.chatbot-body{ padding:12px; max-height:320px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:var(--bg); }
+.chatbot-input-area{ display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.06); background:var(--card); }
+.chatbot-input-area input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); }
+.chatbot-input-area button{ background:var(--brand); color:#fff; border:0; padding:8px 12px; border-radius:8px; cursor:pointer; }
+.bot-message,.user-message{ padding:8px 10px; border-radius:10px; max-width:85%; word-break:break-word; }
+.bot-message{ background:var(--glass); align-self:flex-start; }
+.user-message{ background:var(--brand); color:#fff; align-self:flex-end; }
+.chatbot-quick-actions{ display:flex; gap:8px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); }
+.chatbot-quick-actions button{ background:transparent; border:1px solid rgba(0,0,0,0.06); padding:6px 8px; border-radius:8px; cursor:pointer; }
+.small{ font-size:.8rem }
+.muted{ opacity:0.9; font-weight:500 }
+</style>
+
+<script>
+/* ============ CONFIG ============ */
+/* Se for usar backend com OpenAI, ajuste a URL */
+const API_URL = '/api/flexai'; // endpoint servidor que proxyia p/ OpenAI (opcional)
+const USE_REMOTE_AI = false; // true para enviar histórico ao servidor / IA real
+
+/* armazenamento local */
+const STORAGE_KEY_HISTORY = 'flexai_history_v1';
+
+/* elementos */
+const root = document.getElementById('flexai-root');
+const toggleBtn = document.getElementById('flexai-toggle');
+const panel = document.getElementById('flexai-panel');
+const closeBtn = document.getElementById('flexai-close');
+const bodyEl = document.getElementById('flexai-body');
+const form = document.getElementById('flexai-form');
+const input = document.getElementById('flexai-input');
+const sendBtn = document.getElementById('flexai-send');
+const quickActions = document.getElementById('flexai-actions');
+const summarizeBtn = document.getElementById('flexai-summarize');
+
+/* estado */
+let open = false;
+let history = loadHistory();
+
+/* helpers UI */
+function openPanel(){
+  panel.style.display = 'flex'; panel.setAttribute('aria-hidden','false');
+  toggleBtn.setAttribute('aria-expanded','true'); toggleBtn.style.display='none';
+  input.focus(); open=true;
+}
+function closePanel(){
+  panel.style.display = 'none'; panel.setAttribute('aria-hidden','true');
+  toggleBtn.setAttribute('aria-expanded','false'); toggleBtn.style.display='inline-block';
+  open=false;
+}
+toggleBtn.addEventListener('click', openPanel);
+closeBtn.addEventListener('click', closePanel);
+
+/* quick actions */
+quickActions.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-act]');
+  if(!btn) return;
+  const act = btn.dataset.act;
+  if(act==='agendar') handleLocalCommand('agendar demo');
+  if(act==='reformular') handleLocalCommand('reformule esta mensagem para um tom construtivo: [texto aqui]');
+  if(act==='clima') handleLocalCommand('como está o clima da equipe?');
+  if(act==='contato') handleLocalCommand('qual o contato de suporte?');
 });
 
-function speakVisibleText() {
-  if (!('speechSynthesis' in window)) {
-    alert('Leitor de texto não suportado neste navegador.');
+/* load / save history */
+function loadHistory(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY_HISTORY) || '[]'); }catch(e){return []} }
+function saveHistory(){ localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history)); }
+
+/* render history */
+function renderMessage(msg){
+  const div = document.createElement('div');
+  div.className = msg.role === 'user' ? 'user-message' : 'bot-message';
+  div.innerHTML = msg.html || escapeHtml(msg.text);
+  bodyEl.appendChild(div);
+  bodyEl.scrollTop = bodyEl.scrollHeight;
+}
+function renderAll(){ bodyEl.innerHTML = ''; history.forEach(renderMessage); }
+
+/* escape helper */
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* intent & tone detection (basic, extensible) */
+function detectIntent(text){
+  const t = text.toLowerCase();
+  if(/\bagendar\b|\bagendamento\b|\bmarcar\b|\breservar\b/.test(t)) return 'schedule';
+  if(/\bcontato\b|\bsuporte\b|\bemail\b|\btelefone\b/.test(t)) return 'contact';
+  if(/\breformular\b|\bmelhorar\b|\breformular mensagem\b/.test(t)) return 'reformulate';
+  if(/\bclima\b|\bestresse\b|\bmotivaç/i.test(t)) return 'mood';
+  return 'chat';
+}
+function detectTone(text){
+  const t = text.toLowerCase();
+  const negative = /\b(raiva|irritad|frustrad|cansad|sobrecarregad|triste|estressad)\b/;
+  const positive = /\b(ótim|bom|feliz|animad|grato|gostei|excelente)\b/;
+  if(negative.test(t)) return 'negative';
+  if(positive.test(t)) return 'positive';
+  return 'neutral';
+}
+
+/* mediation: reformulate text to constructive tone */
+function reformulateText(text, target='construtivo'){
+  // regra simples: solicita reformulação localmente. Preferível usar modelo remoto p/ qualidade melhor.
+  return `Versão reformulada (${target}): Olá — obrigado pelo retorno. Gostaria de sugerir que... (exemplo) — original: "${text}"`;
+}
+
+/* immediate local handlers for intents */
+async function handleLocalCommand(text){
+  const intent = detectIntent(text);
+  addToHistory({role:'user', text});
+  renderMessage({role:'user', text});
+  if(intent === 'schedule'){
+    const reply = `Posso ajudar a agendar uma demo. Você pode clicar em "Agendar Demo" no header ou me dizer dia e horário. Quer que eu simule o agendamento agora?`;
+    await pushBotReply(reply);
+  } else if(intent === 'contact'){
+    await pushBotReply('Nosso e-mail de suporte é <strong>demo@flexspace.com</strong> — podemos abrir uma solicitação de contato se quiser.');
+  } else if(intent === 'reformulate'){
+    // pega texto entre colchetes se o usuário usar o template
+    const inner = (text.match(/\[(.*)\]/)||[])[1] || 'mensagem de exemplo';
+    const reform = reformulateText(inner);
+    await pushBotReply(reform);
+  } else if(intent === 'mood'){
+    await pushBotReply('Posso checar sinais de estresse na conversa. Recomendo pequenas pausas e reorganização de tarefas. Quer um resumo do tom atual?');
+  } else {
+    // fallback para IA remota ou resposta local generica
+    if(USE_REMOTE_AI){
+      const reply = await askRemoteAI(history.concat([{role:'user', text}]));
+      await pushBotReply(reply);
+    } else {
+      await pushBotReply('Desculpe, ainda estou aprendendo ❗ Tente pedir "agendar", "reformular" ou "contato".');
+    }
+  }
+}
+
+/* push bot reply to UI + history */
+async function pushBotReply(text){
+  const msg = {role:'assistant', text, html: text};
+  history.push(msg); saveHistory();
+  renderMessage(msg);
+}
+
+/* send message flow */
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = '';
+  history.push({role:'user', text}); saveHistory();
+  renderMessage({role:'user', text});
+  const intent = detectIntent(text);
+  const tone = detectTone(text);
+
+  // quick local responses for certain intents
+  if(intent==='reformulate'){
+    // expects format: "reformular: <texto>" or "reformule esta mensagem: <texto>"
+    const inner = (text.match(/reformular.*[:\-]\s*(.*)/i) || (text.match(/reformul.*(?:esta mensagem|mensagem)\s*[:\-]\s*(.*)/i)))?.[1];
+    const source = inner || text;
+    const reform = reformulateText(source, 'construtivo');
+    history.push({role:'assistant', text:reform, html: reform}); saveHistory();
+    renderMessage({role:'assistant', text: reform, html: reform});
     return;
   }
 
-  let visibleText = '';
-  document.querySelectorAll('main, header, footer').forEach(el => {
-    if (el.offsetParent !== null) visibleText += el.innerText + '. ';
-  });
+  // if we want remote AI: send history
+  if(USE_REMOTE_AI){
+    // small typing indicator
+    const typing = document.createElement('div'); typing.className='bot-message'; typing.id='flexai-typing'; typing.innerText = 'FlexAI está digitando...'; bodyEl.appendChild(typing); bodyEl.scrollTop = bodyEl.scrollHeight;
+    try{
+      const reply = await askRemoteAI(history);
+      document.getElementById('flexai-typing')?.remove();
+      history.push({role:'assistant', text: reply, html: reply}); saveHistory();
+      renderMessage({role:'assistant', text: reply, html: reply});
+    }catch(err){
+      document.getElementById('flexai-typing')?.remove();
+      const errorMsg = 'Erro ao contactar a IA remota. Tente novamente mais tarde.';
+      history.push({role:'assistant', text: errorMsg}); saveHistory();
+      renderMessage({role:'assistant', text: errorMsg});
+      console.error(err);
+    }
+  } else {
+    // local best-effort reply
+    // if the tone is negative, offer mediation
+    if(tone === 'negative'){
+      const offer = 'Percebo que a mensagem tem tom negativo. Deseja que eu sugira uma versão mais construtiva para enviar ao seu colega/gestor?';
+      history.push({role:'assistant', text: offer}); saveHistory();
+      renderMessage({role:'assistant', text: offer});
+    } else {
+      const simple = `Entendi. Posso: (1) agendar/organizar, (2) reformular mensagens, (3) fornecer contato. Diga a opção ou pergunte algo mais específico.`;
+      history.push({role:'assistant', text: simple}); saveHistory();
+      renderMessage({role:'assistant', text: simple});
+    }
+  }
+});
 
-  const utterance = new SpeechSynthesisUtterance(visibleText);
-  utterance.lang = 'pt-BR';
-  utterance.rate = 1;
-  synth.speak(utterance);
+/* summarizer (ex.: resumir histórico para gestor) */
+summarizeBtn.addEventListener('click', async () => {
+  if(USE_REMOTE_AI){
+    const typing = document.createElement('div'); typing.className='bot-message'; typing.innerText = 'Gerando resumo...'; bodyEl.appendChild(typing);
+    try{
+      const reply = await askRemoteAI([{role:'system', text:'Resuma esta conversa de forma objetiva:'}, ...history]);
+      document.getElementById('flexai-typing')?.remove();
+      history.push({role:'assistant', text: reply, html: reply}); saveHistory();
+      renderMessage({role:'assistant', text: reply, html: reply});
+    }catch(e){ console.error(e); }
+  } else {
+    const summary = generateLocalSummary(history);
+    history.push({role:'assistant', text:summary}); saveHistory();
+    renderMessage({role:'assistant', text:summary});
+  }
+});
+
+/* small local summary generator */
+function generateLocalSummary(hist){
+  const userMsgs = hist.filter(m=>m.role==='user').slice(-6).map(m=>m.text).join(' • ');
+  return `Resumo curto: tópicos recentes: ${userMsgs || 'nenhum tópico detectado'}. Sugestões: verificar agendamentos pendentes e clima da equipe.`;
 }
 
-</script>
+/* ask remote AI via server proxy (backend necessário) */
+async function askRemoteAI(messages){
+  // messages: array of {role:'user'|'assistant'|'system', text}
+  const payload = { messages: messages.map(m=> ({ role: m.role, content: m.text }) ), info: { source: 'flexspace-demo' } };
+  const res = await fetch(API_URL, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if(!res.ok) throw new Error('Erro na API: ' + res.status);
+  const data = await res.json();
+  // espera { reply: 'texto' }
+  return data.reply || 'Sem resposta da IA remota.';
+}
 
-<input id="mensagem" placeholder="Fale com a IA Flex 🤖">
-<button onclick="enviarMensagem()">Enviar</button>
-<p id="resposta"></p>
+/* restore and render previous history */
+renderAll();
+
+/* keyboard support: Esc fecha */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && open) closePanel();
+});
+
+/* expose simple API to console for debug */
+window.FlexAI = {
+  open: openPanel,
+  close: closePanel,
+  send: (text)=> handleLocalCommand(text),
+  history: ()=> history
+};
 </script>
 
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
