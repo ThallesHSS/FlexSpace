@@ -933,11 +933,41 @@ window.FlexAI = {
   send: (text)=> handleLocalCommand(text),
   history: ()=> history
 };
+
+  async function enviarMensagem() {
+  const input = document.getElementById('mensagem');
+  const area = document.getElementById('resposta');
+  const texto = input.value.trim();
+
+  if (!texto) return;
+
+  area.innerText = "Pensando... 🤔";
+
+  try {
+    const resposta = await fetch("https://stackblitzstartersrlraqwzy-q0rp--3000--cf284e50.local-credentialless.webcontainer.io/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mensagem: texto })
+    });
+
+    const data = await resposta.json();
+    area.innerText = "💬 " + data.resposta;
+  } catch (err) {
+    console.error(err);
+    area.innerText = "Erro ao conectar com o servidor 😭";
+  }
+}
+</script>
+
+<input id="mensagem" placeholder="Fale com a IA Flex 🤖">
+<button onclick="enviarMensagem()">Enviar</button>
+<p id="resposta"></p>
 </script>
 
 </script>
 </body>
 </html>
+
 
 
 
