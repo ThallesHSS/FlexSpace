@@ -1,5 +1,5 @@
 // URL do backend — copia o link que o StackBlitz mostrar na aba “Preview”
-const API_URL = "https://teu-backend.stackblitz.io"; // substitui esse pelo teu link real
+const API_URL = "http://localhost:3000"; // substitui esse pelo teu link real
 
 async function carregarEspacos() {
   const resposta = await fetch(`${API_URL}/espacos`);
