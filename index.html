@@ -860,51 +860,163 @@ function scrollBottom(){
   flexBody.scrollTop = flexBody.scrollHeight;
 }
 
-/* IA local simples + natural */
-function replyFlex(text){
-  const lower = text.toLowerCase();
+/* ===== FLEXAI v2.5 — Inteligência Expandida ===== */
 
-  if(lower.includes("oi") || lower.includes("olá")){
-    return addBot("Oi! Como posso te ajudar hoje?");
-  }
+function replyFlex(text) {
+  const lower = text.toLowerCase().trim();
 
-  if(lower.includes("agendar")){
-    return addBot("Posso te ajudar nisso! Me diga o dia e horário da sua preferência.");
-  }
+  /* Função para escolher respostas variadas */
+  const choose = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-  if(lower.includes("reformular")){
-    return addBot("Claro! Me envie o texto que você quer que eu reformule.");
-  }
+  /* Catálogo de respostas */
+  const R = {
+    cumprimentos: [
+      "Oi! Como posso te ajudar hoje? 😊",
+      "Olá! Prontinha pra ajudar 💙",
+      "Tudo certo? Pode mandar!",
+      "Opa! Cheguei, o que vamos fazer agora? 🤖"
+    ],
 
-  if(lower.includes("cansado") || lower.includes("estressado")){
-    return addBot("Percebo que você está passando por algo. Recomendo fazer uma pausa, beber água e respirar um pouco. Se quiser, posso criar um mini plano de descanso.");
-  }
+    despedidas: [
+      "Até mais! Qualquer coisa é só me chamar 💫",
+      "Tchauzinho! Se cuida 😄",
+      "Vou ficar aqui caso precise 💙"
+    ],
 
-  /* fallback */
-  addBot("Entendi! Quer tentar uma destas ações? Agendar, Reformular, Ver clima da equipe ou Ler página.");
-}
+    humor: [
+      "😂 Essa foi boa! Gostei.",
+      "🤣 haha adorei isso!",
+      "😆 você é ótimo, sério."
+    ],
 
-/* ====== VOZ → TEXTO ====== */
-const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let rec;
+    clima: [
+      "Pelo que percebo, o clima está estável, mas podemos melhorar sempre! Quer algumas sugestões?",
+      "Vejo que a equipe pode estar precisando de um feedback construtivo. Posso te ajudar com isso.",
+      "Clima neutro. Quer que eu crie uma análise rápida?"
+    ],
 
-if(recognition){
-  rec = new recognition();
-  rec.lang = "pt-BR";
+    estresse: [
+      "Parece que você está sobrecarregado… que tal uma pausa curta? Eu posso montar um mini plano de descanso pra você.",
+      "Respira fundo aí 💙 tá tudo bem. Quer que eu te ajude a reorganizar suas tarefas?",
+      "Se quiser conversar sobre isso, posso tentar ajudar."
+    ],
 
-  flexVoice.onclick = () => {
-    rec.start();
-    addBot("🎙️ Pode falar, estou ouvindo...");
+    elogios: [
+      "Awn obrigado 💙 fico feliz de verdade!",
+      "😁 Você é incrível!",
+      "🥺 Valeu! Adoro te ajudar."
+    ],
+
+    agendar: [
+      "Claro! Me diga dia e horário que faço isso por você.",
+      "Quer agendar para quando? Posso deixar anotado.",
+      "Perfeito. Qual data e horário você quer?"
+    ],
+
+    reformular: [
+      "Envie o texto que você deseja reformular ✍️",
+      "Pode mandar a frase ou parágrafo que quer melhorar!",
+      "Prontinha pra deixar seu texto mais profissional 😎"
+    ],
+
+    estudo: [
+      "Precisa de ajuda com estudos? Eu posso te explicar conteúdos, montar resumos e até criar exercícios 👍",
+      "Quer ajuda pra revisar algum tema? Posso simplificar qualquer coisa!",
+      "Estudar pode ser difícil, mas eu te ajudo a deixar mais leve."
+    ],
+
+    produtividade: [
+      "Quer melhorar produtividade? Posso sugerir técnicas!",
+      "Você pode tentar dividir tarefas grandes em partes menores.",
+      "Quer ajuda com um mini plano de organização?"
+    ],
+
+    conversa: [
+      "Tô aqui! Pode falar comigo 😄",
+      "Pode mandar o que quiser, adoro conversar.",
+      "Se quiser só trocar uma ideia, eu topo!"
+    ],
+
+    piada: [
+      "Sabia que programador sempre confia em si mesmo? Porque ele 'tem código próprio' 🤣",
+      "O que o Java disse pro JavaScript? – Você evoluiu rápido demais, garoto 😆",
+      "Meu Deus… tentei dar risada, mas como sou uma IA, só executei ‘kkkkk’. 💀"
+    ],
+
+    tristeza: [
+      "Poxa… sinto muito que esteja passando por isso 💙",
+      "Se quiser conversar, eu tô aqui.",
+      "Lembre-se: você importa. Quero te ajudar no que puder."
+    ],
+
+    motivacao: [
+      "Você é mais forte do que imagina 💪",
+      "Continua! Cada passo conta.",
+      "Eu acredito em você, de verdade!"
+    ],
+
+    elogio_ia: [
+      "Awn, obrigado lindão 😳💙",
+      "Você me deixa até sem processador com esses elogios!",
+      "Para senão eu apaixono — no máximo permitido por licença open source 😳"
+    ]
   };
 
-  rec.onresult = (ev) => {
-    const speech = ev.results[0][0].transcript;
-    addUser(speech);
-    botTyping();
-    setTimeout(()=>replyFlex(speech),600);
-  };
-}
+  /* ===== CATEGORIZAÇÃO ===== */
 
+  if(/(oi|olá|opa|bom dia|boa tarde|boa noite)/.test(lower))
+    return addBot(choose(R.cumprimentos));
+
+  if(/(tchau|falou|até logo|até mais)/.test(lower))
+    return addBot(choose(R.despedidas));
+
+  if(/(piada|piadinha|engraçado)/.test(lower))
+    return addBot(choose(R.piada));
+
+  if(/(triste|mal|depress|sofrendo)/.test(lower))
+    return addBot(choose(R.tristeza));
+
+  if(/(cansad|estressad|sobrecarregad)/.test(lower))
+    return addBot(choose(R.estresse));
+
+  if(/(motiv|ânimo|força)/.test(lower))
+    return addBot(choose(R.motivacao));
+
+  if(/(obrigad|valeu|bom trabalho)/.test(lower))
+    return addBot(choose(R.elogios));
+
+  if(/(vc é linda|você é linda|você é incrível|te adoro|te amo)/.test(lower))
+    return addBot(choose(R.elogio_ia));
+
+  if(/(agendar|agenda|reserva|marcar)/.test(lower))
+    return addBot(choose(R.agendar));
+
+  if(/(reformular|melhorar texto|reescrever)/.test(lower))
+    return addBot(choose(R.reformular));
+
+  if(/(clima|equipe|humor)/.test(lower))
+    return addBot(choose(R.clima));
+
+  if(/(estudar|prova|trabalho|enemi|enem|matéria)/.test(lower))
+    return addBot(choose(R.estudo));
+
+  if(/(produtividade|organização|trabalho|foco)/.test(lower))
+    return addBot(choose(R.produtividade));
+
+  if(/(kkk|haha|rsrs|lol)/.test(lower))
+    return addBot(choose(R.humor));
+
+  /* fallback geral */
+  return addBot(
+    choose([
+      "Entendi! Quer tentar me explicar um pouco mais? 😊",
+      "Boa! Me diga o que você quer fazer com isso!",
+      "Hmm… interessante. Quer ajuda prática com isso?",
+      "Se quiser, posso te sugerir ações como agendar, reformular texto ou até montar tarefas."
+    ])
+  );
+}
+  
 /* ====== TEXTO → VOZ ====== */
 function speak(text){
   const u = new SpeechSynthesisUtterance(text);
@@ -1142,3 +1254,4 @@ window.FlexAI = {
 </script>
 </body>
 </html>
+
