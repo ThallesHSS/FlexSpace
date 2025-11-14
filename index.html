@@ -650,394 +650,605 @@ applyContrast();
 
 </script>
 
-  <!-- ===== FLEXAI v2.0 — Assistente Avançada ===== -->
-<div id="flexai-root">
-  <button id="flexai-toggle" class="flexai-btn" aria-expanded="false">🤖</button>
+  <!-- ===== FLEXAI v3.0 — Assistente Avançada (COLAR SUBSTITUINDO O BLOCO ANTIGO) ===== -->
+<!-- HTML -->
+<div id="flexai-root-v3" aria-live="polite">
+  <button id="flexai-toggle-v3" class="flexai-btn-v3" aria-haspopup="dialog" aria-expanded="false" aria-label="Abrir FlexAI">🤖</button>
 
-  <aside id="flexai-panel" class="flexai-panel" aria-hidden="true">
-    <header class="flexai-header">
-      <div class="left">
-        <strong>FlexAI</strong>
-        <div class="small muted">Assistente Pessoal</div>
+  <aside id="flexai-panel-v3" class="flexai-panel-v3" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true">
+    <header class="flexai-header-v3" role="banner">
+      <div class="flexai-left">
+        <strong id="flexai-title">FlexAI</strong>
+        <div class="small muted" id="flexai-sub">Assistente Pessoal</div>
       </div>
-      <div class="right">
-        <button id="flexai-voice" title="Falar com a IA">🎙️</button>
-        <button id="flexai-close">✖</button>
+      <div class="flexai-controls">
+        <select id="flexai-mode" aria-label="Modo de personalidade" title="Modo de personalidade">
+          <option value="friendly">Amiga</option>
+          <option value="pro">Profissional</option>
+          <option value="coach">Coach</option>
+          <option value="fun">Engraçadona</option>
+        </select>
+        <button id="flexai-voice-btn" title="Ativar reconhecimento de voz" aria-pressed="false">🎙️</button>
+        <button id="flexai-sound-btn" title="Ativar leitura automática" aria-pressed="false">🔊</button>
+        <button id="flexai-close-v3" aria-label="Fechar">✖</button>
       </div>
     </header>
 
-    <section id="flexai-body" class="flexai-body">
-      <div class="bot-msg">
-        👋 Olá! Sou sua assistente FlexAI.  
-        Posso te ajudar com tarefas, responder perguntas, melhorar textos  
-        e até conversar pra descontrair.  
-        No que posso ajudar hoje?
-      </div>
-    </section>
+    <main id="flexai-body-v3" class="flexai-body-v3" tabindex="0" role="region" aria-live="polite"></main>
 
-    <form id="flexai-form" class="flexai-input">
-      <input id="flexai-input" placeholder="Digite aqui..." autocomplete="off">
-      <button id="flexai-send">➤</button>
+    <form id="flexai-form-v3" class="flexai-input-v3" role="search" aria-label="Enviar mensagem para FlexAI">
+      <input id="flexai-input-v3" placeholder="Pergunte algo (ex: 'Agendar demo para terça 10h')"
+             aria-label="Mensagem para FlexAI" autocomplete="off" />
+      <button id="flexai-send-v3" type="submit" aria-label="Enviar">➤</button>
     </form>
 
-    <div class="flexai-actions">
-      <button data-act="tarefas">➕ Lista de tarefas</button>
-      <button data-act="reformular">📝 Reformular texto</button>
-      <button data-act="clima">📊 Clima da equipe</button>
-      <button data-act="ler">🔊 Ler página</button>
+    <div class="flexai-actions-v3" role="toolbar" aria-label="Ações rápidas">
+      <button data-act="tasks" title="Abrir lista de tarefas">➕ Tarefas</button>
+      <button data-act="schedule" title="Agendar demo">📅 Agendar</button>
+      <button data-act="rephrase" title="Reformular texto">📝 Reformular</button>
+      <button data-act="study" title="Ajuda para estudar">📚 Estudo</button>
+      <button data-act="prod" title="Plano de produtividade">⏱️ Produtividade</button>
+      <button data-act="readpage" title="Ler página">🔊 Ler página</button>
+      <button data-act="summary" title="Resumir conversa">✂️ Resumir</button>
+      <button data-act="export" title="Exportar histórico">⬇️ Exportar</button>
     </div>
+
+    <div id="flexai-mini-overlay" aria-hidden="true"></div>
   </aside>
 </div>
 
+<!-- CSS -->
 <style>
-/* FLEXAI v2.0 */
-#flexai-root {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 9999;
-  font-family: Inter, sans-serif;
+/* FLEXAI v3.0 - minimal, uses your CSS variables */
+#flexai-root-v3 { position: fixed; right: 20px; bottom: 18px; z-index: 1400; font-family: Inter, sans-serif; }
+.flexai-btn-v3 {
+  width:64px; height:64px; border-radius:50%; border:0;
+  background: linear-gradient(135deg,var(--brand),var(--accent)); color:#fff;
+  box-shadow: 0 12px 30px rgba(2,10,12,0.25); font-size:28px; cursor:pointer;
 }
-
-.flexai-btn {
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  color: #fff;
-  border: 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  cursor: pointer;
-  font-size: 27px;
-  transition: .25s;
+.flexai-panel-v3 {
+  width:380px; max-width:94vw; display:flex; flex-direction:column; border-radius:14px;
+  overflow:hidden; box-shadow: 0 26px 60px rgba(2,6,12,0.3); background:var(--card);
+  transition: transform .2s ease, opacity .2s ease;
 }
-
-.flexai-btn:hover {
-  transform: scale(1.08);
+.flexai-header-v3 { display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
+  background: linear-gradient(90deg,var(--brand),var(--accent)); color:#fff;
 }
+.flexai-left strong { font-size:1.05rem; }
+.flexai-body-v3 { padding:12px; max-height:360px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:var(--bg); }
+.flexai-input-v3 { display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.06); background:var(--card); }
+.flexai-input-v3 input { flex:1; padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.08); }
+.flexai-input-v3 button { background:var(--brand); color:#fff; border:0; padding:8px 12px; border-radius:10px; cursor:pointer; }
+.bot-msg-v3, .user-msg-v3, .system-msg-v3 { max-width:85%; padding:10px 12px; border-radius:12px; line-height:1.35; word-break:break-word; }
+.bot-msg-v3 { background:var(--glass); align-self:flex-start; }
+.user-msg-v3 { background:var(--brand); color:#fff; align-self:flex-end; }
+.system-msg-v3 { background:rgba(0,0,0,0.05); align-self:center; font-size:.9rem; color:var(--muted); }
+.typing-v3 { font-style:italic; opacity:.7; padding:8px 10px; border-radius:10px; background:var(--glass); align-self:flex-start;}
+.flexai-actions-v3 { display:flex; gap:6px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); background:transparent; }
+.flexai-actions-v3 button { padding:6px 8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; cursor:pointer; }
+#flexai-mini-overlay { position:absolute; inset:0; pointer-events:none; display:none; }
 
-.flexai-panel {
-  width: 360px;
-  max-width: 92vw;
-  background: var(--card);
-  border-radius: 14px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-  animation: fadeUp .25s ease;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.flexai-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  color: #fff;
-}
-
-.flexai-body {
-  max-height: 350px;
-  overflow-y: auto;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--bg);
-}
-
-.bot-msg, .user-msg {
-  padding: 10px 12px;
-  border-radius: 12px;
-  max-width: 80%;
-  line-height: 1.35;
-}
-
-.bot-msg {
-  background: var(--glass);
-  align-self: flex-start;
-}
-
-.user-msg {
-  background: var(--brand);
-  color: #fff;
-  align-self: flex-end;
-}
-
-.typing {
-  opacity: .6;
-  font-style: italic;
-}
-
-.flexai-input {
-  display: flex;
-  padding: 10px;
-  gap: 8px;
-  background: var(--card);
-}
-
-.flexai-actions {
-  display: flex;
-  gap: 6px;
-  padding: 10px;
-  flex-wrap: wrap;
-  border-top: 1px solid rgba(0,0,0,0.05);
-}
-
-.flexai-actions button {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: transparent;
-  cursor: pointer;
+/* small screens */
+@media (max-width:520px){
+  .flexai-panel-v3 { width:92vw; right:4vw; bottom:84px; border-radius:12px; }
+  .flexai-btn-v3 { right:14px; bottom:14px; }
 }
 </style>
 
+<!-- JS -->
 <script>
-/* ===== FLEXAI v2.0 ===== */
+/* ===== FLEXAI v3.0 — Master Script (cole substituindo bloco antigo) ===== */
+(function(){
+  /* ----- Config & Storage Keys ----- */
+  const ROOT = document.getElementById('flexai-root-v3');
+  const TOGGLE = document.getElementById('flexai-toggle-v3');
+  const PANEL = document.getElementById('flexai-panel-v3');
+  const BODY = document.getElementById('flexai-body-v3');
+  const FORM = document.getElementById('flexai-form-v3');
+  const INPUT = document.getElementById('flexai-input-v3');
+  const SEND = document.getElementById('flexai-send-v3');
+  const CLOSE = document.getElementById('flexai-close-v3');
+  const MODE = document.getElementById('flexai-mode');
+  const VOICE_BTN = document.getElementById('flexai-voice-btn');
+  const SOUND_BTN = document.getElementById('flexai-sound-btn');
+  const ACTIONS = document.querySelector('.flexai-actions-v3');
+  const OVERLAY = document.getElementById('flexai-mini-overlay');
 
-const flexBtn = document.getElementById("flexai-toggle");
-const flexPanel = document.getElementById("flexai-panel");
-const flexBody = document.getElementById("flexai-body");
-const flexInput = document.getElementById("flexai-input");
-const flexForm = document.getElementById("flexai-form");
-const flexClose = document.getElementById("flexai-close");
-const flexVoice = document.getElementById("flexai-voice");
+  const STORAGE_KEY = 'flexai_v3_state_v1';
 
-let historyFlex = [];
-
-/* abrir */
-flexBtn.onclick = () => {
-  flexPanel.style.display = "flex";
-  flexBtn.style.display = "none";
-  flexInput.focus();
-};
-
-/* fechar */
-flexClose.onclick = () => {
-  flexPanel.style.display = "none";
-  flexBtn.style.display = "block";
-};
-
-/* enviar mensagem */
-flexForm.addEventListener("submit", e => {
-  e.preventDefault();
-  const txt = flexInput.value.trim();
-  if (!txt) return;
-
-  addUser(txt);
-  flexInput.value = "";
-
-  setTimeout(() => {
-    botTyping();
-    setTimeout(() => replyFlex(txt), 700);
-  }, 200);
-});
-
-/* renderização */
-function addUser(t){
-  flexBody.innerHTML += `<div class="user-msg">${t}</div>`;
-  scrollBottom();
-}
-
-function addBot(t){
-  flexBody.querySelector(".typing")?.remove();
-  flexBody.innerHTML += `<div class="bot-msg">${t}</div>`;
-  scrollBottom();
-}
-
-function botTyping(){
-  flexBody.innerHTML += `<div class="bot-msg typing">digitando...</div>`;
-  scrollBottom();
-}
-
-function scrollBottom(){
-  flexBody.scrollTop = flexBody.scrollHeight;
-}
-
-/* ===== FLEXAI v2.5 — Inteligência Expandida ===== */
-
-function replyFlex(text) {
-  const lower = text.toLowerCase().trim();
-
-  /* Função para escolher respostas variadas */
-  const choose = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-  /* Catálogo de respostas */
-  const R = {
-    cumprimentos: [
-      "Oi! Como posso te ajudar hoje? 😊",
-      "Olá! Prontinha pra ajudar 💙",
-      "Tudo certo? Pode mandar!",
-      "Opa! Cheguei, o que vamos fazer agora? 🤖"
-    ],
-
-    despedidas: [
-      "Até mais! Qualquer coisa é só me chamar 💫",
-      "Tchauzinho! Se cuida 😄",
-      "Vou ficar aqui caso precise 💙"
-    ],
-
-    humor: [
-      "😂 Essa foi boa! Gostei.",
-      "🤣 haha adorei isso!",
-      "😆 você é ótimo, sério."
-    ],
-
-    clima: [
-      "Pelo que percebo, o clima está estável, mas podemos melhorar sempre! Quer algumas sugestões?",
-      "Vejo que a equipe pode estar precisando de um feedback construtivo. Posso te ajudar com isso.",
-      "Clima neutro. Quer que eu crie uma análise rápida?"
-    ],
-
-    estresse: [
-      "Parece que você está sobrecarregado… que tal uma pausa curta? Eu posso montar um mini plano de descanso pra você.",
-      "Respira fundo aí 💙 tá tudo bem. Quer que eu te ajude a reorganizar suas tarefas?",
-      "Se quiser conversar sobre isso, posso tentar ajudar."
-    ],
-
-    elogios: [
-      "Awn obrigado 💙 fico feliz de verdade!",
-      "😁 Você é incrível!",
-      "🥺 Valeu! Adoro te ajudar."
-    ],
-
-    agendar: [
-      "Claro! Me diga dia e horário que faço isso por você.",
-      "Quer agendar para quando? Posso deixar anotado.",
-      "Perfeito. Qual data e horário você quer?"
-    ],
-
-    reformular: [
-      "Envie o texto que você deseja reformular ✍️",
-      "Pode mandar a frase ou parágrafo que quer melhorar!",
-      "Prontinha pra deixar seu texto mais profissional 😎"
-    ],
-
-    estudo: [
-      "Precisa de ajuda com estudos? Eu posso te explicar conteúdos, montar resumos e até criar exercícios 👍",
-      "Quer ajuda pra revisar algum tema? Posso simplificar qualquer coisa!",
-      "Estudar pode ser difícil, mas eu te ajudo a deixar mais leve."
-    ],
-
-    produtividade: [
-      "Quer melhorar produtividade? Posso sugerir técnicas!",
-      "Você pode tentar dividir tarefas grandes em partes menores.",
-      "Quer ajuda com um mini plano de organização?"
-    ],
-
-    conversa: [
-      "Tô aqui! Pode falar comigo 😄",
-      "Pode mandar o que quiser, adoro conversar.",
-      "Se quiser só trocar uma ideia, eu topo!"
-    ],
-
-    piada: [
-      "Sabia que programador sempre confia em si mesmo? Porque ele 'tem código próprio' 🤣",
-      "O que o Java disse pro JavaScript? – Você evoluiu rápido demais, garoto 😆",
-      "Meu Deus… tentei dar risada, mas como sou uma IA, só executei ‘kkkkk’. 💀"
-    ],
-
-    tristeza: [
-      "Poxa… sinto muito que esteja passando por isso 💙",
-      "Se quiser conversar, eu tô aqui.",
-      "Lembre-se: você importa. Quero te ajudar no que puder."
-    ],
-
-    motivacao: [
-      "Você é mais forte do que imagina 💪",
-      "Continua! Cada passo conta.",
-      "Eu acredito em você, de verdade!"
-    ],
-
-    elogio_ia: [
-      "Awn, obrigado lindão 😳💙",
-      "Você me deixa até sem processador com esses elogios!",
-      "Para senão eu apaixono — no máximo permitido por licença open source 😳"
-    ]
+  /* state */
+  let state = {
+    history: [], // {role:'user'|'assistant'|'system', text, ts}
+    tasks: [], // {id, text, done}
+    appointments: [], // {id, text, datetime}
+    mode: localStorage.getItem('flexai_mode') || 'friendly',
+    voice: false,
+    sound: false
   };
 
-  /* ===== CATEGORIZAÇÃO ===== */
+  /* restore state */
+  try {
+    const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    if(s && typeof s === 'object'){
+      state = Object.assign(state, s);
+    }
+  } catch(e){ console.warn('flexai v3 restore error', e); }
 
-  if(/(oi|olá|opa|bom dia|boa tarde|boa noite)/.test(lower))
-    return addBot(choose(R.cumprimentos));
+  /* utilities */
+  const now = () => new Date().toISOString();
+  const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const uid = (p='id') => p + '_' + Math.random().toString(36).slice(2,9);
 
-  if(/(tchau|falou|até logo|até mais)/.test(lower))
-    return addBot(choose(R.despedidas));
+  function appendSystem(text){ state.history.push({role:'system', text, ts: now()}); save(); renderMessage({role:'system', text}); }
+  function appendUser(text){ state.history.push({role:'user', text, ts: now()}); save(); renderMessage({role:'user', text}); }
+  function appendBot(text, html=null){ state.history.push({role:'assistant', text, ts: now()}); save(); renderMessage({role:'assistant', text, html}); if(state.sound) speak(text); }
 
-  if(/(piada|piadinha|engraçado)/.test(lower))
-    return addBot(choose(R.piada));
-
-  if(/(triste|mal|depress|sofrendo)/.test(lower))
-    return addBot(choose(R.tristeza));
-
-  if(/(cansad|estressad|sobrecarregad)/.test(lower))
-    return addBot(choose(R.estresse));
-
-  if(/(motiv|ânimo|força)/.test(lower))
-    return addBot(choose(R.motivacao));
-
-  if(/(obrigad|valeu|bom trabalho)/.test(lower))
-    return addBot(choose(R.elogios));
-
-  if(/(vc é linda|você é linda|você é incrível|te adoro|te amo)/.test(lower))
-    return addBot(choose(R.elogio_ia));
-
-  if(/(agendar|agenda|reserva|marcar)/.test(lower))
-    return addBot(choose(R.agendar));
-
-  if(/(reformular|melhorar texto|reescrever)/.test(lower))
-    return addBot(choose(R.reformular));
-
-  if(/(clima|equipe|humor)/.test(lower))
-    return addBot(choose(R.clima));
-
-  if(/(estudar|prova|trabalho|enemi|enem|matéria)/.test(lower))
-    return addBot(choose(R.estudo));
-
-  if(/(produtividade|organização|trabalho|foco)/.test(lower))
-    return addBot(choose(R.produtividade));
-
-  if(/(kkk|haha|rsrs|lol)/.test(lower))
-    return addBot(choose(R.humor));
-
-  /* fallback geral */
-  return addBot(
-    choose([
-      "Entendi! Quer tentar me explicar um pouco mais? 😊",
-      "Boa! Me diga o que você quer fazer com isso!",
-      "Hmm… interessante. Quer ajuda prática com isso?",
-      "Se quiser, posso te sugerir ações como agendar, reformular texto ou até montar tarefas."
-    ])
-  );
-}
-  
-/* ====== TEXTO → VOZ ====== */
-function speak(text){
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "pt-BR";
-  speechSynthesis.speak(u);
-}
-
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("bot-msg")){
-    speak(e.target.innerText);
+  function renderMessage(msg){
+    // msg: {role, text, html?}
+    const el = document.createElement('div');
+    if(msg.role === 'user') { el.className = 'user-msg-v3'; el.textContent = msg.text; }
+    else if(msg.role === 'assistant') { el.className = 'bot-msg-v3'; el.innerHTML = msg.html || escapeHtml(msg.text); el.tabIndex = 0; el.addEventListener('click', ()=> speak(msg.text)); }
+    else { el.className = 'system-msg-v3'; el.textContent = msg.text; }
+    BODY.appendChild(el);
+    BODY.scrollTop = BODY.scrollHeight;
   }
-});
 
-/* ====== LER CARDS AO PASSAR O MOUSE ====== */
-document.querySelectorAll(".card").forEach(card=>{
-  const title = card.querySelector(".card-title")?.innerText || "card";
-  card.addEventListener("mouseenter", ()=>{
-    speak(`Você passou por: ${title}`);
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  /* initial render of history */
+  function renderAll(){
+    BODY.innerHTML = '';
+    (state.history || []).forEach(m => renderMessage(m));
+  }
+
+  /* typing indicator */
+  function showTyping(){ const t = document.createElement('div'); t.className = 'typing-v3'; t.id = 'flexai-typing-v3'; t.textContent = 'FlexAI está digitando...'; BODY.appendChild(t); BODY.scrollTop = BODY.scrollHeight; }
+  function hideTyping(){ document.getElementById('flexai-typing-v3')?.remove(); }
+
+  /* personality templates */
+  const PERSONALITY = {
+    friendly: {
+      greet: ['Oi! 😊', 'E aí! Como posso ajudar hoje?'],
+      fallback: ['Poxa, não entendi bem — pode explicar diferente?', 'Hmm, posso ajudar com agendar, reformular ou criar tarefas. Quer tentar uma?'],
+      praise: ['Boa! Mandou bem 😉', 'Ótimo trabalho!']
+    },
+    pro: {
+      greet: ['Olá. Em que posso ser útil hoje?', 'Como posso apoiar suas atividades?'],
+      fallback: ['Não consegui interpretar — poderia detalhar mais?', 'Posso agendar, gerar resumo ou criar tarefas. Deseja alguma dessas?'],
+      praise: ['Recebido. Excelente trabalho.', 'Sinalizado como concluído.']
+    },
+    coach: {
+      greet: ['Vamos focar — o que você quer conquistar hoje?', 'Qual é o objetivo principal de hoje?'],
+      fallback: ['Vamos decompor isso em passos, quer que eu comece?', 'Ok — quer uma sugestão de plano de ação?'],
+      praise: ['Perfeito, continue assim!', 'Isso mostra progresso — mantenha o ritmo.']
+    },
+    fun: {
+      greet: ['Opa! Preparadx pra zoeira produtiva? 😂', 'Fala aí, chefia do coworking!'],
+      fallback: ['Que pergunta enigmática! Quer que eu responda com meme?', 'Não peguei a vibe — tenta me explicar com outra frase.'],
+      praise: ['Arrasou! 🌟', 'Topzera!']
+    }
+  };
+
+  function personalityPick(key){
+    const arr = PERSONALITY[state.mode]?.[key] || PERSONALITY.friendly[key];
+    return arr[Math.floor(Math.random()*arr.length)];
+  }
+
+  /* intent engine (rules) */
+  function detectIntent(text){
+    const t = text.toLowerCase();
+    if(/^(oi|olá|ola|opa|bom dia|boa tarde|boa noite)\b/.test(t)) return {intent:'greet'};
+    if(/\b(agendar|agenda|marcar|reservar)\b/.test(t)) return {intent:'schedule'};
+    if(/\b(tarefa|tarefas|to ?do|lista)\b/.test(t)) return {intent:'tasks'};
+    if(/\b(reformular|reescrever|melhorar texto|corrigir)\b/.test(t)) return {intent:'rephrase'};
+    if(/\b(estudo|resumo|resumir|questões|questao|pergunta|prova|exercício|exercicio)\b/.test(t)) return {intent:'study'};
+    if(/\b(produtividade|pomodoro|foco|organiza|organizar)\b/.test(t)) return {intent:'productivity'};
+    if(/\b(clima|equipe|humor|mood)\b/.test(t)) return {intent:'climate'};
+    if(/\b(ler pagina|ler página|ler página|ler pagina|ler|read page)\b/.test(t)) return {intent:'readpage'};
+    if(/\b(resumir conversa|resumir|sumario|resumo)\b/.test(t)) return {intent:'summary'};
+    if(/\b(exportar|baixar|export)\b/.test(t)) return {intent:'export'};
+    if(/\b(qq|o que|como|por que|porque|por quê)\b/.test(t)) return {intent:'ask'});
+    // fallback = chat
+    return {intent:'chat'};
+  }
+
+  /* complex response generator */
+  async function handleText(text){
+    const it = detectIntent(text);
+    if(it.intent === 'greet'){ appendBot(personalityPick('greet')); return; }
+    if(it.intent === 'schedule'){ openSchedulerPrompt(text); return; }
+    if(it.intent === 'tasks'){ openTasksUI(); return; }
+    if(it.intent === 'rephrase'){ openRephraseFlow(text); return; }
+    if(it.intent === 'study'){ openStudyFlow(text); return; }
+    if(it.intent === 'productivity'){ openProductivityFlow(text); return; }
+    if(it.intent === 'climate'){ simulateClimate(text); return; }
+    if(it.intent === 'readpage'){ readEntirePage(); return; }
+    if(it.intent === 'summary'){ const s = generateLocalSummary(); appendBot(s); return; }
+    if(it.intent === 'export'){ exportHistory(); return; }
+    if(it.intent === 'chat'){ // more advanced local reasoning + varied responses
+      // quick checks for sentiment-like words
+      if(/\b(estou|me sinto|sinto)\b.*\b(triste|cansad|estressad|deprimid)/.test(text.toLowerCase())){
+        appendBot(personalityPick('fallback') + ' ' + choose(['Se quiser, posso sugerir um plano de descanso simples.','Quer falar mais sobre isso?']));
+        return;
+      }
+      // if text contains a paragraph request (e.g., reformulate)
+      appendBot(choose([
+        'Interessante — quer que eu: (1) agende, (2) gere um resumo, (3) crie tarefas relacionadas? Responda 1,2 ou 3.',
+        'Ok — posso ajudar com agendamento, reformulação, tarefas ou análise. Qual prefere?',
+        'Boa pergunta! Posso simular um agendamento, criar um checklist ou reformular um texto. O que prefere?'
+      ]));
+      return;
+    }
+  }
+
+  /* small chooser */
+  function choose(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  /* ====== Features implementations ====== */
+
+  /* Tasks UI (inline modal-like in the chat) */
+  function openTasksUI(){
+    showTyping();
+    setTimeout(()=> {
+      hideTyping();
+      const idBase = uid('tasks');
+      const html = `
+        <div class="system-msg-v3">Gerenciador de Tarefas</div>
+        <div style="display:flex;gap:8px;flex-direction:column">
+          <input id="${idBase}_newtask" placeholder="Nova tarefa..." style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
+          <div style="display:flex;gap:8px">
+            <button id="${idBase}_add" style="padding:6px 8px;border-radius:8px">Adicionar</button>
+            <button id="${idBase}_list" style="padding:6px 8px;border-radius:8px">Mostrar tarefas</button>
+            <button id="${idBase}_clear" style="padding:6px 8px;border-radius:8px">Limpar concluídas</button>
+          </div>
+          <div id="${idBase}_container" style="margin-top:8px"></div>
+        </div>
+      `;
+      appendBot(html, html);
+      // attach handlers after render
+      setTimeout(()=>{
+        const addBtn = document.getElementById(`${idBase}_add`);
+        const newInp = document.getElementById(`${idBase}_newtask`);
+        const listBtn = document.getElementById(`${idBase}_list`);
+        const clearBtn = document.getElementById(`${idBase}_clear`);
+        const container = document.getElementById(`${idBase}_container`);
+
+        function renderTasks(){
+          container.innerHTML = '';
+          if(state.tasks.length===0) container.innerHTML = '<div class="system-msg-v3">Sem tarefas</div>';
+          state.tasks.forEach(t => {
+            const row = document.createElement('div');
+            row.style.display='flex'; row.style.gap='8px'; row.style.alignItems='center'; row.style.marginBottom='6px';
+            row.innerHTML = `<input type="checkbox" ${t.done?'checked':''} data-id="${t.id}" class="flexai-taskchk"/><div style="flex:1">${escapeHtml(t.text)}</div><button data-id="${t.id}" class="flexai-taskdel">✖</button>`;
+            container.appendChild(row);
+          });
+          // bind
+          container.querySelectorAll('.flexai-taskchk').forEach(cb => cb.addEventListener('change', (e)=> {
+            const id = e.target.dataset.id; const t = state.tasks.find(x=>x.id===id); if(t){ t.done = e.target.checked; save(); }
+          }));
+          container.querySelectorAll('.flexai-taskdel').forEach(btn => btn.addEventListener('click', (e)=> {
+            const id = e.target.dataset.id; state.tasks = state.tasks.filter(x=>x.id!==id); save(); renderTasks();
+          }));
+        }
+
+        addBtn.addEventListener('click', ()=>{
+          const v = newInp.value.trim(); if(!v) return;
+          state.tasks.push({id: uid('t'), text: v, done: false}); newInp.value=''; save(); renderTasks();
+        });
+        listBtn.addEventListener('click', ()=> renderTasks());
+        clearBtn.addEventListener('click', ()=> { state.tasks = state.tasks.filter(t=>!t.done); save(); renderTasks(); });
+        renderTasks();
+      }, 80);
+    }, 500);
+  }
+
+  /* Scheduler prompt (simulação) */
+  function openSchedulerPrompt(orig){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const idBase = uid('sched');
+      const html = `
+        <div class="system-msg-v3">Agendamento (simulação)</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <input id="${idBase}_when" placeholder="Data e hora (ex: 2025-12-01 14:00)" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
+          <input id="${idBase}_what" placeholder="Motivo (ex: Demo FlexSpace)" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
+          <div style="display:flex;gap:8px">
+            <button id="${idBase}_ok" style="padding:6px 8px;border-radius:8px">Agendar</button>
+            <button id="${idBase}_cancel" style="padding:6px 8px;border-radius:8px">Cancelar</button>
+          </div>
+        </div>
+      `;
+      appendBot(html, html);
+      setTimeout(()=>{
+        document.getElementById(`${idBase}_ok`).addEventListener('click', ()=>{
+          const dt = document.getElementById(`${idBase}_when`).value.trim();
+          const what = document.getElementById(`${idBase}_what`).value.trim() || 'Agendamento';
+          if(!dt){ appendBot('Por favor informe data e hora no formato sugerido.'); return; }
+          const ap = { id: uid('a'), text: what, datetime: dt };
+          state.appointments.push(ap); save();
+          appendBot(`Agendado (simulado): ${what} — ${dt}`);
+        });
+        document.getElementById(`${idBase}_cancel`).addEventListener('click', ()=> appendBot('Agendamento cancelado.'));
+      }, 80);
+    }, 500);
+  }
+
+  /* Rephrase flow: basic rules-based */
+  function openRephraseFlow(orig){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const idBase = uid('reph');
+      const html = `
+        <div class="system-msg-v3">Reformular texto</div>
+        <textarea id="${idBase}_src" placeholder="Cole seu texto aqui..." style="width:100%;height:80px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"></textarea>
+        <div style="display:flex;gap:8px">
+          <button id="${idBase}_gent" style="padding:6px 8px;border-radius:8px">Gerar versão formal</button>
+          <button id="${idBase}_gent2" style="padding:6px 8px;border-radius:8px">Gerar versão amigável</button>
+        </div>
+        <div id="${idBase}_out" style="margin-top:8px"></div>
+      `;
+      appendBot(html, html);
+      setTimeout(()=>{
+        document.getElementById(`${idBase}_gent`).addEventListener('click', ()=>{
+          const s = document.getElementById(`${idBase}_src`).value.trim();
+          if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
+          // naive rules-based formalizer (simple)
+          const res = s.replace(/\bvc\b/gi,'você').replace(/\btbj\b/gi,'também').replace(/\bq\b/gi,'que');
+          const out = `Versão formal: ${res.charAt(0).toUpperCase()+res.slice(1)}`;
+          document.getElementById(`${idBase}_out`).innerText = out;
+          appendBot(out);
+        });
+        document.getElementById(`${idBase}_gent2`).addEventListener('click', ()=>{
+          const s = document.getElementById(`${idBase}_src`).value.trim();
+          if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
+          const out = `Versão amigável: ${s}. Achei legal, só ajustar uns detalhes :)`;
+          document.getElementById(`${idBase}_out`).innerText = out;
+          appendBot(out);
+        });
+      }, 80);
+    }, 500);
+  }
+
+  /* Study flow: quick summary + quiz generation */
+  function openStudyFlow(orig){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const idBase = uid('study');
+      const html = `
+        <div class="system-msg-v3">Estudo — Resumo e Quiz</div>
+        <textarea id="${idBase}_src" placeholder="Cole texto para resumo" style="width:100%;height:100px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"></textarea>
+        <div style="display:flex;gap:8px">
+          <button id="${idBase}_summary" style="padding:6px 8px;border-radius:8px">Gerar resumo</button>
+          <button id="${idBase}_quiz" style="padding:6px 8px;border-radius:8px">Gerar quiz (3 perguntas)</button>
+        </div>
+        <div id="${idBase}_out" style="margin-top:8px"></div>
+      `;
+      appendBot(html, html);
+      setTimeout(()=>{
+        document.getElementById(`${idBase}_summary`).addEventListener('click', ()=>{
+          const s = document.getElementById(`${idBase}_src`).value.trim();
+          if(!s){ appendBot('Cole um texto para eu resumir.'); return; }
+          // super simple summarizer: pick top sentences by length and keywords
+          const sentences = s.split(/[.?!]\s+/).filter(Boolean);
+          const top = sentences.slice(0, Math.min(3, sentences.length)).join('. ') + (sentences.length>3? '…':'');
+          const res = `Resumo curto: ${top}`;
+          document.getElementById(`${idBase}_out`).innerText = res;
+          appendBot(res);
+        });
+        document.getElementById(`${idBase}_quiz`).addEventListener('click', ()=>{
+          const s = document.getElementById(`${idBase}_src`).value.trim();
+          if(!s){ appendBot('Cole um texto para eu gerar perguntas.'); return; }
+          const sentences = s.split(/[.?!]\s+/).filter(Boolean);
+          const q = sentences.slice(0,3).map((sen,i)=> `Pergunta ${i+1}: Sobre "${sen.slice(0,40)}..." — responda em 1 frase.`).join('\n');
+          document.getElementById(`${idBase}_out`).innerText = q;
+          appendBot(q);
+        });
+      }, 80);
+    }, 600);
+  }
+
+  /* productivity flow: pomodoro suggestion */
+  function openProductivityFlow(orig){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const idBase = uid('prod');
+      const html = `
+        <div class="system-msg-v3">Produtividade — Mini-Pomodoro</div>
+        <div style="display:flex;gap:8px;flex-direction:column">
+          <label>Tempo trabalho (min): <input id="${idBase}_work" value="25" style="width:80px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.08)"/></label>
+          <label>Tempo pausa (min): <input id="${idBase}_break" value="5" style="width:80px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.08)"/></label>
+          <div style="display:flex;gap:8px"><button id="${idBase}_start">Iniciar Pomodoro</button><button id="${idBase}_stop">Parar</button></div>
+          <div id="${idBase}_status" style="margin-top:8px"></div>
+        </div>
+      `;
+      appendBot(html, html);
+      setTimeout(()=>{
+        let timer = null; let remaining=0; let mode='work';
+        const status = document.getElementById(`${idBase}_status`);
+        function tick(){
+          if(remaining<=0){
+            if(mode==='work'){ mode='break'; remaining = parseInt(document.getElementById(`${idBase}_break`).value || 5)*60; appendBot('Pausa! Agora descanso curto.'); }
+            else { mode='work'; remaining = parseInt(document.getElementById(`${idBase}_work`).value || 25)*60; appendBot('Volta ao trabalho!'); }
+          }
+          remaining--; const mm = Math.floor(remaining/60); const ss = remaining%60;
+          status.innerText = `${mode.toUpperCase()}: ${mm}:${ss.toString().padStart(2,'0')}`;
+        }
+        document.getElementById(`${idBase}_start`).addEventListener('click', ()=>{
+          remaining = parseInt(document.getElementById(`${idBase}_work`).value || 25)*60;
+          if(timer) clearInterval(timer);
+          timer = setInterval(tick, 1000);
+          appendBot('Pomodoro iniciado. Boa produtividade!');
+        });
+        document.getElementById(`${idBase}_stop`).addEventListener('click', ()=>{
+          if(timer) clearInterval(timer); timer = null; status.innerText = 'Parado';
+          appendBot('Pomodoro parado.');
+        });
+      },80);
+    },500);
+  }
+
+  /* simulate climate: simple mock */
+  function simulateClimate(text){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const res = choose([
+        'Clima da equipe: estável — sugiro uma reunião rápida de alinhamento.',
+        'Clima: algumas tensões detectadas (mensagens recentes). Talvez feedback 1:1 ajude.',
+        'Clima: positivo! Continue com reconhecimento de pequenos resultados.'
+      ]);
+      appendBot(res);
+    }, 600);
+  }
+
+  /* read entire page */
+  function readEntirePage(){
+    const raw = document.body.innerText || document.documentElement.innerText;
+    const cleaned = raw.replace(/\s+/g,' ').slice(0,2000);
+    appendBot('Lendo a página... (máx 2000 chars)'); speak(cleaned);
+  }
+
+  /* generate local summary of conversation */
+  function generateLocalSummary(){
+    const last = state.history.slice(-10).map(h => `${h.role === 'user' ? 'User' : (h.role==='assistant'?'AI':'Sys')}: ${h.text}`).join(' • ');
+    return `Resumo (últimas mensagens): ${last || 'nenhuma mensagem'}`;
+  }
+
+  /* export history */
+  function exportHistory(){
+    const data = JSON.stringify(state, null, 2);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'flexai_history.json'; a.click();
+    URL.revokeObjectURL(url);
+    appendBot('Histórico exportado (download iniciado).');
+  }
+
+  /* speech: TTS */
+  function speak(text){
+    try {
+      if(!('speechSynthesis' in window)) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'pt-BR';
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    } catch(e){ console.warn('speak fail', e); }
+  }
+
+  /* speech: STT */
+  let recognition = null;
+  try {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(SR) { recognition = new SR(); recognition.lang = 'pt-BR'; recognition.interimResults = false; }
+  } catch(e){ recognition = null; }
+
+  if(VOICE_BTN){
+    VOICE_BTN.addEventListener('click', ()=>{
+      if(!recognition){ appendBot('Reconhecimento de voz não suportado neste navegador.'); return; }
+      try {
+        recognition.start();
+        appendBot('🎙️ Estou ouvindo — fale agora.');
+      } catch(e){ console.warn(e); }
+    });
+    if(recognition){
+      recognition.onresult = (ev) =>{
+        const speech = ev.results[0][0].transcript;
+        INPUT.value = speech;
+        appendUser(speech);
+        // small delay to simulate thinking
+        showTyping();
+        setTimeout(()=>{ hideTyping(); handleText(speech); }, 600);
+      };
+      recognition.onerror = (e)=> appendBot('Erro de reconhecimento de voz: ' + (e.error||e.message));
+    }
+  }
+
+  /* send flow */
+  FORM.addEventListener('submit', (ev)=> {
+    ev.preventDefault();
+    const txt = INPUT.value.trim();
+    if(!txt) return;
+    INPUT.value = '';
+    appendUser(txt);
+    showTyping();
+    setTimeout(()=> { hideTyping(); handleText(txt); }, 400);
   });
-});
 
+  /* quick actions */
+  ACTIONS.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-act]');
+    if(!btn) return;
+    const act = btn.dataset.act;
+    if(act === 'tasks') openTasksUI();
+    else if(act === 'schedule') openSchedulerPrompt();
+    else if(act === 'rephrase') openRephraseFlow();
+    else if(act === 'study') openStudyFlow();
+    else if(act === 'prod') openProductivityFlow();
+    else if(act === 'readpage') readEntirePage();
+    else if(act === 'summary') appendBot(generateLocalSummary());
+    else if(act === 'export') exportHistory();
+  });
+
+  /* panel open/close */
+  TOGGLE.addEventListener('click', ()=> {
+    PANEL.style.display = 'flex';
+    PANEL.setAttribute('aria-hidden','false');
+    TOGGLE.style.display = 'none';
+    INPUT.focus();
+  });
+  CLOSE.addEventListener('click', ()=> {
+    PANEL.style.display = 'none';
+    PANEL.setAttribute('aria-hidden','true');
+    TOGGLE.style.display = 'inline-block';
+  });
+
+  /* mode switch */
+  MODE.value = state.mode || 'friendly';
+  MODE.addEventListener('change', ()=> { state.mode = MODE.value; localStorage.setItem('flexai_mode', state.mode); appendSystem('Modo: ' + state.mode); });
+
+  /* sound toggle */
+  SOUND_BTN.addEventListener('click', ()=> {
+    state.sound = !state.sound; SOUND_BTN.setAttribute('aria-pressed', state.sound ? 'true' : 'false'); save();
+    appendSystem('Leitura automática ' + (state.sound ? 'ativada' : 'desativada'));
+  });
+
+  /* open tasks when user hovers cards (integration) */
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('mouseenter', ()=>{
+      const title = card.querySelector('.card-title')?.innerText || 'um espaço';
+      // brief assistive hint
+      OVERLAY.style.display = 'block';
+      OVERLAY.textContent = `Dica da FlexAI: quer informações sobre "${title}"? Pergunte-me!`;
+      setTimeout(()=> OVERLAY.style.display = 'none', 2200);
+      // optional: read
+      if(state.sound) speak(`Você passou por ${title}`);
+    });
+  });
+
+  /* small helpers: load previous history on startup */
+  renderAll();
+  if(state.history.length===0) appendBot(personalityPick('greet'));
+
+  /* expose for debugging */
+  window.FlexAIv3 = {
+    state,
+    open: ()=> { TOGGLE.click(); },
+    close: ()=> { CLOSE.click(); },
+    speak,
+    save
+  };
+
+  /* save on unload */
+  window.addEventListener('beforeunload', save);
+
+})();
+</script>
+
+<script>
 /* estado */
 let open = false;
 let history = loadHistory();
@@ -1254,4 +1465,3 @@ window.FlexAI = {
 </script>
 </body>
 </html>
-
