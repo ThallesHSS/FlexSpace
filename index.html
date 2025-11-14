@@ -333,9 +333,9 @@ const spaces = [
   { id: 'esp-4', type:'lazer', title:'Área Comum', desc:'Lounge e café para pausas, networking e eventos internos.', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMcmmlozZlIxAUweMOYjzeRhITuLolo-TrkA&s' },
   { id: 'esp-5', type:'escritorio', title:'Escritório Financeiro', desc:'Ambiente reservado para equipe financeira e reuniões confidenciais.', img:'https://cdn.cobrefacil.com.br/website/base/650/c4c/a7b/departamento-financeiro.jpg' },
   { id: 'esp-6', type:'lazer', title:'Sala de Lazer', desc:'Sala grande e aconchegante para o descanso dos funcionários.', img:'https://qtmov.com.br/blog/wp-content/uploads/2023/06/blog-O-que-nao-pode-faltar-em-uma-sala-de-descanso-na-empresa-qtmov.jpeg' },
-  { id: 'esp-6', type:'reuniao', title:'Sala de Treinamento', desc:'Sala grande com projetor para treinamentos e workshops.', img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'esp-6', type:'alimentação', title:'Cantina', desc:'Cantina onde os funcionários podem comprar seus lanches.', img:'https://img.freepik.com/fotos-premium/cantina-de-uma-empresa-start-up-moderna_260036-237.jpg' },
-  { id: 'esp-6', type:'alimentação', title:'Praça de alimentação', desc:'Local onde os funcionários se alimentam e interagem entre sí.', img:'https://png.pngtree.com/png-clipart/20200701/original/pngtree-three-dimensional-company-canteen-png-image_5406368.jpg' },
+  { id: 'esp-7', type:'reuniao', title:'Sala de Treinamento', desc:'Sala grande com projetor para treinamentos e workshops.', img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop' },
+  { id: 'esp-8', type:'alimentação', title:'Cantina', desc:'Cantina onde os funcionários podem comprar seus lanches.', img:'https://img.freepik.com/fotos-premium/cantina-de-uma-empresa-start-up-moderna_260036-237.jpg' },
+  { id: 'esp-9', type:'alimentação', title:'Praça de alimentação', desc:'Local onde os funcionários se alimentam e interagem entre sí.', img:'https://png.pngtree.com/png-clipart/20200701/original/pngtree-three-dimensional-company-canteen-png-image_5406368.jpg' },
 ];
 
 
@@ -847,7 +847,7 @@ applyContrast();
     if(/\b(ler pagina|ler página|ler página|ler pagina|ler|read page)\b/.test(t)) return {intent:'readpage'};
     if(/\b(resumir conversa|resumir|sumario|resumo)\b/.test(t)) return {intent:'summary'};
     if(/\b(exportar|baixar|export)\b/.test(t)) return {intent:'export'};
-    if(/\b(qq|o que|como|por que|porque|por quê)\b/.test(t)) return {intent:'ask'});
+    if(/\b(qq|o que|como|por que|porque|por quê)\b/.test(t)) return {intent:'ask'};
     // fallback = chat
     return {intent:'chat'};
   }
@@ -1246,9 +1246,9 @@ applyContrast();
   window.addEventListener('beforeunload', save);
 
 })();
-</script>
 
 </script>
 </body>
 </html>
+
 
