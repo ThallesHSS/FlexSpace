@@ -650,76 +650,281 @@ applyContrast();
 
 </script>
 
-  <!-- ===== FLEXAI AVANÇADA (Frontend) ===== -->
-<div id="flexai-root" aria-live="polite">
-  <button id="flexai-toggle" class="chatbot-button" aria-haspopup="dialog" aria-expanded="false" title="Abrir FlexAI">💬</button>
+  <!-- ===== FLEXAI v2.0 — Assistente Avançada ===== -->
+<div id="flexai-root">
+  <button id="flexai-toggle" class="flexai-btn" aria-expanded="false">🤖</button>
 
-  <aside id="flexai-panel" class="chatbot-panel" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true">
-    <header class="chatbot-header">
-      <div><strong>FlexAI</strong><div class="small muted">Assistente da FlexSpace</div></div>
-      <div>
-        <button id="flexai-summarize" title="Resumir conversa" aria-label="Resumir conversa">✂️</button>
-        <button id="flexai-close" aria-label="Fechar">×</button>
+  <aside id="flexai-panel" class="flexai-panel" aria-hidden="true">
+    <header class="flexai-header">
+      <div class="left">
+        <strong>FlexAI</strong>
+        <div class="small muted">Assistente Pessoal</div>
+      </div>
+      <div class="right">
+        <button id="flexai-voice" title="Falar com a IA">🎙️</button>
+        <button id="flexai-close">✖</button>
       </div>
     </header>
 
-    <section id="flexai-body" class="chatbot-body" tabindex="0" aria-live="polite">
-      <div class="bot-message">👋 Olá! Sou a <strong>FlexAI</strong>. Posso ajudar com agendamentos, reformular mensagens (para melhorar a comunicação), checar o clima da equipe e muito mais. Em que eu te ajudo hoje?</div>
+    <section id="flexai-body" class="flexai-body">
+      <div class="bot-msg">
+        👋 Olá! Sou sua assistente FlexAI.  
+        Posso te ajudar com tarefas, responder perguntas, melhorar textos  
+        e até conversar pra descontrair.  
+        No que posso ajudar hoje?
+      </div>
     </section>
 
-    <form id="flexai-form" class="chatbot-input-area" aria-label="Enviar mensagem para FlexAI">
-      <input id="flexai-input" type="text" placeholder="Escreva uma mensagem (ex: 'Agendar demo para terça 10h')" aria-label="Mensagem para FlexAI" autocomplete="off">
-      <button id="flexai-send" type="submit" aria-label="Enviar mensagem">➤</button>
+    <form id="flexai-form" class="flexai-input">
+      <input id="flexai-input" placeholder="Digite aqui..." autocomplete="off">
+      <button id="flexai-send">➤</button>
     </form>
 
-    <div id="flexai-actions" class="chatbot-quick-actions" aria-hidden="false">
-      <button data-act="agendar">Agendar demo</button>
-      <button data-act="reformular">Reformular mensagem</button>
-      <button data-act="clima">Ver clima da equipe</button>
-      <button data-act="contato">Contato suporte</button>
+    <div class="flexai-actions">
+      <button data-act="tarefas">➕ Lista de tarefas</button>
+      <button data-act="reformular">📝 Reformular texto</button>
+      <button data-act="clima">📊 Clima da equipe</button>
+      <button data-act="ler">🔊 Ler página</button>
     </div>
   </aside>
 </div>
 
 <style>
-/* (Use as classes from your previous CSS, ajustei para integração) */
-#flexai-root { position:fixed; right:20px; bottom:18px; z-index:1200; font-family:Inter, sans-serif; }
-.chatbot-button{ width:56px; height:56px; border-radius:50%; background:var(--brand); color:#fff; border:0; box-shadow:0 8px 30px rgba(0,0,0,0.2); cursor:pointer; font-size:22px; }
-.chatbot-panel{ width:340px; max-width:92vw; display:flex; flex-direction:column; position:absolute; bottom:72px; right:0; border-radius:12px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.25); background:var(--card); }
-.chatbot-header{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:linear-gradient(90deg,var(--brand),var(--accent)); color:#fff; }
-.chatbot-body{ padding:12px; max-height:320px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:var(--bg); }
-.chatbot-input-area{ display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.06); background:var(--card); }
-.chatbot-input-area input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); }
-.chatbot-input-area button{ background:var(--brand); color:#fff; border:0; padding:8px 12px; border-radius:8px; cursor:pointer; }
-.bot-message,.user-message{ padding:8px 10px; border-radius:10px; max-width:85%; word-break:break-word; }
-.bot-message{ background:var(--glass); align-self:flex-start; }
-.user-message{ background:var(--brand); color:#fff; align-self:flex-end; }
-.chatbot-quick-actions{ display:flex; gap:8px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); }
-.chatbot-quick-actions button{ background:transparent; border:1px solid rgba(0,0,0,0.06); padding:6px 8px; border-radius:8px; cursor:pointer; }
-.small{ font-size:.8rem }
-.muted{ opacity:0.9; font-weight:500 }
+/* FLEXAI v2.0 */
+#flexai-root {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 9999;
+  font-family: Inter, sans-serif;
+}
+
+.flexai-btn {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+  color: #fff;
+  border: 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  cursor: pointer;
+  font-size: 27px;
+  transition: .25s;
+}
+
+.flexai-btn:hover {
+  transform: scale(1.08);
+}
+
+.flexai-panel {
+  width: 360px;
+  max-width: 92vw;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  animation: fadeUp .25s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.flexai-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+  color: #fff;
+}
+
+.flexai-body {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg);
+}
+
+.bot-msg, .user-msg {
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  line-height: 1.35;
+}
+
+.bot-msg {
+  background: var(--glass);
+  align-self: flex-start;
+}
+
+.user-msg {
+  background: var(--brand);
+  color: #fff;
+  align-self: flex-end;
+}
+
+.typing {
+  opacity: .6;
+  font-style: italic;
+}
+
+.flexai-input {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  background: var(--card);
+}
+
+.flexai-actions {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.flexai-actions button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: transparent;
+  cursor: pointer;
+}
 </style>
 
 <script>
-/* ============ CONFIG ============ */
-/* Se for usar backend com OpenAI, ajuste a URL */
-const API_URL = '/api/flexai'; // endpoint servidor que proxyia p/ OpenAI (opcional)
-const USE_REMOTE_AI = false; // true para enviar histórico ao servidor / IA real
+/* ===== FLEXAI v2.0 ===== */
 
-/* armazenamento local */
-const STORAGE_KEY_HISTORY = 'flexai_history_v1';
+const flexBtn = document.getElementById("flexai-toggle");
+const flexPanel = document.getElementById("flexai-panel");
+const flexBody = document.getElementById("flexai-body");
+const flexInput = document.getElementById("flexai-input");
+const flexForm = document.getElementById("flexai-form");
+const flexClose = document.getElementById("flexai-close");
+const flexVoice = document.getElementById("flexai-voice");
 
-/* elementos */
-const root = document.getElementById('flexai-root');
-const toggleBtn = document.getElementById('flexai-toggle');
-const panel = document.getElementById('flexai-panel');
-const closeBtn = document.getElementById('flexai-close');
-const bodyEl = document.getElementById('flexai-body');
-const form = document.getElementById('flexai-form');
-const input = document.getElementById('flexai-input');
-const sendBtn = document.getElementById('flexai-send');
-const quickActions = document.getElementById('flexai-actions');
-const summarizeBtn = document.getElementById('flexai-summarize');
+let historyFlex = [];
+
+/* abrir */
+flexBtn.onclick = () => {
+  flexPanel.style.display = "flex";
+  flexBtn.style.display = "none";
+  flexInput.focus();
+};
+
+/* fechar */
+flexClose.onclick = () => {
+  flexPanel.style.display = "none";
+  flexBtn.style.display = "block";
+};
+
+/* enviar mensagem */
+flexForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const txt = flexInput.value.trim();
+  if (!txt) return;
+
+  addUser(txt);
+  flexInput.value = "";
+
+  setTimeout(() => {
+    botTyping();
+    setTimeout(() => replyFlex(txt), 700);
+  }, 200);
+});
+
+/* renderização */
+function addUser(t){
+  flexBody.innerHTML += `<div class="user-msg">${t}</div>`;
+  scrollBottom();
+}
+
+function addBot(t){
+  flexBody.querySelector(".typing")?.remove();
+  flexBody.innerHTML += `<div class="bot-msg">${t}</div>`;
+  scrollBottom();
+}
+
+function botTyping(){
+  flexBody.innerHTML += `<div class="bot-msg typing">digitando...</div>`;
+  scrollBottom();
+}
+
+function scrollBottom(){
+  flexBody.scrollTop = flexBody.scrollHeight;
+}
+
+/* IA local simples + natural */
+function replyFlex(text){
+  const lower = text.toLowerCase();
+
+  if(lower.includes("oi") || lower.includes("olá")){
+    return addBot("Oi! Como posso te ajudar hoje?");
+  }
+
+  if(lower.includes("agendar")){
+    return addBot("Posso te ajudar nisso! Me diga o dia e horário da sua preferência.");
+  }
+
+  if(lower.includes("reformular")){
+    return addBot("Claro! Me envie o texto que você quer que eu reformule.");
+  }
+
+  if(lower.includes("cansado") || lower.includes("estressado")){
+    return addBot("Percebo que você está passando por algo. Recomendo fazer uma pausa, beber água e respirar um pouco. Se quiser, posso criar um mini plano de descanso.");
+  }
+
+  /* fallback */
+  addBot("Entendi! Quer tentar uma destas ações? Agendar, Reformular, Ver clima da equipe ou Ler página.");
+}
+
+/* ====== VOZ → TEXTO ====== */
+const recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec;
+
+if(recognition){
+  rec = new recognition();
+  rec.lang = "pt-BR";
+
+  flexVoice.onclick = () => {
+    rec.start();
+    addBot("🎙️ Pode falar, estou ouvindo...");
+  };
+
+  rec.onresult = (ev) => {
+    const speech = ev.results[0][0].transcript;
+    addUser(speech);
+    botTyping();
+    setTimeout(()=>replyFlex(speech),600);
+  };
+}
+
+/* ====== TEXTO → VOZ ====== */
+function speak(text){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "pt-BR";
+  speechSynthesis.speak(u);
+}
+
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("bot-msg")){
+    speak(e.target.innerText);
+  }
+});
+
+/* ====== LER CARDS AO PASSAR O MOUSE ====== */
+document.querySelectorAll(".card").forEach(card=>{
+  const title = card.querySelector(".card-title")?.innerText || "card";
+  card.addEventListener("mouseenter", ()=>{
+    speak(`Você passou por: ${title}`);
+  });
+});
 
 /* estado */
 let open = false;
@@ -937,25 +1142,3 @@ window.FlexAI = {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
