@@ -21,8 +21,6 @@
     --transition: 250ms cubic-bezier(.2,.9,.3,1);
   }
 
-
-  /* dark */
   .dark {
     --bg: #0f1720;
     --card: #0b1220;
@@ -34,36 +32,34 @@
     --shadow: 0 10px 30px rgba(2,6,12,0.6);
   }
 
-  /* alto contraste */
-.high-contrast {
-  --bg: #000000;
-  --card: #000000;
-  --muted: #ffffff;
-  --brand: #ffff00;
-  --accent: #00ffff;
-  --text: #ffffff;
-  --glass: rgba(255,255,255,0.15);
-  --shadow: none;
-}
+  .high-contrast {
+    --bg: #000000;
+    --card: #000000;
+    --muted: #ffffff;
+    --brand: #ffff00;
+    --accent: #00ffff;
+    --text: #ffffff;
+    --glass: rgba(255,255,255,0.15);
+    --shadow: none;
+  }
 
-.high-contrast a,
-.high-contrast button,
-.high-contrast select,
-.high-contrast input {
-  border: 2px solid #ffffff !important;
-  color: #ffffff !important;
-  background: #000000 !important;
-}
+  .high-contrast a,
+  .high-contrast button,
+  .high-contrast select,
+  .high-contrast input {
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    background: #000000 !important;
+  }
 
-.high-contrast .btn.primary {
-  background: #ffff00 !important;
-  color: #000000 !important;
-}
+  .high-contrast .btn.primary {
+    background: #ffff00 !important;
+    color: #000000 !important;
+  }
 
-.high-contrast .logo {
-  background: linear-gradient(135deg, #ffff00, #00ffff) !important;
-}
-
+  .high-contrast .logo {
+    background: linear-gradient(135deg, #ffff00, #00ffff) !important;
+  }
 
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -75,7 +71,6 @@
     -moz-osx-font-smoothing:grayscale;
     -webkit-tap-highlight-color:transparent;
   }
-
 
   /* Header */
   header{
@@ -107,7 +102,6 @@
   }
   button.icon-btn:hover{transform:translateY(-3px)}
 
-
   /* Layout */
   main{max-width:1100px;margin:24px auto;padding:0 20px;}
   .hero{
@@ -125,12 +119,10 @@
   .btn.primary{background:var(--brand); color:#fff; box-shadow: 0 8px 18px rgba(43,195,204,0.18)}
   .btn.ghost{background:transparent; border:1px solid rgba(0,0,0,0.06)}
 
-
   .hero-visual{
     border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
     height:260px; background-size:cover; background-position:center;
   }
-
 
   /* Search & filter */
   .searchbar{display:flex; gap:12px; margin-top:14px; align-items:center}
@@ -142,7 +134,6 @@
     padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);
     background:var(--card); color:var(--text);
   }
-
 
   /* Grid cards */
   .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-top:18px;}
@@ -159,7 +150,6 @@
   .card-footer{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .card-actions{display:flex; gap:8px; align-items:center}
 
-
   /* rating */
   .stars{display:flex; gap:6px; align-items:center}
   .star{
@@ -170,17 +160,14 @@
   .star.on{ color: #ffd65a; }
   .rating-count{color:var(--muted); font-size:0.85rem}
 
-
   /* overlay quick */
   .overlay-trigger{position:absolute; inset:12px; border-radius:12px; pointer-events:none}
   .card .card-overlay{
     position:absolute; right:12px; top:12px; background:rgba(0,0,0,0.05); padding:6px;border-radius:10px; pointer-events:auto;
   }
 
-
   /* footer */
   footer.site-footer{margin:36px auto 80px; text-align:center; color:var(--muted); font-size:0.95rem}
-
 
   /* responsive */
   @media (max-width:980px){
@@ -196,27 +183,22 @@
     .hero-card{padding:18px}
   }
 
-
-  /* subtle helpers */
   .muted{color:var(--muted)}
   .small{font-size:.85rem}
   a.btn-link{color:var(--brand); text-decoration:none; font-weight:600}
-  /* accessibility focus */
   .star:focus, .icon-btn:focus, .btn:focus, input:focus, select:focus{outline:3px solid rgba(43,195,204,0.14); outline-offset:2px}
 </style>
 </head>
 <body>
 
-
 <header role="banner" aria-label="Cabeçalho do site">
   <div class="brand">
-    <div class="logo" aria-hidden="true"><img src="https://thalleshss.github.io/FlexSpace/Logo flexspace.jfif" class="logo" aria-hidden="true"></div>
+    <div class="logo" aria-hidden="true"><img src="https://thalleshss.github.io/FlexSpace/Logo%20flexspace.jfif" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div>
     <div>
       <h1 style="font-size:0.95rem;margin:0">FlexSpace</h1>
       <div class="small muted">Demonstração Corporativa</div>
     </div>
   </div>
-
 
   <nav class="topnav" role="navigation" aria-label="Menu principal">
     <a href="#sobre">Perfil</a>
@@ -224,15 +206,13 @@
     <a href="#contato">Configurações</a>
   </nav>
 
-
  <div class="controls" aria-hidden="false">
-  <button class="icon-btn" id="toggleTheme" title="Alternar tema (lido pelo leitor)">
+  <button class="icon-btn" id="toggleTheme" title="Alternar tema (lido pelo leitor)" aria-pressed="false">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
     </svg>
   </button>
 
-  <!-- novo botão de acessibilidade -->
   <button class="icon-btn" id="toggleReader" title="Ativar leitor de texto" aria-label="Ativar leitor de texto">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <path d="M3 10v4a1 1 0 001 1h2l3 3V6L6 9H4a1 1 0 00-1 1zm13.54-3.54a5 5 0 010 7.07m2.83-9.9a9 9 0 010 12.73"
@@ -255,27 +235,19 @@
 </div>
 </header>
 
-
 <main>
-  <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-card" role="region" aria-label="Informações sobre a demonstração">
       <h2 id="hero-title">Demonstração FlexSpace — Contabilidade XYZ</h2>
       <p>Gerencie, visualize e avalie os espaços da sua empresa. Clique em um espaço para ver opções, ou avalie com estrelas.</p>
 
-
       <div class="searchbar" role="search">
         <input id="searchInput" placeholder="Procurar espaço (ex: Sala de reunião, Banheiro...)" aria-label="Procurar espaços">
         <select id="filterSelect" aria-label="Filtrar por tipo">
           <option value="">Todos os tipos</option>
-          <option value="escritorio">Escritório</option>
-          <option value="reuniao">Sala de Reunião</option>
-          <option value="banheiro">Banheiro</option>
-          <option value="comum">Área Comum</option>
         </select>
         <button class="btn primary" id="newDemoBtn">Agendar Demo</button>
       </div>
-
 
       <div style="margin-top:14px; display:flex; gap:12px; align-items:center;">
         <div class="muted small">Exibindo <strong id="visibleCount">0</strong> espaços</div>
@@ -284,31 +256,24 @@
       </div>
     </div>
 
-
     <div class="hero-visual" role="img" aria-label="Imagem de ambiente corporativo" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZQ6JzKX9La8o_2GV68nfg5YB9cI9DaAyhbw&s');"></div>
   </section>
 
-
-  <!-- CARDS -->
   <section id="espacos" class="section" aria-labelledby="espacos-title">
     <h3 id="espacos-title" style="margin:0 0 8px">Espaços Disponíveis</h3>
     <p class="muted small" style="margin-top:0">Passe o mouse (ou toque) nos cards para ver opções rápidas. Avalie cada espaço com as estrelas.</p>
-
 
     <div class="grid" id="cardsGrid" aria-live="polite">
       <!-- cards serão inseridos por JS -->
     </div>
   </section>
 
-
-  <!-- Sobre / contato -->
   <section id="sobre" style="margin-top:30px; display:flex; gap:20px; align-items:flex-start;">
     <div style="flex:1" class="hero-card">
       <h4 style="margin-top:0">Sobre a Empresa</h4>
       <p class="muted">A Contabilidade XYZ utiliza a FlexSpace para gerenciar salas de reuniões, escritórios e áreas comuns. Aqui é só uma demonstração que mostra a interface e interações com os espaços.</p>
       <p class="small muted">Este protótipo não grava em servidor — as avaliações ficam salvas apenas no seu navegador.</p>
     </div>
-
 
     <div style="width:320px" class="hero-card">
       <h4 style="margin-top:0">Contato</h4>
@@ -318,14 +283,12 @@
   </section>
 </main>
 
-
 <footer class="site-footer" role="contentinfo">
   FlexSpace © <span id="year"></span> — Esta é uma demonstração corporativa. Layout inspirado em aplicativos e sites organizacionais.
 </footer>
 
-
 <script>
-/* Data inicial dos espaços (você pode editar, carregar via API etc.) */
+/* Data inicial dos espaços */
 const spaces = [
   { id: 'esp-1', type:'escritorio', title:'Escritório Principal', desc:'Espaço moderno para a equipe trabalhar de forma confortável.', img:'https://www.divdesign.com.br/wp-content/uploads/2021/11/tendencias-moveis-escritorio-div-design.jpg' },
   { id: 'esp-2', type:'reuniao', title:'Sala de Reunião', desc:'Sala equipada para apresentações e reuniões com clientes.', img:'https://funcional.wpcdn.com.br/blog/2023/05/FUNCIONAL_blog_16-05-1.png' },
@@ -334,21 +297,18 @@ const spaces = [
   { id: 'esp-5', type:'escritorio', title:'Escritório Financeiro', desc:'Ambiente reservado para equipe financeira e reuniões confidenciais.', img:'https://cdn.cobrefacil.com.br/website/base/650/c4c/a7b/departamento-financeiro.jpg' },
   { id: 'esp-6', type:'lazer', title:'Sala de Lazer', desc:'Sala grande e aconchegante para o descanso dos funcionários.', img:'https://qtmov.com.br/blog/wp-content/uploads/2023/06/blog-O-que-nao-pode-faltar-em-uma-sala-de-descanso-na-empresa-qtmov.jpeg' },
   { id: 'esp-7', type:'reuniao', title:'Sala de Treinamento', desc:'Sala grande com projetor para treinamentos e workshops.', img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'esp-8', type:'alimentação', title:'Cantina', desc:'Cantina onde os funcionários podem comprar seus lanches.', img:'https://img.freepik.com/fotos-premium/cantina-de-uma-empresa-start-up-moderna_260036-237.jpg' },
-  { id: 'esp-9', type:'alimentação', title:'Praça de alimentação', desc:'Local onde os funcionários se alimentam e interagem entre sí.', img:'https://png.pngtree.com/png-clipart/20200701/original/pngtree-three-dimensional-company-canteen-png-image_5406368.jpg' },
+  { id: 'esp-8', type:'alimentacao', title:'Cantina', desc:'Cantina onde os funcionários podem comprar seus lanches.', img:'https://img.freepik.com/fotos-premium/cantina-de-uma-empresa-start-up-moderna_260036-237.jpg' },
+  { id: 'esp-9', type:'alimentacao', title:'Praça de alimentação', desc:'Local onde os funcionários se alimentam e interagem entre sí.', img:'https://png.pngtree.com/png-clipart/20200701/original/pngtree-three-dimensional-company-canteen-png-image_5406368.jpg' },
 ];
-
 
 /* Utils: rating persistence in localStorage */
 const STORAGE_KEY = 'flexspace_ratings_v1';
 function loadRatings(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){return {} } }
 function saveRatings(obj){ localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); }
 
-
 /* Render cards */
 const grid = document.getElementById('cardsGrid');
 const visibleCount = document.getElementById('visibleCount');
-
 
 function createCard(space, ratingState){
   const card = document.createElement('article');
@@ -364,7 +324,6 @@ function createCard(space, ratingState){
           <div class="card-desc">${space.desc}</div>
         </div>
       </div>
-
 
       <div class="card-footer" style="margin-top:8px">
         <div>
@@ -384,7 +343,6 @@ function createCard(space, ratingState){
   attachActionHandlers(card, space);
   return card;
 }
-
 
 /* Attach actions */
 function attachActionHandlers(card, space){
@@ -418,7 +376,6 @@ function attachActionHandlers(card, space){
   });
 }
 
-
 /* Stars handlers (hover + click + keyboard) */
 function attachStarHandlers(card, id){
   const stars = card.querySelectorAll('.star');
@@ -426,49 +383,49 @@ function attachStarHandlers(card, id){
   let ratings = loadRatings();
   let current = ratings[id] || 0;
 
-
   function updateVisual(n){
     stars.forEach((s, i)=> s.classList.toggle('on', i < n));
-    ratingEl.textContent = n;
+    if(ratingEl) ratingEl.textContent = n;
   }
   updateVisual(current);
 
-
   stars.forEach((s, idx)=>{
     const val = idx+1;
-    // pointer
     s.addEventListener('mouseenter', ()=> updateVisual(val));
-    s.addEventListener('mouseleave', ()=> updateVisual(ratings[id] || 0));
+    s.addEventListener('mouseleave', ()=> updateVisual(loadRatings()[id] || 0));
     s.addEventListener('click', ()=>{
-      ratings[id] = val;
-      saveRatings(ratings);
+      const ratingsNow = loadRatings();
+      ratingsNow[id] = val;
+      saveRatings(ratingsNow);
       updateVisual(val);
-      // feedback
-      s.closest('.card').style.boxShadow = '0 30px 50px rgba(43,195,204,0.08)';
+      const thisCard = s.closest('.card');
+      if(thisCard) thisCard.style.boxShadow = '0 30px 50px rgba(43,195,204,0.08)';
     });
-    // keyboard accessibility
     s.addEventListener('keydown', (ev)=>{
       if(ev.key === 'Enter' || ev.key === ' '){
         ev.preventDefault();
-        ratings[id] = val;
-        saveRatings(ratings);
+        const ratingsNow = loadRatings();
+        ratingsNow[id] = val;
+        saveRatings(ratingsNow);
         updateVisual(val);
       } else if(ev.key === 'ArrowLeft' || ev.key==='ArrowDown'){
         ev.preventDefault();
-        const newVal = Math.max(0, (ratings[id]||0) - 1);
-        ratings[id] = newVal; saveRatings(ratings); updateVisual(newVal);
+        const ratingsNow = loadRatings();
+        const newVal = Math.max(0, (ratingsNow[id]||0) - 1);
+        ratingsNow[id] = newVal; saveRatings(ratingsNow); updateVisual(newVal);
       } else if(ev.key === 'ArrowRight' || ev.key==='ArrowUp'){
         ev.preventDefault();
-        const newVal = Math.min(5, (ratings[id]||0) + 1);
-        ratings[id] = newVal; saveRatings(ratings); updateVisual(newVal);
+        const ratingsNow = loadRatings();
+        const newVal = Math.min(5, (ratingsNow[id]||0) + 1);
+        ratingsNow[id] = newVal; saveRatings(ratingsNow); updateVisual(newVal);
       }
     });
   });
 }
 
-
 /* Initial mount */
 function mountCards(list){
+  if(!grid) return;
   grid.innerHTML = '';
   const ratings = loadRatings();
   list.forEach(s => {
@@ -478,73 +435,65 @@ function mountCards(list){
   visibleCount.textContent = list.length;
 }
 
-
 /* Filters & search */
 const searchInput = document.getElementById('searchInput');
-  const filterSelect = document.getElementById('filterSelect');
+const filterSelect = document.getElementById('filterSelect');
 
+function populateFilterOptions() {
+  if(!filterSelect) return;
+  const tipos = new Set();
+  spaces.forEach(space => {
+    if (space.type && space.type.trim() !== '') {
+      tipos.add(space.type.trim());
+    }
+  });
+  filterSelect.innerHTML = '<option value="">Todos</option>';
+  tipos.forEach(tipo => {
+    const option = document.createElement('option');
+    option.value = tipo;
+    option.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+    filterSelect.appendChild(option);
+  });
+}
 
-  function populateFilterOptions() {
-    const tipos = new Set();
-    spaces.forEach(space => {
-      if (space.type && space.type.trim() !== '') {
-        tipos.add(space.type.trim());
-      }
-    });
-    filterSelect.innerHTML = '<option value="">Todos</option>';
-    tipos.forEach(tipo => {
-      const option = document.createElement('option');
-      option.value = tipo;
-      option.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
-      filterSelect.appendChild(option);
-    });
-  }
+function filterAndRender() {
+  const q = (searchInput?.value || '').toLowerCase().trim();
+  const type = filterSelect?.value;
+  const filtered = spaces.filter(s => {
+    if (type && s.type !== type) return false;
+    if (!q) return true;
+    return (s.title + ' ' + s.desc + ' ' + s.type).toLowerCase().includes(q);
+  });
+  mountCards(filtered);
+}
 
+function debounce(fn, t) {
+  let to;
+  return (...a) => {
+    clearTimeout(to);
+    to = setTimeout(() => fn(...a), t);
+  };
+}
 
-  function filterAndRender() {
-    const q = (searchInput.value || '').toLowerCase().trim();
-    const type = filterSelect.value;
-    const filtered = spaces.filter(s => {
-      if (type && s.type !== type) return false;
-      if (!q) return true;
-      return (s.title + ' ' + s.desc + ' ' + s.type).toLowerCase().includes(q);
-    });
-    mountCards(filtered);
-  }
-
-
-  function debounce(fn, t) {
-    let to;
-    return (...a) => {
-      clearTimeout(to);
-      to = setTimeout(() => fn(...a), t);
-    };
-  }
-
-
-  populateFilterOptions();
-  searchInput.addEventListener('input', debounce(filterAndRender, 180));
-  filterSelect.addEventListener('change', filterAndRender);
-
+populateFilterOptions();
+if(searchInput) searchInput.addEventListener('input', debounce(filterAndRender, 180));
+if(filterSelect) filterSelect.addEventListener('change', filterAndRender);
 
 /* Theme toggle */
 const toggleThemeBtn = document.getElementById('toggleTheme');
-const html = document.documentElement;
 const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 let usingDark = (localStorage.getItem('flexspace_theme') === 'dark') || prefersDark;
 function applyTheme(){
   if(usingDark) document.body.classList.add('dark'); else document.body.classList.remove('dark');
   localStorage.setItem('flexspace_theme', usingDark ? 'dark' : 'light');
 }
-toggleThemeBtn.addEventListener('click', ()=>{ usingDark = !usingDark; applyTheme(); });
+if(toggleThemeBtn) toggleThemeBtn.addEventListener('click', ()=>{ usingDark = !usingDark; applyTheme(); });
 applyTheme();
-
 
 /* small helpers */
 document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('newDemoBtn').addEventListener('click', ()=>alert('Solicitação de demo enviada (simulada).'));
 mountCards(spaces);
-
 
 /* keyboard: focus first card with ArrowDown */
 document.addEventListener('keydown', (e)=>{
@@ -554,22 +503,18 @@ document.addEventListener('keydown', (e)=>{
   }
 });
 
-
-/* touch behavior: show overlay on tap by focusing */
-grid.addEventListener('click', (ev)=>{
+/* touch behavior */
+if(grid) grid.addEventListener('click', (ev)=>{
   const card = ev.target.closest('.card');
   if(!card) return;
-  // on small screens we might want to open details directly
   if(window.innerWidth < 700){
-    const title = card.querySelector('.card-title').textContent;
+    const title = card.querySelector('.card-title')?.textContent || '';
     alert(`${title}\n\nOpções: Detalhes / Agendar (simulação)`);
   }
 });
 
-
 /* quick: update visible count after rating change (so UI reacts) */
 window.addEventListener('storage', ()=>{ filterAndRender(); });
-
 
 /* ====== Leitor de Texto Acessível ====== */
 const readerBtn = document.getElementById('toggleReader');
@@ -578,47 +523,44 @@ let synth = window.speechSynthesis;
 let utterance = null;
 
 function getPageText() {
-  // pega o conteúdo textual principal da página
-  const mainText = document.body.innerText
+  const mainText = (document.body && document.body.innerText ? document.body.innerText : '')
     .replace(/\s+/g, ' ')
-    .replace(/Detalhes|Agendar/g, '') // remove botões repetitivos
+    .replace(/Detalhes|Agendar/g, '')
     .trim();
   return mainText;
 }
 
 function startReading() {
-  if (synth.speaking) synth.cancel();
-  utterance = new SpeechSynthesisUtterance(getPageText());
-  utterance.lang = 'pt-BR';
-  utterance.rate = 1.0;
-  utterance.pitch = 1;
-  synth.speak(utterance);
-  reading = true;
-  readerBtn.classList.add('active');
-  readerBtn.title = 'Desativar leitor de texto';
-  readerBtn.setAttribute('aria-label', 'Desativar leitor de texto');
+  try {
+    if (synth.speaking) synth.cancel();
+    utterance = new SpeechSynthesisUtterance(getPageText());
+    utterance.lang = 'pt-BR';
+    utterance.rate = 1.0;
+    utterance.pitch = 1;
+    synth.speak(utterance);
+    reading = true;
+    readerBtn?.classList.add('active');
+    readerBtn?.setAttribute('title', 'Desativar leitor de texto');
+    readerBtn?.setAttribute('aria-label', 'Desativar leitor de texto');
+  } catch(e){ console.warn(e); }
 }
 
 function stopReading() {
-  synth.cancel();
-  reading = false;
-  readerBtn.classList.remove('active');
-  readerBtn.title = 'Ativar leitor de texto';
-  readerBtn.setAttribute('aria-label', 'Ativar leitor de texto');
+  try {
+    synth.cancel();
+    reading = false;
+    readerBtn?.classList.remove('active');
+    readerBtn?.setAttribute('title', 'Ativar leitor de texto');
+    readerBtn?.setAttribute('aria-label', 'Ativar leitor de texto');
+  } catch(e){ console.warn(e); }
 }
 
-readerBtn.addEventListener('click', () => {
-  if (!reading) {
-    startReading();
-  } else {
-    stopReading();
-  }
+if(readerBtn) readerBtn.addEventListener('click', () => {
+  if (!reading) startReading(); else stopReading();
 });
 
-// se o usuário fechar o navegador ou trocar de aba
-window.addEventListener('beforeunload', () => synth.cancel());
+window.addEventListener('beforeunload', () => { try{ synth.cancel(); }catch(e){} });
 
-// feedback visual quando ativo
 const style = document.createElement('style');
 style.textContent = `
   #toggleReader.active {
@@ -628,7 +570,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-  const contrastBtn = document.getElementById('toggleContrast');
+const contrastBtn = document.getElementById('toggleContrast');
 let usingContrast = localStorage.getItem('flexspace_contrast') === 'true';
 
 function applyContrast(){
@@ -639,23 +581,15 @@ function applyContrast(){
   }
   localStorage.setItem('flexspace_contrast', usingContrast);
 }
-
-contrastBtn.addEventListener('click', ()=>{
-  usingContrast = !usingContrast;
-  applyContrast();
-});
-
+if(contrastBtn) contrastBtn.addEventListener('click', ()=>{ usingContrast = !usingContrast; applyContrast(); });
 applyContrast();
-
-
 </script>
 
-  <!-- ===== FLEXAI v3.0 — Assistente Avançada (COLAR SUBSTITUINDO O BLOCO ANTIGO) ===== -->
-<!-- HTML -->
+<!-- ===== FLEXAI v3.0 — Assistente Avançada (substituição limpa e testada) ===== -->
 <div id="flexai-root-v3" aria-live="polite">
   <button id="flexai-toggle-v3" class="flexai-btn-v3" aria-haspopup="dialog" aria-expanded="false" aria-label="Abrir FlexAI">🤖</button>
 
-  <aside id="flexai-panel-v3" class="flexai-panel-v3" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true">
+  <aside id="flexai-panel-v3" class="flexai-panel-v3" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true" style="display:none">
     <header class="flexai-header-v3" role="banner">
       <div class="flexai-left">
         <strong id="flexai-title">FlexAI</strong>
@@ -677,8 +611,7 @@ applyContrast();
     <main id="flexai-body-v3" class="flexai-body-v3" tabindex="0" role="region" aria-live="polite"></main>
 
     <form id="flexai-form-v3" class="flexai-input-v3" role="search" aria-label="Enviar mensagem para FlexAI">
-      <input id="flexai-input-v3" placeholder="Pergunte algo (ex: 'Agendar demo para terça 10h')"
-             aria-label="Mensagem para FlexAI" autocomplete="off" />
+      <input id="flexai-input-v3" placeholder="Pergunte algo (ex: 'Agendar demo para terça 10h')" aria-label="Mensagem para FlexAI" autocomplete="off" />
       <button id="flexai-send-v3" type="submit" aria-label="Enviar">➤</button>
     </form>
 
@@ -697,9 +630,8 @@ applyContrast();
   </aside>
 </div>
 
-<!-- CSS -->
 <style>
-/* FLEXAI v3.0 - minimal, uses your CSS variables */
+/* FLEXAI v3.0 styling (keeps your CSS variables) */
 #flexai-root-v3 { position: fixed; right: 20px; bottom: 18px; z-index: 1400; font-family: Inter, sans-serif; }
 .flexai-btn-v3 {
   width:64px; height:64px; border-radius:50%; border:0;
@@ -714,7 +646,6 @@ applyContrast();
 .flexai-header-v3 { display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
   background: linear-gradient(90deg,var(--brand),var(--accent)); color:#fff;
 }
-.flexai-left strong { font-size:1.05rem; }
 .flexai-body-v3 { padding:12px; max-height:360px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:var(--bg); }
 .flexai-input-v3 { display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.06); background:var(--card); }
 .flexai-input-v3 input { flex:1; padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.08); }
@@ -727,19 +658,15 @@ applyContrast();
 .flexai-actions-v3 { display:flex; gap:6px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); background:transparent; }
 .flexai-actions-v3 button { padding:6px 8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; cursor:pointer; }
 #flexai-mini-overlay { position:absolute; inset:0; pointer-events:none; display:none; }
-
-/* small screens */
 @media (max-width:520px){
   .flexai-panel-v3 { width:92vw; right:4vw; bottom:84px; border-radius:12px; }
   .flexai-btn-v3 { right:14px; bottom:14px; }
 }
 </style>
 
-<!-- JS -->
 <script>
-/* ===== FLEXAI v3.0 — Master Script (cole substituindo bloco antigo) ===== */
+/* ===== FLEXAI v3.0 — Master Script (limpo e testado) ===== */
 (function(){
-  /* ----- Config & Storage Keys ----- */
   const ROOT = document.getElementById('flexai-root-v3');
   const TOGGLE = document.getElementById('flexai-toggle-v3');
   const PANEL = document.getElementById('flexai-panel-v3');
@@ -756,17 +683,15 @@ applyContrast();
 
   const STORAGE_KEY = 'flexai_v3_state_v1';
 
-  /* state */
   let state = {
-    history: [], // {role:'user'|'assistant'|'system', text, ts}
-    tasks: [], // {id, text, done}
-    appointments: [], // {id, text, datetime}
+    history: [],
+    tasks: [],
+    appointments: [],
     mode: localStorage.getItem('flexai_mode') || 'friendly',
     voice: false,
     sound: false
   };
 
-  /* restore state */
   try {
     const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     if(s && typeof s === 'object'){
@@ -774,7 +699,6 @@ applyContrast();
     }
   } catch(e){ console.warn('flexai v3 restore error', e); }
 
-  /* utilities */
   const now = () => new Date().toISOString();
   const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   const uid = (p='id') => p + '_' + Math.random().toString(36).slice(2,9);
@@ -784,7 +708,7 @@ applyContrast();
   function appendBot(text, html=null){ state.history.push({role:'assistant', text, ts: now()}); save(); renderMessage({role:'assistant', text, html}); if(state.sound) speak(text); }
 
   function renderMessage(msg){
-    // msg: {role, text, html?}
+    if(!BODY) return;
     const el = document.createElement('div');
     if(msg.role === 'user') { el.className = 'user-msg-v3'; el.textContent = msg.text; }
     else if(msg.role === 'assistant') { el.className = 'bot-msg-v3'; el.innerHTML = msg.html || escapeHtml(msg.text); el.tabIndex = 0; el.addEventListener('click', ()=> speak(msg.text)); }
@@ -795,17 +719,15 @@ applyContrast();
 
   function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  /* initial render of history */
   function renderAll(){
+    if(!BODY) return;
     BODY.innerHTML = '';
     (state.history || []).forEach(m => renderMessage(m));
   }
 
-  /* typing indicator */
-  function showTyping(){ const t = document.createElement('div'); t.className = 'typing-v3'; t.id = 'flexai-typing-v3'; t.textContent = 'FlexAI está digitando...'; BODY.appendChild(t); BODY.scrollTop = BODY.scrollHeight; }
+  function showTyping(){ if(!BODY) return; const t = document.createElement('div'); t.className = 'typing-v3'; t.id = 'flexai-typing-v3'; t.textContent = 'FlexAI está digitando...'; BODY.appendChild(t); BODY.scrollTop = BODY.scrollHeight; }
   function hideTyping(){ document.getElementById('flexai-typing-v3')?.remove(); }
 
-  /* personality templates */
   const PERSONALITY = {
     friendly: {
       greet: ['Oi! 😊', 'E aí! Como posso ajudar hoje?'],
@@ -834,9 +756,8 @@ applyContrast();
     return arr[Math.floor(Math.random()*arr.length)];
   }
 
-  /* intent engine (rules) */
   function detectIntent(text){
-    const t = text.toLowerCase();
+    const t = (text || '').toLowerCase();
     if(/^(oi|olá|ola|opa|bom dia|boa tarde|boa noite)\b/.test(t)) return {intent:'greet'};
     if(/\b(agendar|agenda|marcar|reservar)\b/.test(t)) return {intent:'schedule'};
     if(/\b(tarefa|tarefas|to ?do|lista)\b/.test(t)) return {intent:'tasks'};
@@ -848,11 +769,9 @@ applyContrast();
     if(/\b(resumir conversa|resumir|sumario|resumo)\b/.test(t)) return {intent:'summary'};
     if(/\b(exportar|baixar|export)\b/.test(t)) return {intent:'export'};
     if(/\b(qq|o que|como|por que|porque|por quê)\b/.test(t)) return {intent:'ask'};
-    // fallback = chat
     return {intent:'chat'};
   }
 
-  /* complex response generator */
   async function handleText(text){
     const it = detectIntent(text);
     if(it.intent === 'greet'){ appendBot(personalityPick('greet')); return; }
@@ -865,13 +784,11 @@ applyContrast();
     if(it.intent === 'readpage'){ readEntirePage(); return; }
     if(it.intent === 'summary'){ const s = generateLocalSummary(); appendBot(s); return; }
     if(it.intent === 'export'){ exportHistory(); return; }
-    if(it.intent === 'chat'){ // more advanced local reasoning + varied responses
-      // quick checks for sentiment-like words
-      if(/\b(estou|me sinto|sinto)\b.*\b(triste|cansad|estressad|deprimid)/.test(text.toLowerCase())){
+    if(it.intent === 'chat'){
+      if(/\b(estou|me sinto|sinto)\b.*\b(triste|cansad|estressad|deprimid)/.test((text||'').toLowerCase())){
         appendBot(personalityPick('fallback') + ' ' + choose(['Se quiser, posso sugerir um plano de descanso simples.','Quer falar mais sobre isso?']));
         return;
       }
-      // if text contains a paragraph request (e.g., reformulate)
       appendBot(choose([
         'Interessante — quer que eu: (1) agende, (2) gere um resumo, (3) crie tarefas relacionadas? Responda 1,2 ou 3.',
         'Ok — posso ajudar com agendamento, reformulação, tarefas ou análise. Qual prefere?',
@@ -881,12 +798,9 @@ applyContrast();
     }
   }
 
-  /* small chooser */
   function choose(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-  /* ====== Features implementations ====== */
-
-  /* Tasks UI (inline modal-like in the chat) */
+  /* Tasks UI */
   function openTasksUI(){
     showTyping();
     setTimeout(()=> {
@@ -905,7 +819,6 @@ applyContrast();
         </div>
       `;
       appendBot(html, html);
-      // attach handlers after render
       setTimeout(()=>{
         const addBtn = document.getElementById(`${idBase}_add`);
         const newInp = document.getElementById(`${idBase}_newtask`);
@@ -914,6 +827,7 @@ applyContrast();
         const container = document.getElementById(`${idBase}_container`);
 
         function renderTasks(){
+          if(!container) return;
           container.innerHTML = '';
           if(state.tasks.length===0) container.innerHTML = '<div class="system-msg-v3">Sem tarefas</div>';
           state.tasks.forEach(t => {
@@ -922,7 +836,6 @@ applyContrast();
             row.innerHTML = `<input type="checkbox" ${t.done?'checked':''} data-id="${t.id}" class="flexai-taskchk"/><div style="flex:1">${escapeHtml(t.text)}</div><button data-id="${t.id}" class="flexai-taskdel">✖</button>`;
             container.appendChild(row);
           });
-          // bind
           container.querySelectorAll('.flexai-taskchk').forEach(cb => cb.addEventListener('change', (e)=> {
             const id = e.target.dataset.id; const t = state.tasks.find(x=>x.id===id); if(t){ t.done = e.target.checked; save(); }
           }));
@@ -931,18 +844,18 @@ applyContrast();
           }));
         }
 
-        addBtn.addEventListener('click', ()=>{
+        if(addBtn) addBtn.addEventListener('click', ()=>{
           const v = newInp.value.trim(); if(!v) return;
           state.tasks.push({id: uid('t'), text: v, done: false}); newInp.value=''; save(); renderTasks();
         });
-        listBtn.addEventListener('click', ()=> renderTasks());
-        clearBtn.addEventListener('click', ()=> { state.tasks = state.tasks.filter(t=>!t.done); save(); renderTasks(); });
+        if(listBtn) listBtn.addEventListener('click', ()=> renderTasks());
+        if(clearBtn) clearBtn.addEventListener('click', ()=> { state.tasks = state.tasks.filter(t=>!t.done); save(); renderTasks(); });
         renderTasks();
       }, 80);
     }, 500);
   }
 
-  /* Scheduler prompt (simulação) */
+  /* Scheduler prompt */
   function openSchedulerPrompt(orig){
     showTyping();
     setTimeout(()=>{
@@ -961,7 +874,7 @@ applyContrast();
       `;
       appendBot(html, html);
       setTimeout(()=>{
-        document.getElementById(`${idBase}_ok`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_ok`)?.addEventListener('click', ()=>{
           const dt = document.getElementById(`${idBase}_when`).value.trim();
           const what = document.getElementById(`${idBase}_what`).value.trim() || 'Agendamento';
           if(!dt){ appendBot('Por favor informe data e hora no formato sugerido.'); return; }
@@ -969,12 +882,12 @@ applyContrast();
           state.appointments.push(ap); save();
           appendBot(`Agendado (simulado): ${what} — ${dt}`);
         });
-        document.getElementById(`${idBase}_cancel`).addEventListener('click', ()=> appendBot('Agendamento cancelado.'));
+        document.getElementById(`${idBase}_cancel`)?.addEventListener('click', ()=> appendBot('Agendamento cancelado.'));
       }, 80);
     }, 500);
   }
 
-  /* Rephrase flow: basic rules-based */
+  /* Rephrase flow */
   function openRephraseFlow(orig){
     showTyping();
     setTimeout(()=>{
@@ -991,16 +904,15 @@ applyContrast();
       `;
       appendBot(html, html);
       setTimeout(()=>{
-        document.getElementById(`${idBase}_gent`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_gent`)?.addEventListener('click', ()=>{
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
-          // naive rules-based formalizer (simple)
           const res = s.replace(/\bvc\b/gi,'você').replace(/\btbj\b/gi,'também').replace(/\bq\b/gi,'que');
           const out = `Versão formal: ${res.charAt(0).toUpperCase()+res.slice(1)}`;
           document.getElementById(`${idBase}_out`).innerText = out;
           appendBot(out);
         });
-        document.getElementById(`${idBase}_gent2`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_gent2`)?.addEventListener('click', ()=>{
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
           const out = `Versão amigável: ${s}. Achei legal, só ajustar uns detalhes :)`;
@@ -1011,7 +923,7 @@ applyContrast();
     }, 500);
   }
 
-  /* Study flow: quick summary + quiz generation */
+  /* Study flow */
   function openStudyFlow(orig){
     showTyping();
     setTimeout(()=>{
@@ -1028,17 +940,16 @@ applyContrast();
       `;
       appendBot(html, html);
       setTimeout(()=>{
-        document.getElementById(`${idBase}_summary`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_summary`)?.addEventListener('click', ()=>{
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole um texto para eu resumir.'); return; }
-          // super simple summarizer: pick top sentences by length and keywords
           const sentences = s.split(/[.?!]\s+/).filter(Boolean);
           const top = sentences.slice(0, Math.min(3, sentences.length)).join('. ') + (sentences.length>3? '…':'');
           const res = `Resumo curto: ${top}`;
           document.getElementById(`${idBase}_out`).innerText = res;
           appendBot(res);
         });
-        document.getElementById(`${idBase}_quiz`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_quiz`)?.addEventListener('click', ()=>{
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole um texto para eu gerar perguntas.'); return; }
           const sentences = s.split(/[.?!]\s+/).filter(Boolean);
@@ -1050,7 +961,7 @@ applyContrast();
     }, 600);
   }
 
-  /* productivity flow: pomodoro suggestion */
+  /* productivity flow */
   function openProductivityFlow(orig){
     showTyping();
     setTimeout(()=>{
@@ -1075,23 +986,22 @@ applyContrast();
             else { mode='work'; remaining = parseInt(document.getElementById(`${idBase}_work`).value || 25)*60; appendBot('Volta ao trabalho!'); }
           }
           remaining--; const mm = Math.floor(remaining/60); const ss = remaining%60;
-          status.innerText = `${mode.toUpperCase()}: ${mm}:${ss.toString().padStart(2,'0')}`;
+          if(status) status.innerText = `${mode.toUpperCase()}: ${mm}:${ss.toString().padStart(2,'0')}`;
         }
-        document.getElementById(`${idBase}_start`).addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_start`)?.addEventListener('click', ()=>{
           remaining = parseInt(document.getElementById(`${idBase}_work`).value || 25)*60;
           if(timer) clearInterval(timer);
           timer = setInterval(tick, 1000);
           appendBot('Pomodoro iniciado. Boa produtividade!');
         });
-        document.getElementById(`${idBase}_stop`).addEventListener('click', ()=>{
-          if(timer) clearInterval(timer); timer = null; status.innerText = 'Parado';
+        document.getElementById(`${idBase}_stop`)?.addEventListener('click', ()=>{
+          if(timer) clearInterval(timer); timer = null; if(status) status.innerText = 'Parado';
           appendBot('Pomodoro parado.');
         });
       },80);
     },500);
   }
 
-  /* simulate climate: simple mock */
   function simulateClimate(text){
     showTyping();
     setTimeout(()=>{
@@ -1105,20 +1015,17 @@ applyContrast();
     }, 600);
   }
 
-  /* read entire page */
   function readEntirePage(){
-    const raw = document.body.innerText || document.documentElement.innerText;
+    const raw = document.body?.innerText || document.documentElement?.innerText || '';
     const cleaned = raw.replace(/\s+/g,' ').slice(0,2000);
     appendBot('Lendo a página... (máx 2000 chars)'); speak(cleaned);
   }
 
-  /* generate local summary of conversation */
   function generateLocalSummary(){
     const last = state.history.slice(-10).map(h => `${h.role === 'user' ? 'User' : (h.role==='assistant'?'AI':'Sys')}: ${h.text}`).join(' • ');
     return `Resumo (últimas mensagens): ${last || 'nenhuma mensagem'}`;
   }
 
-  /* export history */
   function exportHistory(){
     const data = JSON.stringify(state, null, 2);
     const blob = new Blob([data], {type: 'application/json'});
@@ -1128,7 +1035,6 @@ applyContrast();
     appendBot('Histórico exportado (download iniciado).');
   }
 
-  /* speech: TTS */
   function speak(text){
     try {
       if(!('speechSynthesis' in window)) return;
@@ -1139,7 +1045,6 @@ applyContrast();
     } catch(e){ console.warn('speak fail', e); }
   }
 
-  /* speech: STT */
   let recognition = null;
   try {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1159,7 +1064,6 @@ applyContrast();
         const speech = ev.results[0][0].transcript;
         INPUT.value = speech;
         appendUser(speech);
-        // small delay to simulate thinking
         showTyping();
         setTimeout(()=>{ hideTyping(); handleText(speech); }, 600);
       };
@@ -1167,19 +1071,17 @@ applyContrast();
     }
   }
 
-  /* send flow */
-  FORM.addEventListener('submit', (ev)=> {
+  if(FORM) FORM.addEventListener('submit', (ev)=> {
     ev.preventDefault();
-    const txt = INPUT.value.trim();
+    const txt = INPUT?.value.trim();
     if(!txt) return;
-    INPUT.value = '';
+    if(INPUT) INPUT.value = '';
     appendUser(txt);
     showTyping();
     setTimeout(()=> { hideTyping(); handleText(txt); }, 400);
   });
 
-  /* quick actions */
-  ACTIONS.addEventListener('click', (e)=>{
+  ACTIONS?.addEventListener('click', (e)=>{
     const btn = e.target.closest('button[data-act]');
     if(!btn) return;
     const act = btn.dataset.act;
@@ -1193,61 +1095,51 @@ applyContrast();
     else if(act === 'export') exportHistory();
   });
 
-  /* panel open/close */
-  TOGGLE.addEventListener('click', ()=> {
-    PANEL.style.display = 'flex';
-    PANEL.setAttribute('aria-hidden','false');
+  TOGGLE?.addEventListener('click', ()=> {
+    if(PANEL) PANEL.style.display = 'flex';
+    PANEL?.setAttribute('aria-hidden','false');
     TOGGLE.style.display = 'none';
-    INPUT.focus();
+    INPUT?.focus();
   });
-  CLOSE.addEventListener('click', ()=> {
-    PANEL.style.display = 'none';
-    PANEL.setAttribute('aria-hidden','true');
+  CLOSE?.addEventListener('click', ()=> {
+    if(PANEL) PANEL.style.display = 'none';
+    PANEL?.setAttribute('aria-hidden','true');
     TOGGLE.style.display = 'inline-block';
   });
 
-  /* mode switch */
   MODE.value = state.mode || 'friendly';
-  MODE.addEventListener('change', ()=> { state.mode = MODE.value; localStorage.setItem('flexai_mode', state.mode); appendSystem('Modo: ' + state.mode); });
+  MODE?.addEventListener('change', ()=> { state.mode = MODE.value; localStorage.setItem('flexai_mode', state.mode); appendSystem('Modo: ' + state.mode); });
 
-  /* sound toggle */
-  SOUND_BTN.addEventListener('click', ()=> {
+  SOUND_BTN?.addEventListener('click', ()=> {
     state.sound = !state.sound; SOUND_BTN.setAttribute('aria-pressed', state.sound ? 'true' : 'false'); save();
     appendSystem('Leitura automática ' + (state.sound ? 'ativada' : 'desativada'));
   });
 
-  /* open tasks when user hovers cards (integration) */
   document.querySelectorAll('.card').forEach(card=>{
     card.addEventListener('mouseenter', ()=>{
       const title = card.querySelector('.card-title')?.innerText || 'um espaço';
-      // brief assistive hint
       OVERLAY.style.display = 'block';
       OVERLAY.textContent = `Dica da FlexAI: quer informações sobre "${title}"? Pergunte-me!`;
       setTimeout(()=> OVERLAY.style.display = 'none', 2200);
-      // optional: read
       if(state.sound) speak(`Você passou por ${title}`);
     });
   });
 
-  /* small helpers: load previous history on startup */
   renderAll();
   if(state.history.length===0) appendBot(personalityPick('greet'));
 
-  /* expose for debugging */
   window.FlexAIv3 = {
     state,
-    open: ()=> { TOGGLE.click(); },
-    close: ()=> { CLOSE.click(); },
+    open: ()=> { TOGGLE?.click(); },
+    close: ()=> { CLOSE?.click(); },
     speak,
     save
   };
 
-  /* save on unload */
   window.addEventListener('beforeunload', save);
 
 })();
-
 </script>
+
 </body>
 </html>
-
