@@ -930,6 +930,11 @@ const greetRegex = new RegExp(
 if (greetRegex.test(t)) {
   return {intent:"greet_basic"};
 }
+
+    // "O que você faz?" / "Pra que você serve?" / "Como funciona?"
+if(/\b(o que você faz|oque vc faz|pra que serve|como funciona você|como você funciona|que que você faz|qual sua função|o que vc sabe|como você me ajuda|me explica você)\b/i.test(t)){
+    return {intent:"about_ai"};
+}
     // booking / scheduling
     if(/\b(agendar|agenda|marcar|reservar|marcação|marcar uma|marcar para)\b/.test(t)) return {intent:'schedule'};
 
@@ -1107,6 +1112,57 @@ function insultMomReply(){
   return choose(map[mode] || friendly);
 }
 
+function handleAboutAI(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Eu faço um montão de coisas pra te ajudar, lindão! 😄💚\n\n" +
+    "Você pode me pedir para:\n" +
+    "• ✨ Resumir textos\n" +
+    "• 📝 Reformular algo\n" +
+    "• 📚 Ajudar nos estudos\n" +
+    "• 📅 Agendar ações\n" +
+    "• ⬇️ Exportar o histórico\n\n" +
+    "Também dá pra clicar nas opções aqui embaixo 👇 pra facilitar!"
+  ];
+
+  const pro = [
+    "Posso executar diversas funções para agilizar sua experiência:\n\n" +
+    "• Resumos profissionais\n" +
+    "• Reformulação de textos\n" +
+    "• Análises e explicações\n" +
+    "• Geração de tarefas\n" +
+    "• Agendamentos\n\n" +
+    "Você também pode utilizar os botões abaixo para atalhos rápidos."
+  ];
+
+  const coach = [
+    "Eu tô aqui pra te ajudar a evoluir! 💪🔥\n\n" +
+    "Posso:\n" +
+    "• Organizar seu dia\n" +
+    "• Criar planos de estudo\n" +
+    "• Ajudar na produtividade\n" +
+    "• Explicar conteúdos\n" +
+    "• Reformular textos e ideias\n\n" +
+    "E se quiser agilizar, usa os botões aqui embaixo! 👇"
+  ];
+
+  const fun = [
+    "Faço TANTA coisa que parece até magia kkkkk 🔮🤖🔥\n\n" +
+    "Mando bem em:\n" +
+    "• Resumir fofoquinha (ou texto sério também)… 😏\n" +
+    "• Reformular qualquer coisa\n" +
+    "• Te ajudar a estudar\n" +
+    "• Criar tarefas\n" +
+    "• Ler a página pra você\n" +
+    "• Te lembrar coisas\n\n" +
+    "Ou só clica aí nos botões estilosos que eu deixei 👇"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(map[mode] || friendly);
+}
+
     // routing by intent
     switch(it.intent){
       case 'greet':
@@ -1117,6 +1173,9 @@ function insultMomReply(){
         return;
       case 'insult':
         handleInsult(text);
+        return;
+      case 'about_ai':
+        handleAboutAI();
         return;
       case 'schedule':
         openSchedulerPrompt(text);
