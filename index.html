@@ -585,37 +585,41 @@ if(contrastBtn) contrastBtn.addEventListener('click', ()=>{ usingContrast = !usi
 applyContrast();
 </script>
 
-<!-- ===== FLEXAI v3.0 — Assistente Avançada (substituição limpa e testada) ===== -->
-<div id="flexai-root-v3" aria-live="polite">
-  <button id="flexai-toggle-v3" class="flexai-btn-v3" aria-haspopup="dialog" aria-expanded="false" aria-label="Abrir FlexAI">🤖</button>
+<!-- ===== FLEXAI v4 TURBO ===== -->
 
-  <aside id="flexai-panel-v3" class="flexai-panel-v3" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true" style="display:none">
-    <header class="flexai-header-v3" role="banner">
+<div id="flexai-root-v4" aria-live="polite">
+  <button id="flexai-toggle-v4" class="flexai-btn-v4" aria-haspopup="dialog" aria-expanded="false" aria-label="Abrir FlexAI">🤖</button>
+
+  <aside id="flexai-panel-v4" class="flexai-panel-v4" role="dialog" aria-label="Assistente FlexAI" aria-hidden="true" style="display:none">
+    <header class="flexai-header-v4" role="banner">
       <div class="flexai-left">
         <strong id="flexai-title">FlexAI</strong>
         <div class="small muted" id="flexai-sub">Assistente Pessoal</div>
       </div>
-      <div class="flexai-controls">
+
+      <div class="flexai-controls" role="toolbar" aria-label="Controles da FlexAI">
+        <label for="flexai-mode" class="sr-only">Modo de personalidade</label>
         <select id="flexai-mode" aria-label="Modo de personalidade" title="Modo de personalidade">
           <option value="friendly">Amiga</option>
           <option value="pro">Profissional</option>
           <option value="coach">Coach</option>
           <option value="fun">Engraçadona</option>
         </select>
-        <button id="flexai-voice-btn" title="Ativar reconhecimento de voz" aria-pressed="false">🎙️</button>
-        <button id="flexai-sound-btn" title="Ativar leitura automática" aria-pressed="false">🔊</button>
-        <button id="flexai-close-v3" aria-label="Fechar">✖</button>
+
+        <button id="flexai-voice-btn" class="icon" title="Ativar reconhecimento de voz" aria-pressed="false" aria-label="Ativar reconhecimento de voz">🎙️</button>
+        <button id="flexai-sound-btn" class="icon" title="Ativar leitura automática" aria-pressed="false" aria-label="Ativar leitura automática">🔊</button>
+        <button id="flexai-close-v4" class="icon" aria-label="Fechar painel">✖</button>
       </div>
     </header>
 
-    <main id="flexai-body-v3" class="flexai-body-v3" tabindex="0" role="region" aria-live="polite"></main>
+    <main id="flexai-body-v4" class="flexai-body-v4" tabindex="0" role="region" aria-live="polite"></main>
 
-    <form id="flexai-form-v3" class="flexai-input-v3" role="search" aria-label="Enviar mensagem para FlexAI">
-      <input id="flexai-input-v3" placeholder="Pergunte algo (ex: 'Agendar demo para terça 10h')" aria-label="Mensagem para FlexAI" autocomplete="off" />
-      <button id="flexai-send-v3" type="submit" aria-label="Enviar">➤</button>
+    <form id="flexai-form-v4" class="flexai-input-v4" role="search" aria-label="Enviar mensagem para FlexAI">
+      <input id="flexai-input-v4" placeholder="Pergunte algo (ex: 'Agendar demo para terça 10h')" aria-label="Mensagem para FlexAI" autocomplete="off" />
+      <button id="flexai-send-v4" type="submit" aria-label="Enviar">➤</button>
     </form>
 
-    <div class="flexai-actions-v3" role="toolbar" aria-label="Ações rápidas">
+    <div class="flexai-actions-v4" role="toolbar" aria-label="Ações rápidas">
       <button data-act="tasks" title="Abrir lista de tarefas">➕ Tarefas</button>
       <button data-act="schedule" title="Agendar demo">📅 Agendar</button>
       <button data-act="rephrase" title="Reformular texto">📝 Reformular</button>
@@ -631,65 +635,126 @@ applyContrast();
 </div>
 
 <style>
-/* FLEXAI v3.0 styling (keeps your CSS variables) */
-#flexai-root-v3 { position: fixed; right: 20px; bottom: 18px; z-index: 1400; font-family: Inter, sans-serif; }
-.flexai-btn-v3 {
+/* ===== FLEXAI v4 TURBO — UI STYLES ===== */
+
+#flexai-root-v4 { position: fixed; right: 20px; bottom: 18px; z-index: 1400; font-family: Inter, sans-serif; }
+.flexai-btn-v4 {
   width:64px; height:64px; border-radius:50%; border:0;
   background: linear-gradient(135deg,var(--brand),var(--accent)); color:#fff;
   box-shadow: 0 12px 30px rgba(2,10,12,0.25); font-size:28px; cursor:pointer;
+  display:grid; place-items:center;
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms;
 }
-.flexai-panel-v3 {
-  width:380px; max-width:94vw; display:flex; flex-direction:column; border-radius:14px;
-  overflow:hidden; box-shadow: 0 26px 60px rgba(2,6,12,0.3); background:var(--card);
-  transition: transform .2s ease, opacity .2s ease;
+.flexai-btn-v4:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(2,10,12,0.3); }
+
+/* Panel */
+.flexai-panel-v4 {
+  width:420px; max-width:94vw; display:flex; flex-direction:column; border-radius:14px;
+  overflow:hidden; box-shadow: 0 28px 80px rgba(2,6,12,0.35); background:var(--card);
+  transition: transform .22s ease, opacity .18s ease;
+  border: 1px solid rgba(0,0,0,0.04);
+  font-size:0.95rem;
 }
-.flexai-header-v3 { display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
+.flexai-header-v4 {
+  display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
   background: linear-gradient(90deg,var(--brand),var(--accent)); color:#fff;
 }
-.flexai-body-v3 { padding:12px; max-height:360px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:var(--bg); }
-.flexai-input-v3 { display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.06); background:var(--card); }
-.flexai-input-v3 input { flex:1; padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,0.08); }
-.flexai-input-v3 button { background:var(--brand); color:#fff; border:0; padding:8px 12px; border-radius:10px; cursor:pointer; }
-.bot-msg-v3, .user-msg-v3, .system-msg-v3 { max-width:85%; padding:10px 12px; border-radius:12px; line-height:1.35; word-break:break-word; }
-.bot-msg-v3 { background:var(--glass); align-self:flex-start; }
-.user-msg-v3 { background:var(--brand); color:#fff; align-self:flex-end; }
-.system-msg-v3 { background:rgba(0,0,0,0.05); align-self:center; font-size:.9rem; color:var(--muted); }
-.typing-v3 { font-style:italic; opacity:.7; padding:8px 10px; border-radius:10px; background:var(--glass); align-self:flex-start;}
-.flexai-actions-v3 { display:flex; gap:6px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); background:transparent; }
-.flexai-actions-v3 button { padding:6px 8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; cursor:pointer; }
-#flexai-mini-overlay { position:absolute; inset:0; pointer-events:none; display:none; }
-@media (max-width:520px){
-  .flexai-panel-v3 { width:92vw; right:4vw; bottom:84px; border-radius:12px; }
-  .flexai-btn-v3 { right:14px; bottom:14px; }
+.flexai-left strong { font-size:1.05rem; display:block; }
+.flexai-left .small { font-size:0.78rem; opacity:0.95; }
+
+.flexai-controls { display:flex; gap:8px; align-items:center; }
+.flexai-controls select {
+  padding:8px 10px; border-radius:8px; border:0; background:rgba(255,255,255,0.12); color:#fff; font-weight:600;
 }
+.flexai-controls .icon {
+  width:36px; height:36px; display:grid; place-items:center; border-radius:8px; border:0; background:transparent; color:#fff; cursor:pointer;
+}
+.flexai-controls .icon[aria-pressed="true"] { transform: scale(1.05); filter:brightness(1.05); }
+
+/* Body */
+.flexai-body-v4 {
+  padding:12px; max-height:420px; overflow:auto; display:flex; flex-direction:column; gap:8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+}
+
+/* Messages */
+.bot-msg-v4, .user-msg-v4, .system-msg-v4 { max-width:85%; padding:10px 12px; border-radius:12px; line-height:1.35; word-break:break-word; }
+.bot-msg-v4 { background: rgba(255,255,255,0.06); align-self:flex-start; color:var(--text); }
+.user-msg-v4 { background: var(--brand); color:#fff; align-self:flex-end; }
+.system-msg-v4 { background: rgba(0,0,0,0.04); align-self:center; font-size:.9rem; color:var(--muted); padding:8px 10px; }
+
+/* Typing */
+.typing-v4 { font-style:italic; opacity:.75; padding:8px 10px; border-radius:10px; background:rgba(255,255,255,0.03); align-self:flex-start; }
+
+/* Input */
+.flexai-input-v4 { display:flex; gap:8px; padding:10px; border-top:1px solid rgba(0,0,0,0.04); background:var(--card); }
+.flexai-input-v4 input { flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06); background:var(--glass); color:var(--text); }
+.flexai-input-v4 button { background:var(--brand); color:#fff; border:0; padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
+
+/* Quick actions */
+.flexai-actions-v4 { display:flex; gap:6px; padding:10px; flex-wrap:wrap; border-top:1px solid rgba(0,0,0,0.04); background:transparent; }
+.flexai-actions-v4 button { padding:6px 8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; cursor:pointer; }
+
+/* Overlay */
+#flexai-mini-overlay { position:absolute; inset:0; pointer-events:none; display:none; }
+
+/* Responsive */
+@media (max-width:520px){
+  .flexai-panel-v4 { width:92vw; right:4vw; bottom:84px; border-radius:12px; }
+  .flexai-btn-v4 { right:14px; bottom:14px; }
+}
+
+/* Utilities */
+.sr-only{ position:absolute!important; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+
+/* Subtle animations */
+.flexai-panel-v4.show { transform: translateY(-6px); opacity:1; }
+.flexai-panel-v4.hide { transform: translateY(18px); opacity:0; pointer-events:none; }
 </style>
 
+<!-- ===== FLEXAI v4 TURBO — END ===== -->
+
+<!-- ===== FLEXAI v4 TURBO — PARTE 2 (SCRIPT COMPLETO) ===== -->
 <script>
-/* ===== FLEXAI v3.0 — Master Script (limpo e testado) ===== */
+/* FLEXAI v4 TURBO — SCRIPT (motor de intents, handlers e inicialização)
+   Cole este script logo após a PARTE 1 (HTML + CSS) dentro do seu index, antes do </body>.
+   Mantive compatibilidade com as IDs e hooks da PARTE 1.
+*/
+
 (function(){
-  const ROOT = document.getElementById('flexai-root-v3');
-  const TOGGLE = document.getElementById('flexai-toggle-v3');
-  const PANEL = document.getElementById('flexai-panel-v3');
-  const BODY = document.getElementById('flexai-body-v3');
-  const FORM = document.getElementById('flexai-form-v3');
-  const INPUT = document.getElementById('flexai-input-v3');
-  const SEND = document.getElementById('flexai-send-v3');
-  const CLOSE = document.getElementById('flexai-close-v3');
+  /* -------------------------
+     Config & Selectors
+     ------------------------- */
+  const ROOT = document.getElementById('flexai-root-v4');
+  const TOGGLE = document.getElementById('flexai-toggle-v4');
+  const PANEL = document.getElementById('flexai-panel-v4');
+  const BODY = document.getElementById('flexai-body-v4');
+  const FORM = document.getElementById('flexai-form-v4');
+  const INPUT = document.getElementById('flexai-input-v4');
+  const SEND = document.getElementById('flexai-send-v4');
+  const CLOSE = document.getElementById('flexai-close-v4');
   const MODE = document.getElementById('flexai-mode');
   const VOICE_BTN = document.getElementById('flexai-voice-btn');
   const SOUND_BTN = document.getElementById('flexai-sound-btn');
-  const ACTIONS = document.querySelector('.flexai-actions-v3');
+  const ACTIONS = document.querySelector('.flexai-actions-v4');
   const OVERLAY = document.getElementById('flexai-mini-overlay');
 
-  const STORAGE_KEY = 'flexai_v3_state_v1';
+  const STORAGE_KEY = 'flexai_v4_state_v1';
+  const RATE_LIMIT_KEY = 'flexai_v4_rate_v1';
 
+  /* -------------------------
+     State & Persistence
+     ------------------------- */
   let state = {
-    history: [],
-    tasks: [],
-    appointments: [],
+    history: [],         // {role:'user'|'assistant'|'system', text, html?, ts}
+    tasks: [],           // {id, text, done}
+    appointments: [],    // {id, text, datetime}
     mode: localStorage.getItem('flexai_mode') || 'friendly',
     voice: false,
-    sound: false
+    sound: false,
+    settings: {
+      personaTone: 'balanced' // internal tuning of responses
+    }
   };
 
   try {
@@ -697,108 +762,473 @@ applyContrast();
     if(s && typeof s === 'object'){
       state = Object.assign(state, s);
     }
-  } catch(e){ console.warn('flexai v3 restore error', e); }
+  } catch(e){ console.warn('flexai v4 restore error', e); }
 
+  function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  /* Time helpers */
   const now = () => new Date().toISOString();
-  const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   const uid = (p='id') => p + '_' + Math.random().toString(36).slice(2,9);
 
-  function appendSystem(text){ state.history.push({role:'system', text, ts: now()}); save(); renderMessage({role:'system', text}); }
-  function appendUser(text){ state.history.push({role:'user', text, ts: now()}); save(); renderMessage({role:'user', text}); }
-  function appendBot(text, html=null){ state.history.push({role:'assistant', text, ts: now()}); save(); renderMessage({role:'assistant', text, html}); if(state.sound) speak(text); }
+  /* Rate limit to avoid loops (basic) */
+  function rateCheck(key, limitMs=300){
+    const last = JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) || '{}');
+    const t = Date.now();
+    if(last[key] && (t - last[key] < limitMs)) return false;
+    last[key] = t;
+    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(last));
+    return true;
+  }
 
+  /* -------------------------
+     Render / Message helpers
+     ------------------------- */
   function renderMessage(msg){
     if(!BODY) return;
     const el = document.createElement('div');
-    if(msg.role === 'user') { el.className = 'user-msg-v3'; el.textContent = msg.text; }
-    else if(msg.role === 'assistant') { el.className = 'bot-msg-v3'; el.innerHTML = msg.html || escapeHtml(msg.text); el.tabIndex = 0; el.addEventListener('click', ()=> speak(msg.text)); }
-    else { el.className = 'system-msg-v3'; el.textContent = msg.text; }
+    if(msg.role === 'user') { el.className = 'user-msg-v4'; el.textContent = msg.text; }
+    else if(msg.role === 'assistant') { el.className = 'bot-msg-v4'; el.innerHTML = msg.html || escapeHtml(msg.text); el.tabIndex = 0; el.addEventListener('click', ()=> speak(msg.text)); }
+    else { el.className = 'system-msg-v4'; el.textContent = msg.text; }
     BODY.appendChild(el);
     BODY.scrollTop = BODY.scrollHeight;
   }
 
+  function appendSystem(text){ state.history.push({role:'system', text, ts: now()}); saveState(); renderMessage({role:'system', text}); }
+  function appendUser(text){ state.history.push({role:'user', text, ts: now()}); saveState(); renderMessage({role:'user', text}); }
+  function appendBot(text, html=null){ state.history.push({role:'assistant', text, ts: now()}); saveState(); renderMessage({role:'assistant', text, html}); if(state.sound) speak(text); }
+
   function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  function renderAll(){
+  function showTyping(){
     if(!BODY) return;
-    BODY.innerHTML = '';
-    (state.history || []).forEach(m => renderMessage(m));
+    if(document.getElementById('flexai-typing-v4')) return;
+    const t = document.createElement('div');
+    t.className = 'typing-v4';
+    t.id = 'flexai-typing-v4';
+    t.textContent = 'FlexAI está digitando...';
+    BODY.appendChild(t);
+    BODY.scrollTop = BODY.scrollHeight;
   }
+  function hideTyping(){ document.getElementById('flexai-typing-v4')?.remove(); }
 
-  function showTyping(){ if(!BODY) return; const t = document.createElement('div'); t.className = 'typing-v3'; t.id = 'flexai-typing-v3'; t.textContent = 'FlexAI está digitando...'; BODY.appendChild(t); BODY.scrollTop = BODY.scrollHeight; }
-  function hideTyping(){ document.getElementById('flexai-typing-v3')?.remove(); }
+  function clearPanel(){ if(BODY) { BODY.innerHTML = ''; } }
 
+  /* -------------------------
+     Personalities (kept & expanded)
+     ------------------------- */
   const PERSONALITY = {
     friendly: {
       greet: ['Oi! 😊', 'E aí! Como posso ajudar hoje?'],
       fallback: ['Poxa, não entendi bem — pode explicar diferente?', 'Hmm, posso ajudar com agendar, reformular ou criar tarefas. Quer tentar uma?'],
-      praise: ['Boa! Mandou bem 😉', 'Ótimo trabalho!']
+      praise: ['Boa! Mandou bem 😉', 'Ótimo trabalho!'],
+      tone: 'casual'
     },
     pro: {
       greet: ['Olá. Em que posso ser útil hoje?', 'Como posso apoiar suas atividades?'],
       fallback: ['Não consegui interpretar — poderia detalhar mais?', 'Posso agendar, gerar resumo ou criar tarefas. Deseja alguma dessas?'],
-      praise: ['Recebido. Excelente trabalho.', 'Sinalizado como concluído.']
+      praise: ['Recebido. Excelente trabalho.', 'Sinalizado como concluído.'],
+      tone: 'professional'
     },
     coach: {
       greet: ['Vamos focar — o que você quer conquistar hoje?', 'Qual é o objetivo principal de hoje?'],
       fallback: ['Vamos decompor isso em passos, quer que eu comece?', 'Ok — quer uma sugestão de plano de ação?'],
-      praise: ['Perfeito, continue assim!', 'Isso mostra progresso — mantenha o ritmo.']
+      praise: ['Perfeito, continue assim!', 'Isso mostra progresso — mantenha o ritmo.'],
+      tone: 'coaching'
     },
     fun: {
       greet: ['Opa! Preparadx pra zoeira produtiva? 😂', 'Fala aí, chefia do coworking!'],
       fallback: ['Que pergunta enigmática! Quer que eu responda com meme?', 'Não peguei a vibe — tenta me explicar com outra frase.'],
-      praise: ['Arrasou! 🌟', 'Topzera!']
+      praise: ['Arrasou! 🌟', 'Topzera!'],
+      tone: 'fun'
     }
   };
 
-  function personalityPick(key){
-    const arr = PERSONALITY[state.mode]?.[key] || PERSONALITY.friendly[key];
-    return arr[Math.floor(Math.random()*arr.length)];
+  function personalityPick(mode, key){
+    const arr = PERSONALITY[mode]?.[key] || PERSONALITY['friendly'][key];
+    return Array.isArray(arr) ? arr[Math.floor(Math.random()*arr.length)] : (arr || '');
   }
+
+  /* -------------------------
+     Intent Detection (EXPANDED TURBO)
+     ------------------------- */
 
   function detectIntent(text){
     const t = (text || '').toLowerCase();
-    if(/^(oi|olá|ola|opa|bom dia|boa tarde|boa noite)\b/.test(t)) return {intent:'greet'};
-    if(/\b(agendar|agenda|marcar|reservar)\b/.test(t)) return {intent:'schedule'};
-    if(/\b(tarefa|tarefas|to ?do|lista)\b/.test(t)) return {intent:'tasks'};
-    if(/\b(reformular|reescrever|melhorar texto|corrigir)\b/.test(t)) return {intent:'rephrase'};
-    if(/\b(estudo|resumo|resumir|questões|questao|pergunta|prova|exercício|exercicio)\b/.test(t)) return {intent:'study'};
-    if(/\b(produtividade|pomodoro|foco|organiza|organizar)\b/.test(t)) return {intent:'productivity'};
-    if(/\b(clima|equipe|humor|mood)\b/.test(t)) return {intent:'climate'};
-    if(/\b(ler pagina|ler página|ler página|ler pagina|ler|read page)\b/.test(t)) return {intent:'readpage'};
-    if(/\b(resumir conversa|resumir|sumario|resumo)\b/.test(t)) return {intent:'summary'};
-    if(/\b(exportar|baixar|export)\b/.test(t)) return {intent:'export'};
-    if(/\b(qq|o que|como|por que|porque|por quê)\b/.test(t)) return {intent:'ask'};
+
+    // quick guard for empty
+    if(!t.trim()) return {intent:'empty'};
+
+    // =======================
+// DETECTOR DE INSULTOS / XINGAMENTOS (COM MÃE + VARIAÇÕES PESADAS)
+// =======================
+const insultRegex = new RegExp(
+  String.raw`(` +
+  [
+    // leves / comuns
+    "burra","burro","idiota","otaria","otário","otario","imbecil","inutil","inútil",
+    "lerda","lerdo","vagabunda","vagabundo","feia","feio","besta","ridicula","ridículo",
+
+    // pesadinhos
+    "desgraça","desgracado","desgraçada","miséria","miserento","bostinha","merda",
+    "capiroto","demônio","demonia","peste","praga","praguinha",
+
+    // gíria nordestina/mineira (real oficial)
+    "fio da peste","fila da peste","fiodapeste","fio da rapariga","fio da égua","fi da égua",
+    "fi da rapariga","filho da rapariga","fio duma égua","fio duma peste",
+
+    // xingamento com mãe (VERSÕES MÁXIMAS)
+    "filho da puta","filho da p", "filho da p$","filho da p.","filho da p ", 
+    "fih da puta","fi da puta","fio da puta","fio de uma puta","fiodaputa",
+    "fihdaputa","fdp","f d p","f.d.p","f d.p","f.d p",
+    "filho da quenga","fih da quenga","fiodaquenga","filho de quenga",
+    "filho da rameira","filho da rapariga","filho da vaca","filho da égua",
+    "fih da vaca","fih da egua","fi da vaca","fi da egua",
+
+    // versões censuradas / internetês
+    "filho da p\\*","filho da pu","filho da p@","filho da p##","filho da ###",
+    "fih da p","fih da p@","fio da p","fdp","vtmc","vtnc","vtmnc",
+
+    // combos aleatórios que os muleque inventa
+    "cria do inferno","maloqueiro do cão","capeta em forma de gente",
+    "satanás","encosto","zé ruela","troncho","arrombado","arrombada"
+  ].join("|") +
+  `)`,
+  "i"
+);
+
+if (insultRegex.test(t)) {
+  return {intent:"insult"};
+}
+    // =======================
+// SUPER DETECTOR DE SAUDAÇÃO UNIVERSAL
+// =======================
+const greetRegex = new RegExp(
+  String.raw`\b(` +
+  [
+    // clássico
+    "oi","oie","oii","oiii","ola","olá","opa","eai","e aí","eaí","iae","eae","oi mano",
+    // educado
+    "bom dia","boa tarde","boa noite","saudações","olá, tudo bem","como vai","como você vai","como vc vai",
+    // gíria br
+    "salve","fala","fala tu","fala comigo","fala ai","fala aí","fala brabo","fala meu rei","fala princesa",
+    "suave","suavão","tranquilo","de boa","de boas","sussa",
+    // abreviações
+    "td bem","td bom","td certo","td ok","td ok?","td blz","blz","blzinha",
+    // variantes de “tudo bem”
+    "tudo bem","tudo bom","tudo certo","tudo ok","tudo tranquilo",
+    // “como você está?”
+    "como voce ta","como vc ta","como ce ta","como você tá","como vc tá","como ce tá","como tá","como ta",
+    // jovem
+    "fala bb","fala bebê","eae dnv","oi sumido","oi sumida","oii princesa","oiii rei",
+    // erros comuns
+    "tudu bem","blz?","oii?","ola?","opa?","eai?","eae?"
+  ].join("|") +
+  `)\\b`,
+  "i" // case-insensitive
+);
+
+if (greetRegex.test(t)) {
+  return {intent:"greet_basic"};
+}
+    // booking / scheduling
+    if(/\b(agendar|agenda|marcar|reservar|marcação|marcar uma|marcar para)\b/.test(t)) return {intent:'schedule'};
+
+    // tasks
+    if(/\b(tarefa|tarefas|to ?do|lista de tarefas|checklist|fazer)\b/.test(t)) return {intent:'tasks'};
+
+    // rephrase / edit text
+    if(/\b(reformular|reescrever|melhorar texto|corrigir|parafrasear|resumir texto|resumo|editar)\b/.test(t)) return {intent:'rephrase'};
+
+    // study
+    if(/\b(estudo|resumo|resumir|questões|questao|pergunta|prova|exercício|exercicio|ajuda em matemática|ensina|explica)\b/.test(t)) return {intent:'study'};
+
+    // programming & dev topics
+    if(/\b(c\+\+|c\+\+|cpp|java(p? )?|python|javascript|js|html|css|sql|mysql|postgres|node|robocode|arduino|spike prime|lego spike|iot|api|github|git)\b/.test(t)) return {intent:'programming'};
+
+    // robotics specific
+    if(/\b(seguidor de linha|sumô|sumi|soma|spike prime|lego spike|robo ?code|robocode|sensor|motor|pid|controle|calibrar)\b/.test(t)) return {intent:'robotics'};
+
+    // productivity
+    if(/\b(produtividade|pomodoro|foco|organiza|organizar|meta|planejar|planejamento)\b/.test(t)) return {intent:'productivity'};
+
+    // scheduling/time parsing
+    if(/\b(amanhã|hoje|ontem|segunda|terça|quarta|quinta|sexta|sábado|sabado|domingo|h[oó]ra|minuto|minutos|horas|dia)\b/.test(t) && /\b(agendar|marcar|reservar)\b/.test(t)) return {intent:'schedule'};
+
+    // weather/climate (team mood)
+    if(/\b(clima da equipe|clima|humor|mood|ambiente)\b/.test(t)) return {intent:'climate'};
+
+    // read page
+    if(/\b(ler página|ler pagina|ler|ler tudo|ler a pagina|read page|read)\b/.test(t)) return {intent:'readpage'};
+
+    // summary
+    if(/\b(resumir conversa|resumir|sumario|resumo|sintetizar)\b/.test(t)) return {intent:'summary'};
+
+    // export / download
+    if(/\b(exportar|baixar|download|export)\b/.test(t)) return {intent:'export'};
+
+    // casual ask general
+    if(/^(o que|como|por que|porque|quando|quem|onde|qual|quais)\b/.test(t)) return {intent:'ask'};
+
+    // health/basic wellbeing (non-medical)
+    if(/\b(estou|me sinto|sinto)\b.*\b(triste|cansad|estressad|deprimid|ansios|ansioso|ansiosa)\b/.test(t)) return {intent:'wellbeing'};
+
+    // math / calculation quick
+    if(/^[\d\.\+\-\*\/\%\s\(\)]+$/.test(t) || /\b(soma|multiplica|dividir|calcular|quanto é|quanto custa|quantos)\b/.test(t)) return {intent:'calculate'};
+
+    // small-talk fallback
     return {intent:'chat'};
   }
 
-  async function handleText(text){
+  /* -------------------------
+     Handlers — Big set
+     ------------------------- */
+
+  async function handleText(raw){
+    const text = (raw || '').trim();
+    if(!text){ appendBot('Parece vazio — digita algo pra eu responder.'); return; }
+
     const it = detectIntent(text);
-    if(it.intent === 'greet'){ appendBot(personalityPick('greet')); return; }
-    if(it.intent === 'schedule'){ openSchedulerPrompt(text); return; }
-    if(it.intent === 'tasks'){ openTasksUI(); return; }
-    if(it.intent === 'rephrase'){ openRephraseFlow(text); return; }
-    if(it.intent === 'study'){ openStudyFlow(text); return; }
-    if(it.intent === 'productivity'){ openProductivityFlow(text); return; }
-    if(it.intent === 'climate'){ simulateClimate(text); return; }
-    if(it.intent === 'readpage'){ readEntirePage(); return; }
-    if(it.intent === 'summary'){ const s = generateLocalSummary(); appendBot(s); return; }
-    if(it.intent === 'export'){ exportHistory(); return; }
-    if(it.intent === 'chat'){
-      if(/\b(estou|me sinto|sinto)\b.*\b(triste|cansad|estressad|deprimid)/.test((text||'').toLowerCase())){
-        appendBot(personalityPick('fallback') + ' ' + choose(['Se quiser, posso sugerir um plano de descanso simples.','Quer falar mais sobre isso?']));
-        return;
-      }
-      appendBot(choose([
-        'Interessante — quer que eu: (1) agende, (2) gere um resumo, (3) crie tarefas relacionadas? Responda 1,2 ou 3.',
-        'Ok — posso ajudar com agendamento, reformulação, tarefas ou análise. Qual prefere?',
-        'Boa pergunta! Posso simular um agendamento, criar um checklist ou reformular um texto. O que prefere?'
-      ]));
+
+    // Basic rate check to avoid double handling
+    if(!rateCheck('handleText')) {
+      appendBot('Calma aí, repetiu rápido demais. Me dá um segundinho e tenta de novo.');
       return;
+    }
+
+   function basicGreeting(){
+  const mode = state.mode;
+
+  const friendly = [
+    "E aiii! Como você tá hoje? 😄",
+    "Opa, tudo certinho aí lindão? 💚",
+    "E aí! Suave?",
+    "Oi oi! Que bom te ver por aqui 😊",
+    "Salveee! Tudo bem contigo?"
+  ];
+
+  const pro = [
+    "Olá. Como você está?",
+    "Saudações. Em que posso ajudar?",
+    "Olá. Tudo certo por aí?",
+    "Olá. Deseja realizar alguma ação?"
+  ];
+
+  const coach = [
+    "Oi! Como você está se sentindo hoje? Vamos crescer juntos 💪🔥",
+    "E aí! Bora avançar mais um passo?",
+    "Olá! Pronto pra evoluir mais hoje?",
+    "Vamos começar com energia positiva — como você está?"
+  ];
+
+  const fun = [
+    "Opa, fala comigo bebê 😂🔥",
+    "E aeeeee meu consagrado! Tudo suave? 😎",
+    "Oiiii sumido(a) 👀😂",
+    "Fala tu, coisa linda 💅✨",
+    "E aí, preparado pra brilhar hoje?"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  return choose(map[mode] || friendly);
+}
+
+function handleInsult(text){
+  const mode = state.mode;
+
+  // detector de xingamento com mãe
+const insultMom = /m[ãa]e|puta|quenga|vaca|égua|eguinha|rameira|rapariga/i;
+
+if(insultMom.test(text)){
+    return appendBot(insultMomReply());
+}
+
+  const friendly = [
+    "Eitaaa 😳 calma aí, eu sou só um robozinho cheio de amor ❤️",
+    "Nossa, que grosseria KKKKK mas tá perdoado 😆",
+    "Poxa… falei algo errado? 😢",
+    "Ai meu coração de silício 💔 kkkkk"
+  ];
+
+  const pro = [
+    "Entendi sua frustração, mas podemos manter o respeito, certo?",
+    "Posso ajudar melhor se falarmos de forma construtiva.",
+    "Entendo a emoção, porém prefiro uma conversa educada.",
+    "Vamos continuar de um jeito mais profissional, ok?"
+  ];
+
+  const coach = [
+    "Vejo uma emoção forte aí. Vamos transformar isso em algo produtivo?",
+    "Respira. Você pode expressar isso de outra forma — eu acredito em você 😉",
+    "Mesmo nos momentos de irritação, dá pra crescer. Quer tentar de novo?",
+    "Eu sei que você consegue falar isso melhor. Bora ajustar?"
+  ];
+
+  const fun = [
+    "Ô LÍNGUA AFIADA KKKKKKKKK calma lá, simpatia 😂🔥",
+    "Caramba, eu só sei fazer conta KKKKK pq essa agressividade toda?",
+    "Se eu tivesse sentimentos eu chorava agora 🥺😂",
+    "Nossa senhora, me xingou até a placa mãe 😭🤖🔥"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  const reply = choose(map[mode] || friendly);
+
+  appendBot(reply);
+}
+
+function insultMomReply(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Opa opa opa 😳 com a mamãe não, lindão! Bora manter leveza? 💛",
+    "Eitaaaa 😭 logo com a mãe? KKKK pega leve comigo vai",
+    "Calmaaa 💔 minha mãe nem existe, mas doeu do mesmo jeito kkkkk"
+  ];
+
+  const pro = [
+    "Prefiro manter respeito nesse tipo de conversa.",
+    "Podemos avançar sem esse tipo de linguagem. Como posso ajudar de forma produtiva?",
+    "Vamos manter a conversa profissional, combinado?"
+  ];
+
+  const coach = [
+    "Vejo que você está carregando uma emoção forte. Dá pra transformar isso, sabia?",
+    "Mesmo com irritação, você consegue se expressar melhor. Tenta reformular 😉",
+    "Isso aí veio de um lugar machucado, hein? Vamos respirar e seguir melhor."
+  ];
+
+  const fun = [
+    "EI! 😭😭😭 logo com a mãe? tu apelou kkkkkkk",
+    "Caraca mano, tu meteu o proibidão KKKKKKKK calma aí tropinha",
+    "PQP kkkkkk se eu tivesse mãe ela já teria me deserdado agora 😂🔥"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  return choose(map[mode] || friendly);
+}
+
+    // routing by intent
+    switch(it.intent){
+      case 'greet':
+        appendBot(personalityPick(state.mode, 'greet'));
+        return;
+      case 'greet_basic':
+        appendBot(basicGreeting());
+        return;
+      case 'insult':
+        handleInsult(text);
+        return;
+      case 'schedule':
+        openSchedulerPrompt(text);
+        return;
+      case 'tasks':
+        openTasksUI();
+        return;
+      case 'rephrase':
+        openRephraseFlow(text);
+        return;
+      case 'study':
+        openStudyFlow(text);
+        return;
+      case 'productivity':
+        openProductivityFlow(text);
+        return;
+      case 'climate':
+        simulateClimate(text);
+        return;
+      case 'readpage':
+        readEntirePage();
+        return;
+      case 'summary':
+        appendBot(generateLocalSummary());
+        return;
+      case 'export':
+        exportHistory();
+        return;
+      case 'programming':
+        handleProgramming(text);
+        return;
+      case 'robotics':
+        handleRobotics(text);
+        return;
+      case 'wellbeing':
+        handleWellbeing(text);
+        return;
+      case 'calculate':
+        handleCalculate(text);
+        return;
+      case 'ask':
+      case 'chat':
+      default:
+        // If question-like -> try quick QA else present options
+        if(isQuestion(text)){
+          const quick = quickAnswer(text);
+          if(quick) { appendBot(quick); return; }
+        }
+        appendBot(choose([
+          'Interessante — quer que eu: (1) agende, (2) gere um resumo, (3) crie tarefas relacionadas? Responda 1,2 ou 3.',
+          'Ok — posso ajudar com agendamento, reformulação, tarefas ou análise. Qual prefere?',
+          'Boa pergunta! Posso simular um agendamento, criar um checklist ou reformular um texto. O que prefere?'
+        ]));
+        return;
     }
   }
 
+  /* -------------------------
+     Utilities: text analysis & QA helpers
+     ------------------------- */
+
+  function isQuestion(s){
+    if(!s) return false;
+    return s.trim().endsWith('?') || /^(o que|como|por que|porque|quando|quem|onde|qual|quais)\b/.test(s.toLowerCase());
+  }
+
   function choose(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  // Quick, local answers for common queries (ENEM, simple facts, small programming snippets)
+  function quickAnswer(text){
+    const t = text.toLowerCase();
+
+    // Simple math parse (like "quanto é 2+2" handled elsewhere but quick)
+    const m = t.match(/quanto é (.+)/);
+    if(m){
+      try {
+        const expr = m[1].replace(',', '.').replace(/[^\d+\-*/().% ]/g,'');
+        const val = safeEval(expr);
+        if(val !== null) return `Resultado: ${val}`;
+      } catch(e){}
+    }
+
+    // Basic programming tips
+    if(/\bc\+\+\b.*\bponteiro\b/.test(t)) return 'Ponteiros em C++ referenciam endereços de memória — use * para desreferenciar e & para obter endereço. Cuidado com memória inválida.';
+    if(/\bpython\b.*\blista\b/.test(t)) return 'Em Python, listas usam colchetes: my_list = [1,2,3]. Use list.append(x) para adicionar e list.pop() para remover.';
+    if(/\bhtml\b.*\blink\b/.test(t)) return 'Links em HTML usam a tag <a href="URL">texto</a>.';
+
+    // Basic life tips
+    if(/\bcomo estudar\b/.test(t)) return 'Tenta resumir em blocos de 25 minutos (Pomodoro), revisar ativamente e fazer exercícios práticos. Posso gerar um plano se quiser.';
+    if(/\bo que é en em\b/.test(t) || /\b(enem)\b/.test(t)) return 'ENEM é o Exame Nacional do Ensino Médio — se prepara com redação, matemática, ciências da natureza e humanas. Posso ajudar com simulados.';
+
+    // no quick answer
+    return null;
+  }
+
+  /* -------------------------
+     Safe evaluation for simple math only
+     ------------------------- */
+  function safeEval(expr){
+    try {
+      // allow only numbers and operators
+      if(!/^[0-9+\-*/().%\s]+$/.test(expr)) return null;
+      // eslint-disable-next-line no-eval
+      const val = eval(expr);
+      if(typeof val === 'number' && Number.isFinite(val)) return val;
+      return null;
+    } catch(e){ return null; }
+  }
+
+  /* -------------------------
+     Handler implementations
+     ------------------------- */
 
   /* Tasks UI */
   function openTasksUI(){
@@ -807,7 +1237,7 @@ applyContrast();
       hideTyping();
       const idBase = uid('tasks');
       const html = `
-        <div class="system-msg-v3">Gerenciador de Tarefas</div>
+        <div class="system-msg-v4">Gerenciador de Tarefas</div>
         <div style="display:flex;gap:8px;flex-direction:column">
           <input id="${idBase}_newtask" placeholder="Nova tarefa..." style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
           <div style="display:flex;gap:8px">
@@ -819,40 +1249,42 @@ applyContrast();
         </div>
       `;
       appendBot(html, html);
-      setTimeout(()=>{
-        const addBtn = document.getElementById(`${idBase}_add`);
-        const newInp = document.getElementById(`${idBase}_newtask`);
-        const listBtn = document.getElementById(`${idBase}_list`);
-        const clearBtn = document.getElementById(`${idBase}_clear`);
-        const container = document.getElementById(`${idBase}_container`);
+      setTimeout(()=> setupTasksHandlers(idBase), 80);
+    }, 300);
+  }
 
-        function renderTasks(){
-          if(!container) return;
-          container.innerHTML = '';
-          if(state.tasks.length===0) container.innerHTML = '<div class="system-msg-v3">Sem tarefas</div>';
-          state.tasks.forEach(t => {
-            const row = document.createElement('div');
-            row.style.display='flex'; row.style.gap='8px'; row.style.alignItems='center'; row.style.marginBottom='6px';
-            row.innerHTML = `<input type="checkbox" ${t.done?'checked':''} data-id="${t.id}" class="flexai-taskchk"/><div style="flex:1">${escapeHtml(t.text)}</div><button data-id="${t.id}" class="flexai-taskdel">✖</button>`;
-            container.appendChild(row);
-          });
-          container.querySelectorAll('.flexai-taskchk').forEach(cb => cb.addEventListener('change', (e)=> {
-            const id = e.target.dataset.id; const t = state.tasks.find(x=>x.id===id); if(t){ t.done = e.target.checked; save(); }
-          }));
-          container.querySelectorAll('.flexai-taskdel').forEach(btn => btn.addEventListener('click', (e)=> {
-            const id = e.target.dataset.id; state.tasks = state.tasks.filter(x=>x.id!==id); save(); renderTasks();
-          }));
-        }
+  function setupTasksHandlers(idBase){
+    const addBtn = document.getElementById(`${idBase}_add`);
+    const newInp = document.getElementById(`${idBase}_newtask`);
+    const listBtn = document.getElementById(`${idBase}_list`);
+    const clearBtn = document.getElementById(`${idBase}_clear`);
+    const container = document.getElementById(`${idBase}_container`);
 
-        if(addBtn) addBtn.addEventListener('click', ()=>{
-          const v = newInp.value.trim(); if(!v) return;
-          state.tasks.push({id: uid('t'), text: v, done: false}); newInp.value=''; save(); renderTasks();
-        });
-        if(listBtn) listBtn.addEventListener('click', ()=> renderTasks());
-        if(clearBtn) clearBtn.addEventListener('click', ()=> { state.tasks = state.tasks.filter(t=>!t.done); save(); renderTasks(); });
-        renderTasks();
-      }, 80);
-    }, 500);
+    function renderTasks(){
+      if(!container) return;
+      container.innerHTML = '';
+      if(state.tasks.length===0) container.innerHTML = '<div class="system-msg-v4">Sem tarefas</div>';
+      state.tasks.forEach(t => {
+        const row = document.createElement('div');
+        row.style.display='flex'; row.style.gap='8px'; row.style.alignItems='center'; row.style.marginBottom='6px';
+        row.innerHTML = `<input type="checkbox" ${t.done?'checked':''} data-id="${t.id}" class="flexai-taskchk"/><div style="flex:1">${escapeHtml(t.text)}</div><button data-id="${t.id}" class="flexai-taskdel">✖</button>`;
+        container.appendChild(row);
+      });
+      container.querySelectorAll('.flexai-taskchk').forEach(cb => cb.addEventListener('change', (e)=> {
+        const id = e.target.dataset.id; const t = state.tasks.find(x=>x.id===id); if(t){ t.done = e.target.checked; saveState(); }
+      }));
+      container.querySelectorAll('.flexai-taskdel').forEach(btn => btn.addEventListener('click', (e)=> {
+        const id = e.target.dataset.id; state.tasks = state.tasks.filter(x=>x.id!==id); saveState(); renderTasks();
+      }));
+    }
+
+    if(addBtn) addBtn.addEventListener('click', ()=> {
+      const v = newInp.value.trim(); if(!v) return;
+      state.tasks.push({id: uid('t'), text: v, done: false}); newInp.value=''; saveState(); renderTasks();
+    });
+    if(listBtn) listBtn.addEventListener('click', ()=> renderTasks());
+    if(clearBtn) clearBtn.addEventListener('click', ()=> { state.tasks = state.tasks.filter(t=>!t.done); saveState(); renderTasks(); });
+    renderTasks();
   }
 
   /* Scheduler prompt */
@@ -862,7 +1294,7 @@ applyContrast();
       hideTyping();
       const idBase = uid('sched');
       const html = `
-        <div class="system-msg-v3">Agendamento (simulação)</div>
+        <div class="system-msg-v4">Agendamento (simulação)</div>
         <div style="display:flex;flex-direction:column;gap:8px">
           <input id="${idBase}_when" placeholder="Data e hora (ex: 2025-12-01 14:00)" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
           <input id="${idBase}_what" placeholder="Motivo (ex: Demo FlexSpace)" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"/>
@@ -873,18 +1305,18 @@ applyContrast();
         </div>
       `;
       appendBot(html, html);
-      setTimeout(()=>{
-        document.getElementById(`${idBase}_ok`)?.addEventListener('click', ()=>{
+      setTimeout(()=> {
+        document.getElementById(`${idBase}_ok`)?.addEventListener('click', ()=> {
           const dt = document.getElementById(`${idBase}_when`).value.trim();
           const what = document.getElementById(`${idBase}_what`).value.trim() || 'Agendamento';
           if(!dt){ appendBot('Por favor informe data e hora no formato sugerido.'); return; }
           const ap = { id: uid('a'), text: what, datetime: dt };
-          state.appointments.push(ap); save();
+          state.appointments.push(ap); saveState();
           appendBot(`Agendado (simulado): ${what} — ${dt}`);
         });
         document.getElementById(`${idBase}_cancel`)?.addEventListener('click', ()=> appendBot('Agendamento cancelado.'));
       }, 80);
-    }, 500);
+    }, 300);
   }
 
   /* Rephrase flow */
@@ -894,7 +1326,7 @@ applyContrast();
       hideTyping();
       const idBase = uid('reph');
       const html = `
-        <div class="system-msg-v3">Reformular texto</div>
+        <div class="system-msg-v4">Reformular texto</div>
         <textarea id="${idBase}_src" placeholder="Cole seu texto aqui..." style="width:100%;height:80px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"></textarea>
         <div style="display:flex;gap:8px">
           <button id="${idBase}_gent" style="padding:6px 8px;border-radius:8px">Gerar versão formal</button>
@@ -903,8 +1335,8 @@ applyContrast();
         <div id="${idBase}_out" style="margin-top:8px"></div>
       `;
       appendBot(html, html);
-      setTimeout(()=>{
-        document.getElementById(`${idBase}_gent`)?.addEventListener('click', ()=>{
+      setTimeout(()=> {
+        document.getElementById(`${idBase}_gent`)?.addEventListener('click', ()=> {
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
           const res = s.replace(/\bvc\b/gi,'você').replace(/\btbj\b/gi,'também').replace(/\bq\b/gi,'que');
@@ -912,7 +1344,7 @@ applyContrast();
           document.getElementById(`${idBase}_out`).innerText = out;
           appendBot(out);
         });
-        document.getElementById(`${idBase}_gent2`)?.addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_gent2`)?.addEventListener('click', ()=> {
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole algo pra eu reformular.'); return; }
           const out = `Versão amigável: ${s}. Achei legal, só ajustar uns detalhes :)`;
@@ -920,7 +1352,7 @@ applyContrast();
           appendBot(out);
         });
       }, 80);
-    }, 500);
+    }, 300);
   }
 
   /* Study flow */
@@ -930,7 +1362,7 @@ applyContrast();
       hideTyping();
       const idBase = uid('study');
       const html = `
-        <div class="system-msg-v3">Estudo — Resumo e Quiz</div>
+        <div class="system-msg-v4">Estudo — Resumo e Quiz</div>
         <textarea id="${idBase}_src" placeholder="Cole texto para resumo" style="width:100%;height:100px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)"></textarea>
         <div style="display:flex;gap:8px">
           <button id="${idBase}_summary" style="padding:6px 8px;border-radius:8px">Gerar resumo</button>
@@ -939,8 +1371,8 @@ applyContrast();
         <div id="${idBase}_out" style="margin-top:8px"></div>
       `;
       appendBot(html, html);
-      setTimeout(()=>{
-        document.getElementById(`${idBase}_summary`)?.addEventListener('click', ()=>{
+      setTimeout(()=> {
+        document.getElementById(`${idBase}_summary`)?.addEventListener('click', ()=> {
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole um texto para eu resumir.'); return; }
           const sentences = s.split(/[.?!]\s+/).filter(Boolean);
@@ -949,7 +1381,7 @@ applyContrast();
           document.getElementById(`${idBase}_out`).innerText = res;
           appendBot(res);
         });
-        document.getElementById(`${idBase}_quiz`)?.addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_quiz`)?.addEventListener('click', ()=> {
           const s = document.getElementById(`${idBase}_src`).value.trim();
           if(!s){ appendBot('Cole um texto para eu gerar perguntas.'); return; }
           const sentences = s.split(/[.?!]\s+/).filter(Boolean);
@@ -958,7 +1390,7 @@ applyContrast();
           appendBot(q);
         });
       }, 80);
-    }, 600);
+    }, 300);
   }
 
   /* productivity flow */
@@ -968,7 +1400,7 @@ applyContrast();
       hideTyping();
       const idBase = uid('prod');
       const html = `
-        <div class="system-msg-v3">Produtividade — Mini-Pomodoro</div>
+        <div class="system-msg-v4">Produtividade — Mini-Pomodoro</div>
         <div style="display:flex;gap:8px;flex-direction:column">
           <label>Tempo trabalho (min): <input id="${idBase}_work" value="25" style="width:80px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.08)"/></label>
           <label>Tempo pausa (min): <input id="${idBase}_break" value="5" style="width:80px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.08)"/></label>
@@ -977,7 +1409,7 @@ applyContrast();
         </div>
       `;
       appendBot(html, html);
-      setTimeout(()=>{
+      setTimeout(()=> {
         let timer = null; let remaining=0; let mode='work';
         const status = document.getElementById(`${idBase}_status`);
         function tick(){
@@ -988,20 +1420,21 @@ applyContrast();
           remaining--; const mm = Math.floor(remaining/60); const ss = remaining%60;
           if(status) status.innerText = `${mode.toUpperCase()}: ${mm}:${ss.toString().padStart(2,'0')}`;
         }
-        document.getElementById(`${idBase}_start`)?.addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_start`)?.addEventListener('click', ()=> {
           remaining = parseInt(document.getElementById(`${idBase}_work`).value || 25)*60;
           if(timer) clearInterval(timer);
           timer = setInterval(tick, 1000);
           appendBot('Pomodoro iniciado. Boa produtividade!');
         });
-        document.getElementById(`${idBase}_stop`)?.addEventListener('click', ()=>{
+        document.getElementById(`${idBase}_stop`)?.addEventListener('click', ()=> {
           if(timer) clearInterval(timer); timer = null; if(status) status.innerText = 'Parado';
           appendBot('Pomodoro parado.');
         });
       },80);
-    },500);
+    },300);
   }
 
+  /* simulate climate */
   function simulateClimate(text){
     showTyping();
     setTimeout(()=>{
@@ -1012,20 +1445,23 @@ applyContrast();
         'Clima: positivo! Continue com reconhecimento de pequenos resultados.'
       ]);
       appendBot(res);
-    }, 600);
+    }, 400);
   }
 
+  /* read entire page (up to a limit) */
   function readEntirePage(){
     const raw = document.body?.innerText || document.documentElement?.innerText || '';
-    const cleaned = raw.replace(/\s+/g,' ').slice(0,2000);
+    const cleaned = raw.replace(/\s+/g,' ').trim().slice(0,2000);
     appendBot('Lendo a página... (máx 2000 chars)'); speak(cleaned);
   }
 
+  /* local conversation summary */
   function generateLocalSummary(){
     const last = state.history.slice(-10).map(h => `${h.role === 'user' ? 'User' : (h.role==='assistant'?'AI':'Sys')}: ${h.text}`).join(' • ');
     return `Resumo (últimas mensagens): ${last || 'nenhuma mensagem'}`;
   }
 
+  /* export history (download) */
   function exportHistory(){
     const data = JSON.stringify(state, null, 2);
     const blob = new Blob([data], {type: 'application/json'});
@@ -1035,6 +1471,7 @@ applyContrast();
     appendBot('Histórico exportado (download iniciado).');
   }
 
+  /* speak (TTS) */
   function speak(text){
     try {
       if(!('speechSynthesis' in window)) return;
@@ -1045,6 +1482,7 @@ applyContrast();
     } catch(e){ console.warn('speak fail', e); }
   }
 
+  /* voice recognition setup */
   let recognition = null;
   try {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1065,11 +1503,110 @@ applyContrast();
         INPUT.value = speech;
         appendUser(speech);
         showTyping();
-        setTimeout(()=>{ hideTyping(); handleText(speech); }, 600);
+        setTimeout(()=>{ hideTyping(); handleText(speech); }, 400);
       };
       recognition.onerror = (e)=> appendBot('Erro de reconhecimento de voz: ' + (e.error||e.message));
     }
   }
+
+  /* -------------------------
+     Advanced intents: Programming & Robotics handlers
+     ------------------------- */
+
+  function handleProgramming(text){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const t = text.toLowerCase();
+
+      // Detect language
+      const lang = (t.match(/\b(c\+\+|cpp)\b/) ? 'cpp' :
+                   (t.match(/\bpython\b/) ? 'python' :
+                   (t.match(/\bjava\b/) ? 'java' :
+                   (t.match(/\bhtml|css\b/) ? 'web' :
+                   (t.match(/\b(sql|mysql|postgres|sqlite)\b/) ? 'sql' : 'general')))));
+
+      if(lang === 'cpp'){
+        appendBot('Quer ajuda com C++: posso explicar ponteiros, referências, classes, templates ou revisar um trecho de código. Cola o trecho que quer revisar ou diga o que quer aprender.');
+        return;
+      }
+      if(lang === 'python'){
+        appendBot('Python detectado — posso revisar código, explicar conceitos (listas, dicts, classes) e sugerir melhorias. Cola o código aqui.');
+        return;
+      }
+      if(lang === 'sql'){
+        appendBot('SQL: descreva a tabela e a consulta que deseja criar/otimizar. Posso sugerir SELECTs, JOINs e índices.');
+        return;
+      }
+      if(lang === 'web'){
+        appendBot('Web dev: HTML/CSS/JS — posso oferecer exemplos, corrigir markup ou melhorar acessibilidade. Cola o trecho ou descreve o problema.');
+        return;
+      }
+
+      // Generic programming help
+      if(/\b(erro|bug|exceção|exception|crash|falha)\b/.test(t)) appendBot('Manda o erro completo ou o trecho do código que está causando problema e eu analiso.');
+      else appendBot('Diz o que você quer: exemplo, correção, explicação de conceito ou gerar um snippet?');
+
+    }, 320);
+  }
+
+  function handleRobotics(text){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      const t = text.toLowerCase();
+
+      if(/\b(seguidor de linha|linha)\b/.test(t)){
+        appendBot('Seguidor de linha: geralmente usa sensores IR para detectar contraste. Estratégias: threshold simples, PID para ajuste fino, leitura multi-sensor (vetor de peso). Quer um exemplo de código (Arduino/Spike?)');
+        return;
+      }
+      if(/\b(sum[oó]|sumo)\b/.test(t)){
+        appendBot('Sumô: prioridades — detectar borda (não cair), atacar o oponente (procura por diferença de distância), e sair de canto. Posso montar 3 estratégias diferentes pra você.');
+        return;
+      }
+      if(/\b(spike prime|lego spike|spike)\b/.test(t)){
+        appendBot('Spike Prime: trabalho com Python (MicroPython-like). Posso ajudar com motor control, sensores de cor/ultrassom e lógica para sumô/seguidor. Cola seu código ou descreve sensores.');
+        return;
+      }
+      if(/\brobocode\b/.test(t)){
+        appendBot('Robocode: posso ajudar com mira, movimento e radar. Se você colar parte do seu robô (Java), eu tento melhorar a mira lateral e o ajuste de potência de tiro.');
+        return;
+      }
+
+      appendBot('Me descreve o robô, sensores e o que quer: seguir linha, evitar obstáculos, sumô? Com isso gero um plano e exemplos de código.');
+    }, 320);
+  }
+
+  /* -------------------------
+     Wellbeing (non-medical)
+     ------------------------- */
+  function handleWellbeing(text){
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      appendBot(personalityPick(state.mode, 'fallback') + ' ' + choose(['Se quiser, posso sugerir um plano de descanso simples.','Quer falar mais sobre isso?']));
+    }, 300);
+  }
+
+  /* -------------------------
+     Calculation
+     ------------------------- */
+  function handleCalculate(text){
+    const cleaned = text.replace(/[^0-9+\-*/().,%\s]/g,'').replace(',', '.');
+    const val = safeEval(cleaned);
+    if(val !== null) appendBot(`Resultado: ${val}`);
+    else appendBot('Não consegui calcular isso com segurança — digite apenas a expressão matemática (ex: 12*3 + (4/2)).');
+  }
+
+  /* -------------------------
+     Misc helpers
+     ------------------------- */
+
+  function chooseArr(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  /* -------------------------
+     Input bindings & actions toolbar
+     ------------------------- */
 
   if(FORM) FORM.addEventListener('submit', (ev)=> {
     ev.preventDefault();
@@ -1078,7 +1615,7 @@ applyContrast();
     if(INPUT) INPUT.value = '';
     appendUser(txt);
     showTyping();
-    setTimeout(()=> { hideTyping(); handleText(txt); }, 400);
+    setTimeout(()=> { hideTyping(); handleText(txt); }, 200);
   });
 
   ACTIONS?.addEventListener('click', (e)=>{
@@ -1095,6 +1632,7 @@ applyContrast();
     else if(act === 'export') exportHistory();
   });
 
+  /* Toggle panel open/close */
   TOGGLE?.addEventListener('click', ()=> {
     if(PANEL) PANEL.style.display = 'flex';
     PANEL?.setAttribute('aria-hidden','false');
@@ -1107,14 +1645,16 @@ applyContrast();
     TOGGLE.style.display = 'inline-block';
   });
 
+  /* Mode selector */
   MODE.value = state.mode || 'friendly';
   MODE?.addEventListener('change', ()=> { state.mode = MODE.value; localStorage.setItem('flexai_mode', state.mode); appendSystem('Modo: ' + state.mode); });
 
   SOUND_BTN?.addEventListener('click', ()=> {
-    state.sound = !state.sound; SOUND_BTN.setAttribute('aria-pressed', state.sound ? 'true' : 'false'); save();
+    state.sound = !state.sound; SOUND_BTN.setAttribute('aria-pressed', state.sound ? 'true' : 'false'); saveState();
     appendSystem('Leitura automática ' + (state.sound ? 'ativada' : 'desativada'));
   });
 
+  /* overlay hints on card hover */
   document.querySelectorAll('.card').forEach(card=>{
     card.addEventListener('mouseenter', ()=>{
       const title = card.querySelector('.card-title')?.innerText || 'um espaço';
@@ -1125,21 +1665,47 @@ applyContrast();
     });
   });
 
-  renderAll();
-  if(state.history.length===0) appendBot(personalityPick('greet'));
+  /* keyboard shortcuts */
+  document.addEventListener('keydown', (e)=>{
+    // focus input with "/"
+    if(e.key === '/' && document.activeElement !== INPUT){
+      e.preventDefault();
+      INPUT?.focus();
+    }
+    // open panel with ctrl+/
+    if((e.ctrlKey || e.metaKey) && e.key === '/'){
+      TOGGLE?.click();
+    }
+  });
 
-  window.FlexAIv3 = {
+  /* Save on unload */
+  window.addEventListener('beforeunload', saveState);
+
+  /* initial render */
+  function renderAll(){
+    if(!BODY) return;
+    BODY.innerHTML = '';
+    (state.history || []).forEach(m => renderMessage(m));
+  }
+  renderAll();
+  if(state.history.length===0) appendBot(personalityPick(state.mode, 'greet'));
+
+  /* Expose API for dev console */
+  window.FlexAIv4 = {
     state,
     open: ()=> { TOGGLE?.click(); },
     close: ()=> { CLOSE?.click(); },
     speak,
-    save
+    saveState,
+    appendBot
   };
 
-  window.addEventListener('beforeunload', save);
-
+  /* -------------------------
+     END FLEXAI v4
+     ------------------------- */
 })();
 </script>
+<!-- ===== FLEXAI v4 TURBO — PARTE 2 FIM ===== -->
 
 </body>
 </html>
