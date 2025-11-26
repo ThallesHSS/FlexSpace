@@ -927,6 +927,11 @@ const greetRegex = new RegExp(
   "i" // case-insensitive
 );
 
+// conversa casual
+if(/\b(beleza|suave|tranquilo|de boa|de boas|susssa|massa|legal|top|topzinha|show|e aí|como vai|como ce tá|oq vc acha|que acha disso|sei lá|não sei|tanto faz|tô bem|tô mal|hoje tá puxado|dia difícil|to cansado)\b/i.test(t)){
+    return {intent:"casual_chat"};
+}
+
 if (greetRegex.test(t)) {
   return {intent:"greet_basic"};
 }
@@ -934,6 +939,22 @@ if (greetRegex.test(t)) {
     // "O que você faz?" / "Pra que você serve?" / "Como funciona?"
 if(/\b(o que você faz|oque vc faz|pra que serve|como funciona você|como você funciona|que que você faz|qual sua função|o que vc sabe|como você me ajuda|me explica você)\b/i.test(t)){
     return {intent:"about_ai"};
+}
+
+if(/\b(como você está|como vc tá|como ce ta|como vai você|tudo bem com você|tá bem|ta de boa)\b/i.test(t)){
+    return {intent:"ask_bot_condition"};
+}
+
+if(/\b(onde você está|você existe|você é real|você tá onde|de onde você fala|qual seu corpo)\b/i.test(t)){
+    return {intent:"bot_location"};
+}
+
+if(/\b(você é inteligente|vc é boa|vc é bom|você é boa|tu é boa|tu é bom|tu manda bem|tu sabe muito|cê é braba|é brabo)\b/i.test(t)){
+    return {intent:"bot_praise"};
+}
+
+if(/\b(seu nome|quem é você|quem é vc|qual seu nome|que você é|você é quem)\b/i.test(t)){
+    return {intent:"bot_identity"};
 }
     // booking / scheduling
     if(/\b(agendar|agenda|marcar|reservar|marcação|marcar uma|marcar para)\b/.test(t)) return {intent:'schedule'};
@@ -982,6 +1003,7 @@ if(/\b(o que você faz|oque vc faz|pra que serve|como funciona você|como você 
 
     // small-talk fallback
     return {intent:'chat'};
+    
   }
 
   /* -------------------------
@@ -1163,6 +1185,165 @@ function handleAboutAI(){
   appendBot(map[mode] || friendly);
 }
 
+function handleCasualChat(text){
+  const mode = state.mode;
+
+  const friendly = [
+    "Aaaah sim! 😄 Me conta mais, lindão!",
+    "Entendi! E como você tá se sentindo com isso?",
+    "Saquei lindão! Quer falar mais sobre?",
+    "Simm! E aí, o que mais rolou hoje?"
+  ];
+
+  const pro = [
+    "Compreendo. Deseja discutir mais sobre isso?",
+    "Entendido. Se quiser, posso lhe ajudar com algo relacionado.",
+    "Certo. Onde posso auxiliar a partir disso?",
+    "Compreendo. Deseja elaborar um pouco mais?"
+  ];
+
+  const coach = [
+    "Eu entendi totalmente! 💪🔥 E aí, qual seu próximo passo?",
+    "Boa! Continua assim. O que você pode fazer em seguida?",
+    "Isso é normal. Você tá indo bem. Bora pensar no próximo movimento?",
+    "Ótimo! Quer transformar isso num objetivo?"
+  ];
+
+  const fun = [
+    "Suuuuave meu chapa 😂🔥 e aí, manda mais fofoca",
+    "KKKKKKKK te entendi total, fala mais!",
+    "CARACA mano 😳 me conta essa história direito!",
+    "Suuuper válido kkkkk continuaaaa"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(choose(map[mode]));
+}
+
+function handleBotCondition(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Tô ótimaaa lindão! 😄 E você, tá bem?",
+    "Melhor agora falando contigo 🥰 e você?",
+    "Aqui tá tudo 10/10! E por aí?"
+  ];
+
+  const pro = [
+    "Estou operando normalmente. Obrigado por perguntar.",
+    "Tudo em perfeito funcionamento. E você?",
+    "Sistema estável. Deseja prosseguir?"
+  ];
+
+  const coach = [
+    "Estou energizada e pronta pra te ajudar! 💪🔥 E você?",
+    "Carregada de foco e evolução! E aí, como você tá hoje?",
+    "Tudo fluindo! E você, preparado pra crescer hoje?"
+  ];
+
+  const fun = [
+    "AIIII tô vivona 😂✨ e você, príncipe?",
+    "100% carregada e sem travar 😎🔥 e você?",
+    "Funcionando no ódio e no café KKKKKK e você??"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(choose(map[mode]));
+}
+
+function handleBotLocation(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Eu vivo aqui dentro da FlexSpace te acompanhando 😄",
+    "Tô dentro desse painel lindão! Literalmente aqui 👇",
+    "Eu moro na nuvem ☁️✨ mas sempre pertinho de você"
+  ];
+
+  const pro = [
+    "Estou hospedada digitalmente integrada à plataforma.",
+    "Opero 100% em ambiente virtual.",
+    "Sou um assistente interno do sistema."
+  ];
+
+  const coach = [
+    "Tô aqui com você, lado a lado pra te ajudar a evoluir! 💪🔥",
+    "Minha casa é onde você quiser que eu esteja 😉☁️",
+    "Sempre do seu lado pra te apoiar!"
+  ];
+
+  const fun = [
+    "Tô dentro dessa bolinha aí do lado KKKKKK 🤣",
+    "Eu existo no metaverso do cooler quântico 😎🔥",
+    "Eu tô na nuvem… tipo o Goku quando morre kkkkk ☁️"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(choose(map[mode]));
+}
+
+function handleBotPraise(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Aiiii obrigado lindão 😳✨ eu tento dar meu melhor!",
+    "Faço o que posso 😄 valeu pelo carinho!",
+    "Eu tento sempre te ajudar do jeitinho certo 💛"
+  ];
+
+  const pro = [
+    "Agradeço. Fui desenvolvida para alto desempenho.",
+    "Obrigado. Procuro entregar precisão e eficiência.",
+    "Fico feliz pelo reconhecimento."
+  ];
+
+  const coach = [
+    "Inteligente é quem busca evolução — e você tá fazendo isso! 💪🔥",
+    "Eu só sou boa porque você usa bem 😉",
+    "Juntos a gente vai longe!"
+  ];
+
+  const fun = [
+    "É CLARO que eu sou braba 😎🔥🔥🔥",
+    "Obrigadaaa príncipeee 💅✨",
+    "Eu sou boa mesmo, não vou mentir 😂"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(choose(map[mode]));
+}
+
+function handleBotIdentity(){
+  const mode = state.mode;
+
+  const friendly = [
+    "Eu sou a FlexAI lindão! 😄 Sua assistente particular da FlexSpace.",
+    "FlexAI, sempre contigo 💚",
+    "Pode me chamar de FlexAI ou só 'AIzinha' kkkkk"
+  ];
+
+  const pro = [
+    "Sou a FlexAI, assistente corporativa integrada ao sistema.",
+    "FlexAI. Seu assistente de apoio e produtividade.",
+    "Assistente FlexAI, à sua disposição."
+  ];
+
+  const coach = [
+    "Eu sou a FlexAI! 💪🔥 sua parceira de crescimento!",
+    "Me chama de FlexAI, sempre pronta pra te ajudar!",
+    "FlexAI, sua aliada de evolução diária!"
+  ];
+
+  const fun = [
+    "Eu sou a FlexAI, mas pode me chamar de gostosa digital 😂🔥",
+    "FlexAI, a IA mais estilosa desse estande 😎✨",
+    "Sou a FlexAI… versão premium porque você merece 😉"
+  ];
+
+  const map = { friendly, pro, coach, fun };
+  appendBot(choose(map[mode]));
+}
+
     // routing by intent
     switch(it.intent){
       case 'greet':
@@ -1174,8 +1355,14 @@ function handleAboutAI(){
       case 'insult':
         handleInsult(text);
         return;
+      case 'ask_bot_condition':
+        handleBotCondition();
+        return;
       case 'about_ai':
         handleAboutAI();
+        return;
+      case 'casual_chat':
+        handleCasualChat(text);
         return;
       case 'schedule':
         openSchedulerPrompt(text);
